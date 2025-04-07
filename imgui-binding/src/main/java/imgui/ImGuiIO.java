@@ -518,12 +518,6 @@ public final class ImGuiIO extends ImGuiStruct {
     public int MetricsActiveWindows;
 
     /**
-     * Number of active allocations, updated by MemAlloc/MemFree based on current context. May be off if you have multiple imgui contexts.
-     */
-    @BindingField
-    public int MetricsActiveAllocations;
-
-    /**
      * Mouse delta. Note that this is zero if either current or previous position are invalid (-FLT_MAX,-FLT_MAX), so a disappearing/reappearing mouse won't have a huge delta.
      */
     @BindingField

@@ -31,24 +31,7 @@ public class ImGui {
     private static final String LIB_TMP_DIR_PREFIX = "imgui-java-natives";
 
     static {
-        final String libPath = System.getProperty(LIB_PATH_PROP);
-        final String libName = System.getProperty(LIB_NAME_PROP, LIB_NAME_DEFAULT);
-        final String fullLibName = resolveFullLibName();
-
-        if (libPath != null) {
-            System.load(Paths.get(libPath).resolve(fullLibName).toAbsolutePath().toString());
-        } else {
-            try {
-                System.loadLibrary(libName);
-            } catch (Exception | Error e) {
-                final String extractedLibAbsPath = tryLoadFromClasspath(fullLibName);
-                if (extractedLibAbsPath != null) {
-                    System.load(extractedLibAbsPath);
-                } else {
-                    throw e;
-                }
-            }
-        }
+        System.load("/home/ims/imgui-java/imgui-binding/build/libsNative/linux64/libimgui-java64.so");
 
         nInitJni();
         ImFontAtlas.nInit();
@@ -366,24 +349,24 @@ public class ImGui {
     /**
      * Create Stack Tool window. hover items with mouse to query information about the source of their unique ID.
      */
-    public static void showStackToolWindow() {
-        nShowStackToolWindow();
+    public static void showIDStackToolWindow() {
+        nShowIDStackToolWindow();
     }
 
     /**
      * Create Stack Tool window. hover items with mouse to query information about the source of their unique ID.
      */
-    public static void showStackToolWindow(final ImBoolean pOpen) {
-        nShowStackToolWindow(pOpen != null ? pOpen.getData() : null);
+    public static void showIDStackToolWindow(final ImBoolean pOpen) {
+        nShowIDStackToolWindow(pOpen != null ? pOpen.getData() : null);
     }
 
-    private static native void nShowStackToolWindow(); /*
-        ImGui::ShowStackToolWindow();
+    private static native void nShowIDStackToolWindow(); /*
+        ImGui::ShowIDStackToolWindow();
     */
 
-    private static native void nShowStackToolWindow(boolean[] pOpen); /*MANUAL
+    private static native void nShowIDStackToolWindow(boolean[] pOpen); /*MANUAL
         auto pOpen = obj_pOpen == NULL ? NULL : (bool*)env->GetPrimitiveArrayCritical(obj_pOpen, JNI_FALSE);
-        ImGui::ShowStackToolWindow((pOpen != NULL ? &pOpen[0] : NULL));
+        ImGui::ShowIDStackToolWindow((pOpen != NULL ? &pOpen[0] : NULL));
         if (pOpen != NULL) env->ReleasePrimitiveArrayCritical(obj_pOpen, pOpen, JNI_FALSE);
     */
 

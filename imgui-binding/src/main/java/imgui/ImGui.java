@@ -248,7 +248,7 @@ public class ImGui {
      * Create Stack Tool window. hover items with mouse to query information about the source of their unique ID.
      */
     @BindingMethod
-    public static native void ShowStackToolWindow(@OptArg ImBoolean pOpen);
+    public static native void ShowIDStackToolWindow(@OptArg ImBoolean pOpen);
 
     /**
      * Create About window. display Dear ImGui version, credits and build/system information.

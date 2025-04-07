@@ -1,7 +1,4 @@
-import imgui.ImFontConfig;
-import imgui.ImFontGlyphRangesBuilder;
-import imgui.ImGui;
-import imgui.ImGuiIO;
+import imgui.*;
 import imgui.app.Application;
 import imgui.app.Configuration;
 import imgui.flag.ImGuiConfigFlags;
@@ -18,6 +15,7 @@ public class Main extends Application {
     private final ImString str = new ImString(5);
     private final float[] flt = new float[1];
     private int count = 0;
+    private ImFont goodFont;
 
     @Override
     protected void configure(final Configuration config) {
@@ -32,7 +30,7 @@ public class Main extends Application {
         io.setIniFilename(null);                                // We don't want to save .ini file
         io.addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);  // Enable Keyboard Controls
         io.addConfigFlags(ImGuiConfigFlags.DockingEnable);      // Enable Docking
-        io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable);    // Enable Multi-Viewport / Platform Windows
+       // io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable);    // Enable Multi-Viewport / Platform Windows
         io.setConfigViewportsNoTaskBarIcon(true);
 
         initFonts(io);
@@ -46,35 +44,31 @@ public class Main extends Application {
         // This enables FreeType font renderer, which is disabled by default.
         io.getFonts().setFreeTypeRenderer(true);
 
-        // Add default font for latin glyphs
         io.getFonts().addFontDefault();
-
         // You can use the ImFontGlyphRangesBuilder helper to create glyph ranges based on text input.
         // For example: for a game where your script is known, if you can feed your entire script to it (using addText) and only build the characters the game needs.
         // Here we are using it just to combine all required glyphs in one place
         final ImFontGlyphRangesBuilder rangesBuilder = new ImFontGlyphRangesBuilder(); // Glyphs ranges provide
         rangesBuilder.addRanges(io.getFonts().getGlyphRangesDefault());
-        rangesBuilder.addRanges(io.getFonts().getGlyphRangesCyrillic());
-        rangesBuilder.addRanges(io.getFonts().getGlyphRangesJapanese());
         rangesBuilder.addRanges(FontAwesomeIcons._IconRange);
 
         // Font config for additional fonts
         // This is a natively allocated struct so don't forget to call destroy after atlas is built
         final ImFontConfig fontConfig = new ImFontConfig();
-        fontConfig.setMergeMode(true);  // Enable merge mode to merge cyrillic, japanese and icons with default font
+        fontConfig.setRasterizerDensity(2.0f);
 
         final short[] glyphRanges = rangesBuilder.buildRanges();
-        io.getFonts().addFontFromMemoryTTF(loadFromResources("Tahoma.ttf"), 14, fontConfig, glyphRanges); // cyrillic glyphs
-        io.getFonts().addFontFromMemoryTTF(loadFromResources("NotoSansCJKjp-Medium.otf"), 14, fontConfig, glyphRanges); // japanese glyphs
-        io.getFonts().addFontFromMemoryTTF(loadFromResources("fa-regular-400.ttf"), 14, fontConfig, glyphRanges); // font awesome
-        io.getFonts().addFontFromMemoryTTF(loadFromResources("fa-solid-900.ttf"), 14, fontConfig, glyphRanges); // font awesome
+
+        this.goodFont = io.getFonts().addFontFromMemoryTTF(loadFromResources("monocraft.ttf"), 28, fontConfig, glyphRanges); // font awesome
         io.getFonts().build();
+
 
         fontConfig.destroy();
     }
 
     @Override
     public void process() {
+        ImGui.pushFont(goodFont);
         if (ImGui.begin("Demo", ImGuiWindowFlags.AlwaysAutoResize)) {
             ImGui.text("OS: [" + System.getProperty("os.name") + "] Arch: [" + System.getProperty("os.arch") + "]");
             ImGui.text("Hello, World! " + FontAwesomeIcons.Smile);
@@ -90,6 +84,7 @@ public class Main extends Application {
             ImGui.text("Extra");
             Extra.show(this);
         }
+        ImGui.popFont();
         ImGui.end();
     }
 

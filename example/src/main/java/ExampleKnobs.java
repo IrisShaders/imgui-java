@@ -1,4 +1,5 @@
 import imgui.ImGui;
+import imgui.ImVec2;
 import imgui.extension.imguiknobs.ImGuiKnobs;
 import imgui.extension.imguiknobs.flag.ImGuiKnobFlags;
 import imgui.extension.imguiknobs.flag.ImGuiKnobVariant;

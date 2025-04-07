@@ -27,4 +27,6 @@ run {
     if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
         jvmArgs += ['-XstartOnFirstThread', '-Djava.awt.headless=true']
     }
+
+    jvmArgs += ['-Xmx4096M']
 }

@@ -105,11 +105,18 @@ public final class ImGuiTreeNodeFlags {
     public static final int SpanFullWidth = 4096;
 
     /**
-     * (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
+     * Frame will span all columns of its container table (text will still fit in current column)
      *
      * <p>Definition: {@code 1 << 13}
      */
-    public static final int NavLeftJumpsBackHere = 8192;
+    public static final int SpanAllColumns = 8192;
+
+    /**
+     * (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
+     *
+     * <p>Definition: {@code 1 << 14}
+     */
+    public static final int NavLeftJumpsBackHere = 16384;
 
     /**
      * ImGuiTreeNodeFlags_NoScrollOnOpen     = 1 {@code <<} 14,  // FIXME: TODO: Disable automatic scroll on TreePop() if node got just open and contents is not visible

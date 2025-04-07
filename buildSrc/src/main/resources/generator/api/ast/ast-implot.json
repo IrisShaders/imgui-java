@@ -2481,7 +2481,7 @@
         "name" : "ctx",
         "qualType" : "ImPlotContext *",
         "desugaredQualType" : "ImPlotContext *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -2681,13 +2681,13 @@
         "name" : "row_ratios",
         "qualType" : "float *",
         "desugaredQualType" : "float *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "col_ratios",
         "qualType" : "float *",
         "desugaredQualType" : "float *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -2867,7 +2867,7 @@
         "name" : "label",
         "qualType" : "const char *",
         "desugaredQualType" : "const char *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "flags",
@@ -2991,7 +2991,7 @@
         "name" : "data",
         "qualType" : "void *",
         "desugaredQualType" : "void *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -3026,7 +3026,7 @@
         "name" : "labels",
         "qualType" : "const char *const *",
         "desugaredQualType" : "const char *const *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "keep_default",
@@ -3072,7 +3072,7 @@
         "name" : "labels",
         "qualType" : "const char *const *",
         "desugaredQualType" : "const char *const *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "keep_default",
@@ -3137,7 +3137,7 @@
         "name" : "data",
         "qualType" : "void *",
         "desugaredQualType" : "void *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -4722,7 +4722,7 @@
         "name" : "dst",
         "qualType" : "ImPlotStyle *",
         "desugaredQualType" : "ImPlotStyle *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -4742,7 +4742,7 @@
         "name" : "dst",
         "qualType" : "ImPlotStyle *",
         "desugaredQualType" : "ImPlotStyle *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -4762,7 +4762,7 @@
         "name" : "dst",
         "qualType" : "ImPlotStyle *",
         "desugaredQualType" : "ImPlotStyle *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -4782,7 +4782,7 @@
         "name" : "dst",
         "qualType" : "ImPlotStyle *",
         "desugaredQualType" : "ImPlotStyle *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -5466,7 +5466,7 @@
         "name" : "out",
         "qualType" : "int *",
         "desugaredQualType" : "int *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "format",
@@ -5529,7 +5529,7 @@
         "name" : "plot_title_id",
         "qualType" : "const char *",
         "desugaredQualType" : "const char *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -5581,7 +5581,7 @@
         "name" : "dst",
         "qualType" : "ImPlotInputMap *",
         "desugaredQualType" : "ImPlotInputMap *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -5601,7 +5601,7 @@
         "name" : "dst",
         "qualType" : "ImPlotInputMap *",
         "desugaredQualType" : "ImPlotInputMap *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -5765,7 +5765,7 @@
         "name" : "ref",
         "qualType" : "ImPlotStyle *",
         "desugaredQualType" : "ImPlotStyle *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -5799,7 +5799,7 @@
         "name" : "p_popen",
         "qualType" : "bool *",
         "desugaredQualType" : "bool *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -5819,7 +5819,7 @@
         "name" : "p_open",
         "qualType" : "bool *",
         "desugaredQualType" : "bool *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -5919,6 +5919,15 @@
         "qualType" : "const char *",
         "desugaredQualType" : "const char *",
         "defaultValue" : "IMPLOT_DEPRECATED"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " OBSOLETED in v0.13 -> PLANNED REMOVAL in v1.0"
+          } ]
+        } ]
       } ]
     } ]
   } ]

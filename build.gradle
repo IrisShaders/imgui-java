@@ -64,6 +64,7 @@ tasks.register('generateAst', GenerateAst) {
             file('include/imnodes/imnodes.h'),
             file('include/implot/implot.h'),
             file('include/imgui-node-editor/imgui_node_editor.h'),
+            file('include/imgui_toggle/imgui_toggle.h'),
             file('include/ImGuiColorTextEdit/TextEditor.h'),
     ]
 }

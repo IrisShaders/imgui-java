@@ -1,9 +1,9 @@
 {
   "info" : {
     "source" : "include/imguizmo/ImGuizmo.h",
-    "hash" : "86c265f6f4ce4a91b09950758f209579",
+    "hash" : "348d79a62207d3517e84d4f10b1ff8c7",
     "url" : "https://github.com/CedricGuillemet/ImGuizmo.git",
-    "revision" : "ba662b119d64f9ab700bb2cd7b2781f9044f5565"
+    "revision" : "2310acda820d7383d4c4884b7945ada92cd16a47"
   },
   "decls" : [ {
     "@type" : "AstNamespaceDecl",
@@ -17,7 +17,7 @@
         "name" : "drawlist",
         "qualType" : "int *",
         "desugaredQualType" : "int *",
-        "defaultValue" : "="
+        "defaultValue" : "nullptr"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -98,6 +98,34 @@
           "decls" : [ {
             "@type" : "AstTextComment",
             "text" : " return true if mouse IsOver or if the gizmo is in moving state"
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "IsUsingViewManipulate",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " return true if the view gizmo is in moving state"
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "IsViewManipulateHovered",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " only check if your mouse is over the view manipulator - no matter whether it's active or not"
           } ]
         } ]
       } ]
@@ -344,7 +372,7 @@
             "text" : " call it when you want a gizmo"
           }, {
             "@type" : "AstTextComment",
-            "text" : " Needs view and projection matrices. "
+            "text" : " Needs view and projection matrices."
           }, {
             "@type" : "AstTextComment",
             "text" : " matrix parameter is the source matrix (where will be gizmo be drawn) and might be transformed by the function. Return deltaMatrix is optional"
@@ -664,6 +692,16 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "SetAlternativeWindow",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "window",
+        "qualType" : "ImGuiWindow *",
+        "desugaredQualType" : "ImGuiWindow *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "SetID",
       "resultType" : "void",
       "decls" : [ {
@@ -671,6 +709,129 @@
         "name" : "id",
         "qualType" : "int",
         "desugaredQualType" : "int"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PushID",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "str_id",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " ID stack/scopes"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " Read the FAQ (docs/FAQ.md or http://dearimgui.org/faq) for more details about how ID are handled in dear imgui."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Those questions are answered and impacted by understanding of the ID stack system:"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   - \"Q: Why is my widget not reacting when I click on it?\""
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   - \"Q: How can I have widgets with an empty label?\""
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   - \"Q: How can I have multiple widgets with the same label?\""
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Short version: ID are hashes of the entire ID stack. If you are creating widgets in a loop you most likely"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   want to push a unique identifier (e.g. object pointer, loop index) to uniquely differentiate them."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - You can also use the \"Label##foobar\" syntax within widget label to distinguish them from each others."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - In this header file we use the \"label\"/\"name\" terminology to denote a string that will be displayed + used as an ID,"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   whereas \"str_id\" denote a string that is only used as an ID and not normally displayed."
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PushID",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "str_id_begin",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "str_id_end",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PushID",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "ptr_id",
+        "qualType" : "const void *",
+        "desugaredQualType" : "const void *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PushID",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "int_id",
+        "qualType" : "int",
+        "desugaredQualType" : "int"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PopID",
+      "resultType" : "void"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetID",
+      "resultType" : "int",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "str_id",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetID",
+      "resultType" : "int",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "str_id_begin",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "str_id_end",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetID",
+      "resultType" : "int",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "ptr_id",
+        "qualType" : "const void *",
+        "desugaredQualType" : "const void *"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -747,6 +908,35 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "SetAxisMask",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "x",
+        "qualType" : "bool",
+        "desugaredQualType" : "bool"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "y",
+        "qualType" : "bool",
+        "desugaredQualType" : "bool"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "z",
+        "qualType" : "bool",
+        "desugaredQualType" : "bool"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " Set an axis mask to permanently hide a given axis (true -> hidden, false -> shown)"
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "SetPlaneLimit",
       "resultType" : "void",
       "decls" : [ {
@@ -761,6 +951,30 @@
           "decls" : [ {
             "@type" : "AstTextComment",
             "text" : " Configure the limit where planes are hiden"
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "IsOver",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "position",
+        "qualType" : "float *",
+        "desugaredQualType" : "float *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "pixelRadius",
+        "qualType" : "float",
+        "desugaredQualType" : "float"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " from a x,y,z point in space and using Manipulation view/projection matrix, check if mouse is in pixel radius distance of that projected point"
           } ]
         } ]
       } ]

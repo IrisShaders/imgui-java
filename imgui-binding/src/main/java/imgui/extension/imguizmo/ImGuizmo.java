@@ -142,7 +142,7 @@ public final class ImGuizmo {
             System.arraycopy(cubeMatrix, 0, cubeMatrices, i * cubeMatrix.length, cubeMatrix.length);
         }
 
-        drawCubes(view, projection, cubeMatrices, cubeMatrices.length);
+        drawCubes(view, projection, cubeMatrices);
     }
 
     /**
