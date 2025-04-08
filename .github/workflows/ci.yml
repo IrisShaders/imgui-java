@@ -174,16 +174,24 @@ jobs:
           zip -rj out/archives/native-libraries out/artifacts/native-libraries
           zip -rj out/archives/java-libraries out/artifacts/java-libraries
 
+      - name: Capture Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.sha }}
+          path: |
+            out/artifacts/native-libraries
+            out/artifacts/java-libraries
+
       - name: Publish
         env:
           PUBLISH_SUFFIX: snapshots
           MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_PASS: ${{ secrets.MAVEN_PASS }}
-          NEXUS_UPD_ID: ${{ secrets.RELEASE_NEXUS_UPD_ID }}
-          NEXUS_UPD_PASS: ${{ secrets.RELEASE_NEXUS_UPD_PASS }}
-          SIGNING_KEY_ID: ${{ secrets.RELEASE_SIGNING_KEY_ID }}
-          SIGNING_KEY: ${{ secrets.RELEASE_SIGNING_KEY }}
-          SIGNING_KEY_PASS: ${{ secrets.RELEASE_SIGNING_KEY_PASS }}
+#          NEXUS_UPD_ID: ${{ secrets.RELEASE_NEXUS_UPD_ID }}
+#          NEXUS_UPD_PASS: ${{ secrets.RELEASE_NEXUS_UPD_PASS }}
+#          SIGNING_KEY_ID: ${{ secrets.RELEASE_SIGNING_KEY_ID }}
+#          SIGNING_KEY: ${{ secrets.RELEASE_SIGNING_KEY }}
+#          SIGNING_KEY_PASS: ${{ secrets.RELEASE_SIGNING_KEY_PASS }}
         run: |
           chmod +x ./buildSrc/scripts/publish.sh
           buildSrc/scripts/publish.sh
