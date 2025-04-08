@@ -1,6 +1,11 @@
 package imgui.extension.imnodes;
 
 import imgui.ImVec2;
+
+
+
+
+
 import imgui.internal.ImGuiContext;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
@@ -11,6 +16,7 @@ import imgui.type.ImInt;
  * <p>
  * Refer to the library's Github page for examples and support
  */
+
 public final class ImNodes {
     private ImNodes() {
     }
@@ -159,7 +165,7 @@ public final class ImNodes {
         return (uintptr_t)&ImNodes::GetIO();
     */
 
-    private static final ImNodesStyle _GETSTYLE_1 = new ImNodesStyle(0);
+     private static final ImNodesStyle _GETSTYLE_1 = new ImNodesStyle(0);
 
     /**
      * Returns the global style struct. See the struct declaration for default values.
@@ -223,7 +229,7 @@ public final class ImNodes {
         ImNodes::StyleColorsLight(reinterpret_cast<ImNodesStyle*>(style));
     */
 
-    /**
+     /**
      * The top-level function call. Call this before calling BeginNode/EndNode. Calling this function
      * will result the node editor grid workspace being rendered.
      */
@@ -243,7 +249,7 @@ public final class ImNodes {
         ImNodes::EndNodeEditor();
     */
 
-    /**
+     /**
      * Add a navigable minimap to the editor; call before EndNodeEditor after all nodes and links have been specified
      * // TODO: add callback
      */
@@ -279,7 +285,7 @@ public final class ImNodes {
         ImNodes::MiniMap(miniMapSizeFraction, static_cast<ImNodesMiniMapLocation>(miniMapLocation));
     */
 
-    /**
+     /**
      * Use PushColorStyle and PopColorStyle to modify ImNodesColorStyle mid-frame.
      */
     public static void pushColorStyle(final int item, final int color) {
@@ -373,7 +379,7 @@ public final class ImNodes {
         return ImNodes::GetNodeDimensions(id).y;
     */
 
-    /**
+     /**
      * Place your node title bar content (such as the node title, using ImGui::Text) between the
      * following function calls. These functions have to be called before adding any attributes, or the
      * layout of the node will be incorrect.
@@ -403,7 +409,7 @@ public final class ImNodes {
     //
     // Each attribute id must be unique.
 
-    /**
+     /**
      * Create an input attribute block. The pin is rendered on left side.
      */
     public static void beginInputAttribute(final int id) {
@@ -435,7 +441,7 @@ public final class ImNodes {
         ImNodes::EndInputAttribute();
     */
 
-    /**
+     /**
      * Create an output attribute block. The pin is rendered on the right side.
      */
     public static void beginOutputAttribute(final int id) {
@@ -465,7 +471,7 @@ public final class ImNodes {
         ImNodes::EndOutputAttribute();
     */
 
-    /**
+     /**
      * Create a static attribute block. A static attribute has no pin, and therefore can't be linked to
      * anything. However, you can still use IsAttributeActive() and IsAnyAttributeActive() to check for
      * attribute activity.
@@ -486,7 +492,7 @@ public final class ImNodes {
         ImNodes::EndStaticAttribute();
     */
 
-    /**
+     /**
      * Push a single AttributeFlags value. By default, only AttributeFlags_None is set.
      */
     public static void pushAttributeFlag(final int flag) {
@@ -505,7 +511,7 @@ public final class ImNodes {
         ImNodes::PopAttributeFlag();
     */
 
-    /**
+     /**
      * Render a link between attributes.
      * The attributes ids used here must match the ids used in Begin(Input|Output)Attribute function
      * calls. The order of source and target doesn't make a difference for rendering the link.
@@ -518,7 +524,7 @@ public final class ImNodes {
         ImNodes::Link(id, source, target);
     */
 
-    /**
+     /**
      * Enable or disable the ability to click and drag a specific node.
      */
     public static void setNodeDraggable(final int nodeId, final boolean draggable) {
@@ -666,7 +672,7 @@ public final class ImNodes {
         return ImNodes::GetNodeGridSpacePos(nodeId).y;
     */
 
-    /**
+     /**
      * Enable or disable grid snapping.
      */
     public static void snapNodeToGrid(final int nodeId) {
@@ -677,7 +683,7 @@ public final class ImNodes {
         ImNodes::SnapNodeToGrid(nodeId);
     */
 
-    /**
+     /**
      * Returns true if the current node editor canvas is being hovered over by the mouse, and is not
      * blocked by any other windows.
      */
@@ -757,7 +763,7 @@ public final class ImNodes {
         return ImNodes::IsPinHovered(&i) ? i : -1;
     */
 
-    /**
+     /**
      * Use The following two functions to query the number of selected nodes or links in the current
      * editor. Use after calling EndNodeEditor().
      */
@@ -777,7 +783,7 @@ public final class ImNodes {
         return ImNodes::NumSelectedLinks();
     */
 
-    /**
+     /**
      * Get the selected node/link ids. The pointer argument should point to an integer array with at
      * least as many elements as the respective NumSelectedNodes/NumSelectedLinks function call
      * returned.
@@ -792,7 +798,7 @@ public final class ImNodes {
         if (nodeIds != NULL) env->ReleasePrimitiveArrayCritical(obj_nodeIds, nodeIds, JNI_FALSE);
     */
 
-    /**
+     /**
      * Get the selected node/link ids. The pointer argument should point to an integer array with at
      * least as many elements as the respective NumSelectedNodes/NumSelectedLinks function call
      * returned.
@@ -807,7 +813,7 @@ public final class ImNodes {
         if (linkIds != NULL) env->ReleasePrimitiveArrayCritical(obj_linkIds, linkIds, JNI_FALSE);
     */
 
-    /**
+     /**
      * Clears the list of selected nodes/links. Useful if you want to delete a selected node or link.
      */
     public static void clearNodeSelection() {
@@ -818,7 +824,7 @@ public final class ImNodes {
         ImNodes::ClearNodeSelection();
     */
 
-    /**
+     /**
      * Clears the list of selected nodes/links. Useful if you want to delete a selected node or link.
      */
     public static void clearLinkSelection() {
@@ -829,7 +835,7 @@ public final class ImNodes {
         ImNodes::ClearLinkSelection();
     */
 
-    /**
+     /**
      * Manually select a node or link.
      */
     public static void selectNode(final int nodeId) {
@@ -880,7 +886,7 @@ public final class ImNodes {
         return ImNodes::IsLinkSelected(linkId);
     */
 
-    /**
+     /**
      * Was the previous attribute active? This will continuously return true while the left mouse button
      * is being pressed over the UI content of the attribute.
      */
@@ -924,7 +930,7 @@ public final class ImNodes {
     // Use the following functions to query a change of state for an existing link, or new link. Call
     // these after EndNodeEditor().
 
-    /**
+     /**
      * Did the user start dragging a new link from a pin?
      */
     public static boolean isLinkStarted(final ImInt startedAtAttributeId) {
@@ -938,7 +944,7 @@ public final class ImNodes {
         return _result;
     */
 
-    /**
+     /**
      * Did the user drop the dragged link before attaching it to a pin?
      * There are two different kinds of situations to consider when handling this event:
      * 1) a link which is created at a pin and then dropped
@@ -1008,7 +1014,7 @@ public final class ImNodes {
         return ImNodes::IsLinkDropped(NULL, includingDetachedLinks);
     */
 
-    /**
+     /**
      * Did the user finish creating a new link?
      */
     public static boolean isLinkCreated(final ImInt startedAtAttributeId, final ImInt endedAtAttributeId) {
@@ -1042,7 +1048,7 @@ public final class ImNodes {
         return _result;
     */
 
-    /**
+     /**
      * Did the user finish creating a new link?
      */
     public static boolean isLinkCreated(final ImInt startedAtNodeId, final ImInt startedAtAttributeId, final ImInt endedAtNodeId, final ImInt endedAtAttributeId) {
@@ -1084,7 +1090,7 @@ public final class ImNodes {
         return _result;
     */
 
-    /**
+     /**
      * Was an existing link detached from a pin by the user? The detached link's id is assigned to the
      * output argument link_id.
      */

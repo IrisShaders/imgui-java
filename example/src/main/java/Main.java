@@ -59,7 +59,7 @@ public class Main extends Application {
 
         final short[] glyphRanges = rangesBuilder.buildRanges();
 
-        this.goodFont = io.getFonts().addFontFromMemoryTTF(loadFromResources("monocraft.ttf"), 28, fontConfig, glyphRanges); // font awesome
+        //this.goodFont = io.getFonts().addFontFromMemoryTTF(loadFromResources("monocraft.ttf"), 28, fontConfig, glyphRanges); // font awesome
         io.getFonts().build();
 
 
@@ -68,7 +68,7 @@ public class Main extends Application {
 
     @Override
     public void process() {
-        ImGui.pushFont(goodFont);
+        //ImGui.pushFont(goodFont);
         if (ImGui.begin("Demo", ImGuiWindowFlags.AlwaysAutoResize)) {
             ImGui.text("OS: [" + System.getProperty("os.name") + "] Arch: [" + System.getProperty("os.arch") + "]");
             ImGui.text("Hello, World! " + FontAwesomeIcons.Smile);
@@ -84,7 +84,7 @@ public class Main extends Application {
             ImGui.text("Extra");
             Extra.show(this);
         }
-        ImGui.popFont();
+        //ImGui.popFont();
         ImGui.end();
     }
 

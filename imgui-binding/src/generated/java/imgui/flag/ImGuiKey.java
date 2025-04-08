@@ -1,6 +1,8 @@
 package imgui.flag;
 
 
+
+
 /**
  * A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values.
  * All our named keys are {@code >=} 512. Keys value 0 to 511 are left unused as legacy native/opaque key values ({@code <} 1.87).
@@ -8,6 +10,7 @@ package imgui.flag;
  * Read details about the 1.87 and 1.89 transition : https://github.com/ocornut/imgui/issues/4921
  * Note that "Keys" related to physical keys and are not the same concept as input "Characters", the later are submitted via io.AddInputCharacter().
  */
+
 public final class ImGuiKey {
     private ImGuiKey() {
     }
