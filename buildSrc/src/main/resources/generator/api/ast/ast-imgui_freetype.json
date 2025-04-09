@@ -1,7 +1,7 @@
 {
   "info" : {
     "source" : "include/imgui/misc/freetype/imgui_freetype.h",
-    "hash" : "70fc81810854ab5f439f8e1ea0536285",
+    "hash" : "206296e3f9b6fbad92f841f516d7ecc7",
     "url" : "https://github.com/ocornut/imgui",
     "revision" : "ce0d0ac8298ce164b5d862577e8b087d92f6e90e"
   },

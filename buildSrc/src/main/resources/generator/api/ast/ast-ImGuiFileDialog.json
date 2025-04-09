@@ -1,7 +1,7 @@
 {
   "info" : {
     "source" : "include/ImGuiFileDialog/ImGuiFileDialog.h",
-    "hash" : "11872045e07178b9875d166a203d0345",
+    "hash" : "5e504e644fbe5e85e2701af5c51b1cf3",
     "url" : "https://github.com/aiekick/ImGuiFileDialog",
     "revision" : "007091af18c69a2eed15cf5016951eb481a1de79"
   },
@@ -208,60 +208,6 @@
   }, {
     "@type" : "AstRecordDecl",
     "name" : "pthread_attr_t"
-  }, {
-    "@type" : "AstRecordDecl",
-    "name" : "sched_attr",
-    "decls" : [ {
-      "@type" : "AstFieldDecl",
-      "name" : "size",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_policy",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_flags",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_nice",
-      "qualType" : "__s32",
-      "desugaredQualType" : "int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_priority",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_runtime",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_deadline",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_period",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_util_min",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_util_max",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    } ]
   }, {
     "@type" : "AstEnumDecl",
     "name" : "IGFD_FileStyleFlags_",

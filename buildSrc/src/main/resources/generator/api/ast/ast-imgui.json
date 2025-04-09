@@ -1,7 +1,7 @@
 {
   "info" : {
     "source" : "include/imgui/imgui.h",
-    "hash" : "f2557d7667ecad420277fc31be4b458d",
+    "hash" : "ebb404bb21c33510bdadf62c6650cad2",
     "url" : "https://github.com/ocornut/imgui",
     "revision" : "ce0d0ac8298ce164b5d862577e8b087d92f6e90e"
   },

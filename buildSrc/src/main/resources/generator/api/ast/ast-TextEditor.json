@@ -1632,59 +1632,5 @@
       "qualType" : "int",
       "desugaredQualType" : "int"
     } ]
-  }, {
-    "@type" : "AstRecordDecl",
-    "name" : "sched_attr",
-    "decls" : [ {
-      "@type" : "AstFieldDecl",
-      "name" : "size",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_policy",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_flags",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_nice",
-      "qualType" : "__s32",
-      "desugaredQualType" : "int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_priority",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_runtime",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_deadline",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_period",
-      "qualType" : "__u64",
-      "desugaredQualType" : "unsigned long long"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_util_min",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "sched_util_max",
-      "qualType" : "__u32",
-      "desugaredQualType" : "unsigned int"
-    } ]
   } ]
 }
