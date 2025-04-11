@@ -129,6 +129,13 @@ public final class ImGuiDockNodeFlags {
     public static final int NoResizeY = 131072;
 
     /**
+     * Any docked window will be automatically be focus-route chained (window{@code ->}ParentWindowForFocusRoute set to this) so Shortcut() in this window can run when any docked window is focused.
+     *
+     * <p>Definition: {@code 1 << 18}
+     */
+    public static final int DockedWindowsInFocusRoute = 262144;
+
+    /**
      * Disable this node from splitting other windows/nodes.
      *
      * <p>Definition: {@code 1 << 19}

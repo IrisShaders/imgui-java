@@ -479,14 +479,14 @@ public final class ImGuiKey {
     public static final int COUNT = 666;
 
     /**
-     * Keyboard Modifiers (explicitly submitted by backend via AddKeyEvent() calls) - This is mirroring the data also written to io.KeyCtrl, io.KeyShift, io.KeyAlt, io.KeySuper, in a format allowing them to be accessed via standard key API, allowing calls such as IsKeyPressed(), IsKeyReleased(), querying duration etc. - Code polling every key (e.g. an interface to detect a key press for input mapping) might want to ignore those and prefer using the real keys (e.g. ImGuiKey_LeftCtrl, ImGuiKey_RightCtrl instead of ImGuiMod_Ctrl). - In theory the value of keyboard modifiers should be roughly equivalent to a logical or of the equivalent left/right keys. In practice: it's complicated; mods are often provided from different sources. Keyboard layout, IME, sticky keys and backends tend to interfere and break that equivalence. The safer decision is to relay that ambiguity down to the end-user...
+     * Keyboard Modifiers (explicitly submitted by backend via AddKeyEvent() calls) - This is mirroring the data also written to io.KeyCtrl, io.KeyShift, io.KeyAlt, io.KeySuper, in a format allowing them to be accessed via standard key API, allowing calls such as IsKeyPressed(), IsKeyReleased(), querying duration etc. - Code polling every key (e.g. an interface to detect a key press for input mapping) might want to ignore those and prefer using the real keys (e.g. ImGuiKey_LeftCtrl, ImGuiKey_RightCtrl instead of ImGuiMod_Ctrl). - In theory the value of keyboard modifiers should be roughly equivalent to a logical or of the equivalent left/right keys. In practice: it's complicated; mods are often provided from different sources. Keyboard layout, IME, sticky keys and backends tend to interfere and break that equivalence. The safer decision is to relay that ambiguity down to the end-user... - On macOS, we swap Cmd(Super) and Ctrl keys at the time of the io.AddKeyEvent() call.
      *
      * <p>Definition: {@code 0}
      */
     public static final int ImGuiMod_None = 0;
 
     /**
-     * Ctrl
+     * Ctrl (non-macOS), Cmd (macOS)
      *
      * <p>Definition: {@code 1 << 12}
      */
@@ -507,25 +507,18 @@ public final class ImGuiKey {
     public static final int ImGuiMod_Alt = 16384;
 
     /**
-     * Cmd/Super/Windows
+     * Windows/Super (non-macOS), Ctrl (macOS)
      *
      * <p>Definition: {@code 1 << 15}
      */
     public static final int ImGuiMod_Super = 32768;
 
     /**
-     * Alias for Ctrl (non-macOS) _or_ Super (macOS).
+     * 4-bits
      *
-     * <p>Definition: {@code 1 << 11}
+     * <p>Definition: {@code 0xF000}
      */
-    public static final int ImGuiMod_Shortcut = 2048;
-
-    /**
-     * 5-bits
-     *
-     * <p>Definition: {@code 0xF800}
-     */
-    public static final int ImGuiMod_Mask_ = 63488;
+    public static final int ImGuiMod_Mask_ = 61440;
 
     /**
      * [Internal] Prior to 1.87 we required user to fill io.KeysDown[512] using their own native index + the io.KeyMap[] array. We are ditching this method but keeping a legacy path for user code doing e.g. IsKeyPressed(MY_NATIVE_KEY_CODE) If you need to iterate all keys (for e.g. an input mapper) you may use ImGuiKey_NamedKey_BEGIN..ImGuiKey_NamedKey_END.
@@ -563,6 +556,13 @@ public final class ImGuiKey {
     public static final int KeysData_OFFSET = 0;
 
     /**
+     * Removed in 1.90.7, you can now simply use ImGuiMod_Ctrl
+     *
+     * <p>Definition: {@code ImGuiMod_Ctrl}
+     */
+    public static final int ImGuiMod_Shortcut = 4096;
+
+    /**
      * Renamed in 1.89
      *
      * <p>Definition: {@code ImGuiMod_Ctrl}
@@ -589,11 +589,4 @@ public final class ImGuiKey {
      * <p>Definition: {@code ImGuiMod_Super}
      */
     public static final int ModSuper = 32768;
-
-    /**
-     * Renamed in 1.87
-     *
-     * <p>Definition: {@code ImGuiKey_KeypadEnter}
-     */
-    public static final int KeyPadEnter = 627;
 }

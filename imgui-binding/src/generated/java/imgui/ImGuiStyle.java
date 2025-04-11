@@ -303,37 +303,22 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
         THIS->WindowTitleAlign = value;
     */
 
-    /**
-     * Side of the collapsing/docking button in the title bar (None/Left/Right). Defaults to ImGuiDir_Left.
-     */
-    public int getWindowMenuButtonPosition() {
-        return nGetWindowMenuButtonPosition();
-    }
+    //public int WindowMenuButtonPosition;
 
-    /**
-     * Side of the collapsing/docking button in the title bar (None/Left/Right). Defaults to ImGuiDir_Left.
-     */
-    public void setWindowMenuButtonPosition(final int value) {
-        nSetWindowMenuButtonPosition(value);
-    }
-
-    private native int nGetWindowMenuButtonPosition(); /*
-        return THIS->WindowMenuButtonPosition;
-    */
-
-    private native void nSetWindowMenuButtonPosition(int value); /*
-        THIS->WindowMenuButtonPosition = value;
-    */
+    // TODO: WindowMenuButtonPosition, ColorButtonPosition
 
     /**
      * Radius of child window corners rounding. Set to 0.0f to have rectangular windows.
+     */
+    /**
+     * Side of the collapsing/docking button in the title bar (None/Left/Right). Defaults to ImGuiDir_Left.
      */
     public float getChildRounding() {
         return nGetChildRounding();
     }
 
     /**
-     * Radius of child window corners rounding. Set to 0.0f to have rectangular windows.
+     * Side of the collapsing/docking button in the title bar (None/Left/Right). Defaults to ImGuiDir_Left.
      */
     public void setChildRounding(final float value) {
         nSetChildRounding(value);
@@ -1035,29 +1020,73 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     */
 
     /**
-     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
+     * Alignment of angled headers within the cell
      */
-    public int getColorButtonPosition() {
-        return nGetColorButtonPosition();
+    public ImVec2 getTableAngledHeadersTextAlign() {
+        final ImVec2 dst = new ImVec2();
+        nGetTableAngledHeadersTextAlign(dst);
+        return dst;
     }
 
     /**
-     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
+     * Alignment of angled headers within the cell
      */
-    public void setColorButtonPosition(final int value) {
-        nSetColorButtonPosition(value);
+    public float getTableAngledHeadersTextAlignX() {
+        return nGetTableAngledHeadersTextAlignX();
     }
 
-    private native int nGetColorButtonPosition(); /*
-        return THIS->ColorButtonPosition;
+    /**
+     * Alignment of angled headers within the cell
+     */
+    public float getTableAngledHeadersTextAlignY() {
+        return nGetTableAngledHeadersTextAlignY();
+    }
+
+    /**
+     * Alignment of angled headers within the cell
+     */
+    public void getTableAngledHeadersTextAlign(final ImVec2 dst) {
+        nGetTableAngledHeadersTextAlign(dst);
+    }
+
+    /**
+     * Alignment of angled headers within the cell
+     */
+    public void setTableAngledHeadersTextAlign(final ImVec2 value) {
+        nSetTableAngledHeadersTextAlign(value.x, value.y);
+    }
+
+    /**
+     * Alignment of angled headers within the cell
+     */
+    public void setTableAngledHeadersTextAlign(final float valueX, final float valueY) {
+        nSetTableAngledHeadersTextAlign(valueX, valueY);
+    }
+
+    private native void nGetTableAngledHeadersTextAlign(ImVec2 dst); /*
+        Jni::ImVec2Cpy(env, THIS->TableAngledHeadersTextAlign, dst);
     */
 
-    private native void nSetColorButtonPosition(int value); /*
-        THIS->ColorButtonPosition = value;
+    private native float nGetTableAngledHeadersTextAlignX(); /*
+        return THIS->TableAngledHeadersTextAlign.x;
     */
+
+    private native float nGetTableAngledHeadersTextAlignY(); /*
+        return THIS->TableAngledHeadersTextAlign.y;
+    */
+
+    private native void nSetTableAngledHeadersTextAlign(float valueX, float valueY); /*MANUAL
+        ImVec2 value = ImVec2(valueX, valueY);
+        THIS->TableAngledHeadersTextAlign = value;
+    */
+
+    //public int ColorButtonPosition;
 
     /**
      * Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).
+     */
+    /**
+     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
      */
     public ImVec2 getButtonTextAlign() {
         final ImVec2 dst = new ImVec2();
@@ -1066,35 +1095,35 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     }
 
     /**
-     * Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).
+     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
      */
     public float getButtonTextAlignX() {
         return nGetButtonTextAlignX();
     }
 
     /**
-     * Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).
+     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
      */
     public float getButtonTextAlignY() {
         return nGetButtonTextAlignY();
     }
 
     /**
-     * Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).
+     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
      */
     public void getButtonTextAlign(final ImVec2 dst) {
         nGetButtonTextAlign(dst);
     }
 
     /**
-     * Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).
+     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
      */
     public void setButtonTextAlign(final ImVec2 value) {
         nSetButtonTextAlign(value.x, value.y);
     }
 
     /**
-     * Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).
+     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
      */
     public void setButtonTextAlign(final float valueX, final float valueY) {
         nSetButtonTextAlign(valueX, valueY);

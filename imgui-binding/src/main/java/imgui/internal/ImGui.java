@@ -324,7 +324,7 @@ public final class ImGui extends imgui.ImGui {
      * Create 2 child nodes in this parent node.
      */
     @BindingMethod
-    public static native int DockBuilderSplitNode(int nodeId, int splitDir, float sizeRatioForNodeAtDir, @ArgValue(reinterpretCast = "ImGuiID*") ImInt outIdAtDir, @ArgValue(reinterpretCast = "ImGuiID*") ImInt outIdAtOppositeDir);
+    public static native int DockBuilderSplitNode(int nodeId, @ArgValue(staticCast = "ImGuiDir") int splitDir, float sizeRatioForNodeAtDir, @ArgValue(reinterpretCast = "ImGuiID*") ImInt outIdAtDir, @ArgValue(reinterpretCast = "ImGuiID*") ImInt outIdAtOppositeDir);
 
     // TODO DockBuilderCopyDockSpace, DockBuilderCopyNode
 
@@ -415,7 +415,7 @@ public final class ImGui extends imgui.ImGui {
     public static native int GetWindowScrollbarID(ImGuiWindow window, @ArgValue(staticCast = "ImGuiAxis") int axis);
 
     @BindingMethod
-    public static native int GetWindowResizeCornerID(ImGuiWindow window, int n);
+    public static native int GetWindowResizeCornerID(ImGuiWindow window, @ArgValue(staticCast = "ImGuiDir") int n);
 
     @BindingMethod
     public static native int GetWindowResizeBorderID(ImGuiWindow window, @ArgValue(staticCast = "ImGuiDir") int dir);

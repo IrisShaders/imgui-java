@@ -1301,6 +1301,25 @@ public final class ImGuiIO extends ImGuiStruct {
         THIS->ClearEventsQueue();
     */
 
+    /**
+     * Clear current keyboard/gamepad state + current frame text input buffer. Equivalent to releasing all keys/buttons.
+     */
+    public void clearInputKeys() {
+        nClearInputKeys();
+    }
+
+    private native void nClearInputKeys(); /*
+        THIS->ClearInputKeys();
+    */
+
+    public void clearInputMouse() {
+        nClearInputMouse();
+    }
+
+    private native void nClearInputMouse(); /*
+        THIS->ClearInputMouse();
+    */
+
     //------------------------------------------------------------------
     // Output - Updated by NewFrame() or EndFrame()/Render()
     // (when reading from the io.WantCaptureMouse, io.WantCaptureKeyboard flags to dispatch your inputs, it is
@@ -2695,6 +2714,28 @@ public final class ImGuiIO extends ImGuiStruct {
 
     private native void nSetMouseWheelRequestAxisSwap(boolean value); /*
         THIS->MouseWheelRequestAxisSwap = value;
+    */
+
+    /**
+     * (OSX) Set to true when the current click was a ctrl-click that spawned a simulated right click
+     */
+    public boolean getMouseCtrlLeftAsRightClick() {
+        return nGetMouseCtrlLeftAsRightClick();
+    }
+
+    /**
+     * (OSX) Set to true when the current click was a ctrl-click that spawned a simulated right click
+     */
+    public void setMouseCtrlLeftAsRightClick(final boolean value) {
+        nSetMouseCtrlLeftAsRightClick(value);
+    }
+
+    private native boolean nGetMouseCtrlLeftAsRightClick(); /*
+        return THIS->MouseCtrlLeftAsRightClick;
+    */
+
+    private native void nSetMouseCtrlLeftAsRightClick(boolean value); /*
+        THIS->MouseCtrlLeftAsRightClick = value;
     */
 
     /**

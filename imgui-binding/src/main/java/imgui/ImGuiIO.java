@@ -430,6 +430,15 @@ public final class ImGuiIO extends ImGuiStruct {
     @BindingMethod
     public native void ClearEventsQueue();
 
+    /**
+     * Clear current keyboard/gamepad state + current frame text input buffer. Equivalent to releasing all keys/buttons.
+     */
+    @BindingMethod
+    public native void ClearInputKeys();
+
+    @BindingMethod
+    public native void ClearInputMouse();
+
     //------------------------------------------------------------------
     // Output - Updated by NewFrame() or EndFrame()/Render()
     // (when reading from the io.WantCaptureMouse, io.WantCaptureKeyboard flags to dispatch your inputs, it is
@@ -712,6 +721,12 @@ public final class ImGuiIO extends ImGuiStruct {
      */
     @BindingField
     public boolean MouseWheelRequestAxisSwap;
+
+    /**
+     * (OSX) Set to true when the current click was a ctrl-click that spawned a simulated right click
+     */
+    @BindingField
+    public boolean MouseCtrlLeftAsRightClick;
 
     /**
      * Duration the mouse button has been down (0.0f == just clicked)

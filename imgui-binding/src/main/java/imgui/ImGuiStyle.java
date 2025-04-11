@@ -81,8 +81,10 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     /**
      * Side of the collapsing/docking button in the title bar (None/Left/Right). Defaults to ImGuiDir_Left.
      */
-    @BindingField
-    public int WindowMenuButtonPosition;
+    //@BindingField
+    //public int WindowMenuButtonPosition;
+
+    // TODO: WindowMenuButtonPosition, ColorButtonPosition
 
     /**
      * Radius of child window corners rounding. Set to 0.0f to have rectangular windows.
@@ -225,10 +227,16 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     public float TableAngledHeadersAngle;
 
     /**
-     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
+     * Alignment of angled headers within the cell
      */
     @BindingField
-    public int ColorButtonPosition;
+    public ImVec2 TableAngledHeadersTextAlign;
+
+    /**
+     * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
+     */
+    //@BindingField
+    //public int ColorButtonPosition;
 
     /**
      * Alignment of button text when button is larger than text. Defaults to (0.5f, 0.5f) (centered).

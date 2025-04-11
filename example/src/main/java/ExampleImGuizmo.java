@@ -210,7 +210,7 @@ public class ExampleImGuizmo {
         ImGui.setNextWindowPos(ImGui.getMainViewport().getPosX() + 100, ImGui.getMainViewport().getPosY() + 100, ImGuiCond.Once);
         ImGui.setNextWindowSize(800, 400, ImGuiCond.Once);
         ImGui.begin("Gizmo", showImGuizmoWindow);
-        ImGui.beginChild("prevent_window_from_moving_by_drag", 0, 0, false, ImGuiWindowFlags.NoMove);
+        ImGui.beginChild("prevent_window_from_moving_by_drag", 0, 0, 0, ImGuiWindowFlags.NoMove);
 
         float aspect = ImGui.getWindowWidth() / ImGui.getWindowHeight();
         float[] cameraProjection = perspective(27, aspect, 0.1f, 100f);

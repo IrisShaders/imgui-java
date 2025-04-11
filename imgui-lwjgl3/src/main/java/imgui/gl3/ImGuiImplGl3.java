@@ -23,6 +23,8 @@ import static org.lwjgl.opengl.GL20.glDetachShader;
 import static org.lwjgl.opengl.GL20.glGetAttribLocation;
 import static org.lwjgl.opengl.GL20.glGetProgramiv;
 import static org.lwjgl.opengl.GL20.glGetUniformLocation;
+import static org.lwjgl.opengl.GL21C.GL_PIXEL_UNPACK_BUFFER;
+import static org.lwjgl.opengl.GL21C.GL_PIXEL_UNPACK_BUFFER_BINDING;
 import static org.lwjgl.opengl.GL32.GL_ACTIVE_TEXTURE;
 import static org.lwjgl.opengl.GL32.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL32.GL_ARRAY_BUFFER_BINDING;
@@ -184,6 +186,7 @@ public class ImGuiImplGl3 {
         private final ImVec4 clipRect = new ImVec4();
         private final float[] orthoProjMatrix = new float[4 * 4];
         private final int[] lastActiveTexture = new int[1];
+        private final int[] lastPixelUnpackBuffer = new int[1];
         private final int[] lastProgram = new int[1];
         private final int[] lastTexture = new int[1];
         private final int[] lastSampler = new int[1];
@@ -337,6 +340,10 @@ public class ImGuiImplGl3 {
         if (data.shaderHandle == 0) {
             createDeviceObjects();
         }
+
+        if (data.fontTexture == 0) {
+            createFontsTexture();
+        }
     }
 
     protected void setupRenderState(final ImDrawData drawData, final int fbWidth, final int fbHeight, final int gVertexArrayObject) {
@@ -430,6 +437,8 @@ public class ImGuiImplGl3 {
         }
 
         glGetIntegerv(GL_ACTIVE_TEXTURE, props.lastActiveTexture);
+        glGetIntegerv(GL_PIXEL_UNPACK_BUFFER_BINDING, props.lastPixelUnpackBuffer);
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
         glActiveTexture(GL_TEXTURE0);
         glGetIntegerv(GL_CURRENT_PROGRAM, props.lastProgram);
         glGetIntegerv(GL_TEXTURE_BINDING_2D, props.lastTexture);
@@ -543,6 +552,7 @@ public class ImGuiImplGl3 {
         glActiveTexture(props.lastActiveTexture[0]);
         glBindVertexArray(props.lastVertexArrayObject[0]);
         glBindBuffer(GL_ARRAY_BUFFER, props.lastArrayBuffer[0]);
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, props.lastPixelUnpackBuffer[0]);
         glBlendEquationSeparate(props.lastBlendEquationRgb[0], props.lastBlendEquationAlpha[0]);
         glBlendFuncSeparate(props.lastBlendSrcRgb[0], props.lastBlendDstRgb[0], props.lastBlendSrcAlpha[0], props.lastBlendDstAlpha[0]);
         if (props.lastEnableBlend) glEnable(GL_BLEND);

@@ -1088,7 +1088,7 @@ public final class ImGui extends imgui.ImGui {
     private static native int nDockBuilderSplitNode(int nodeId, int splitDir, float sizeRatioForNodeAtDir, int[] obj_outIdAtDir, int[] obj_outIdAtOppositeDir); /*MANUAL
         auto outIdAtDir = obj_outIdAtDir == NULL ? NULL : (int*)env->GetPrimitiveArrayCritical(obj_outIdAtDir, JNI_FALSE);
         auto outIdAtOppositeDir = obj_outIdAtOppositeDir == NULL ? NULL : (int*)env->GetPrimitiveArrayCritical(obj_outIdAtOppositeDir, JNI_FALSE);
-        auto _result = ImGui::DockBuilderSplitNode(nodeId, splitDir, sizeRatioForNodeAtDir, reinterpret_cast<ImGuiID*>((outIdAtDir != NULL ? &outIdAtDir[0] : NULL)), reinterpret_cast<ImGuiID*>((outIdAtOppositeDir != NULL ? &outIdAtOppositeDir[0] : NULL)));
+        auto _result = ImGui::DockBuilderSplitNode(nodeId, static_cast<ImGuiDir>(splitDir), sizeRatioForNodeAtDir, reinterpret_cast<ImGuiID*>((outIdAtDir != NULL ? &outIdAtDir[0] : NULL)), reinterpret_cast<ImGuiID*>((outIdAtOppositeDir != NULL ? &outIdAtOppositeDir[0] : NULL)));
         if (outIdAtDir != NULL) env->ReleasePrimitiveArrayCritical(obj_outIdAtDir, outIdAtDir, JNI_FALSE);
         if (outIdAtOppositeDir != NULL) env->ReleasePrimitiveArrayCritical(obj_outIdAtOppositeDir, outIdAtOppositeDir, JNI_FALSE);
         return _result;
@@ -1430,7 +1430,7 @@ public final class ImGui extends imgui.ImGui {
     }
 
     private static native int nGetWindowResizeCornerID(long window, int n); /*
-        return ImGui::GetWindowResizeCornerID(reinterpret_cast<ImGuiWindow*>(window), n);
+        return ImGui::GetWindowResizeCornerID(reinterpret_cast<ImGuiWindow*>(window), static_cast<ImGuiDir>(n));
     */
 
     public static int getWindowResizeBorderID(final ImGuiWindow window, final int dir) {

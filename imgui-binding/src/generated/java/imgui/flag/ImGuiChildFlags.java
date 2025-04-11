@@ -14,7 +14,7 @@ public final class ImGuiChildFlags {
     public static final int None = 0;
 
     /**
-     * Show an outer border and enable WindowPadding. (Important: this is always == 1 == true for legacy reason)
+     * Show an outer border and enable WindowPadding. (IMPORTANT: this is always == 1 == true for legacy reason)
      *
      * <p>Definition: {@code 1 << 0}
      */
@@ -68,4 +68,11 @@ public final class ImGuiChildFlags {
      * <p>Definition: {@code 1 << 7}
      */
     public static final int FrameStyle = 128;
+
+    /**
+     * Share focus scope, allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.
+     *
+     * <p>Definition: {@code 1 << 8}
+     */
+    public static final int NavFlattened = 256;
 }

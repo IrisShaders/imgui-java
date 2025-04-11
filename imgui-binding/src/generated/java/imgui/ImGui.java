@@ -3008,7 +3008,7 @@ public class ImGui {
 
     private static native boolean nArrowButton(String obj_strId, int dir); /*MANUAL
         auto strId = obj_strId == NULL ? NULL : (char*)env->GetStringUTFChars(obj_strId, JNI_FALSE);
-        auto _result = ImGui::ArrowButton(strId, dir);
+        auto _result = ImGui::ArrowButton(strId, static_cast<ImGuiDir>(dir));
         if (strId != NULL) env->ReleaseStringUTFChars(obj_strId, strId);
         return _result;
     */
@@ -11059,6 +11059,19 @@ public class ImGui {
     */
 
     /**
+     * return hovered column. return -1 when table is not hovered. return columns_count if the unused space at the right of visible columns is hovered.
+     * <p>
+     * Can also use (TableGetColumnFlags() & ImGuiTableColumnFlags_IsHovered) instead.
+     */
+    public static int tableGetHoveredColumn() {
+        return nTableGetHoveredColumn();
+    }
+
+    private static native int nTableGetHoveredColumn(); /*
+        return ImGui::TableGetHoveredColumn();
+    */
+
+    /**
      * Change the color of a cell, row, or column. See ImGuiTableBgTarget_ flags for details.
      */
     public static void tableSetBgColor(final int imGuiTableBgTarget, final int color) {
@@ -11411,83 +11424,83 @@ public class ImGui {
     // - Important: Dockspaces need to be kept alive if hidden, otherwise windows docked into it will be undocked.
     //   e.g. if you have multiple tabs with a dockspace inside each tab: submit the non-visible dockspaces with ImGuiDockNodeFlags_KeepAliveOnly.
 
-    public static int dockSpace(final int imGuiID) {
-        return nDockSpace(imGuiID);
+    public static int dockSpace(final int dockspace_id) {
+        return nDockSpace(dockspace_id);
     }
 
-    public static int dockSpace(final int imGuiID, final ImVec2 size) {
-        return nDockSpace(imGuiID, size.x, size.y);
+    public static int dockSpace(final int dockspace_id, final ImVec2 size) {
+        return nDockSpace(dockspace_id, size.x, size.y);
     }
 
-    public static int dockSpace(final int imGuiID, final float sizeX, final float sizeY) {
-        return nDockSpace(imGuiID, sizeX, sizeY);
+    public static int dockSpace(final int dockspace_id, final float sizeX, final float sizeY) {
+        return nDockSpace(dockspace_id, sizeX, sizeY);
     }
 
-    public static int dockSpace(final int imGuiID, final ImVec2 size, final int imGuiDockNodeFlags) {
-        return nDockSpace(imGuiID, size.x, size.y, imGuiDockNodeFlags);
+    public static int dockSpace(final int dockspace_id, final ImVec2 size, final int imGuiDockNodeFlags) {
+        return nDockSpace(dockspace_id, size.x, size.y, imGuiDockNodeFlags);
     }
 
-    public static int dockSpace(final int imGuiID, final float sizeX, final float sizeY, final int imGuiDockNodeFlags) {
-        return nDockSpace(imGuiID, sizeX, sizeY, imGuiDockNodeFlags);
+    public static int dockSpace(final int dockspace_id, final float sizeX, final float sizeY, final int imGuiDockNodeFlags) {
+        return nDockSpace(dockspace_id, sizeX, sizeY, imGuiDockNodeFlags);
     }
 
-    public static int dockSpace(final int imGuiID, final ImVec2 size, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
-        return nDockSpace(imGuiID, size.x, size.y, imGuiDockNodeFlags, windowClass.ptr);
+    public static int dockSpace(final int dockspace_id, final ImVec2 size, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
+        return nDockSpace(dockspace_id, size.x, size.y, imGuiDockNodeFlags, windowClass.ptr);
     }
 
-    public static int dockSpace(final int imGuiID, final float sizeX, final float sizeY, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
-        return nDockSpace(imGuiID, sizeX, sizeY, imGuiDockNodeFlags, windowClass.ptr);
+    public static int dockSpace(final int dockspace_id, final float sizeX, final float sizeY, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
+        return nDockSpace(dockspace_id, sizeX, sizeY, imGuiDockNodeFlags, windowClass.ptr);
     }
 
-    public static int dockSpace(final int imGuiID, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
-        return nDockSpace(imGuiID, imGuiDockNodeFlags, windowClass.ptr);
+    public static int dockSpace(final int dockspace_id, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
+        return nDockSpace(dockspace_id, imGuiDockNodeFlags, windowClass.ptr);
     }
 
-    public static int dockSpace(final int imGuiID, final ImGuiWindowClass windowClass) {
-        return nDockSpace(imGuiID, windowClass.ptr);
+    public static int dockSpace(final int dockspace_id, final ImGuiWindowClass windowClass) {
+        return nDockSpace(dockspace_id, windowClass.ptr);
     }
 
-    public static int dockSpace(final int imGuiID, final ImVec2 size, final ImGuiWindowClass windowClass) {
-        return nDockSpace(imGuiID, size.x, size.y, windowClass.ptr);
+    public static int dockSpace(final int dockspace_id, final ImVec2 size, final ImGuiWindowClass windowClass) {
+        return nDockSpace(dockspace_id, size.x, size.y, windowClass.ptr);
     }
 
-    public static int dockSpace(final int imGuiID, final float sizeX, final float sizeY, final ImGuiWindowClass windowClass) {
-        return nDockSpace(imGuiID, sizeX, sizeY, windowClass.ptr);
+    public static int dockSpace(final int dockspace_id, final float sizeX, final float sizeY, final ImGuiWindowClass windowClass) {
+        return nDockSpace(dockspace_id, sizeX, sizeY, windowClass.ptr);
     }
 
-    private static native int nDockSpace(int imGuiID); /*
-        return ImGui::DockSpace(imGuiID);
+    private static native int nDockSpace(int dockspace_id); /*
+        return ImGui::DockSpace(dockspace_id);
     */
 
-    private static native int nDockSpace(int imGuiID, float sizeX, float sizeY); /*MANUAL
+    private static native int nDockSpace(int dockspace_id, float sizeX, float sizeY); /*MANUAL
         ImVec2 size = ImVec2(sizeX, sizeY);
-        auto _result = ImGui::DockSpace(imGuiID, size);
+        auto _result = ImGui::DockSpace(dockspace_id, size);
         return _result;
     */
 
-    private static native int nDockSpace(int imGuiID, float sizeX, float sizeY, int imGuiDockNodeFlags); /*MANUAL
+    private static native int nDockSpace(int dockspace_id, float sizeX, float sizeY, int imGuiDockNodeFlags); /*MANUAL
         ImVec2 size = ImVec2(sizeX, sizeY);
-        auto _result = ImGui::DockSpace(imGuiID, size, imGuiDockNodeFlags);
+        auto _result = ImGui::DockSpace(dockspace_id, size, imGuiDockNodeFlags);
         return _result;
     */
 
-    private static native int nDockSpace(int imGuiID, float sizeX, float sizeY, int imGuiDockNodeFlags, long windowClass); /*MANUAL
+    private static native int nDockSpace(int dockspace_id, float sizeX, float sizeY, int imGuiDockNodeFlags, long windowClass); /*MANUAL
         ImVec2 size = ImVec2(sizeX, sizeY);
-        auto _result = ImGui::DockSpace(imGuiID, size, imGuiDockNodeFlags, reinterpret_cast<ImGuiWindowClass*>(windowClass));
+        auto _result = ImGui::DockSpace(dockspace_id, size, imGuiDockNodeFlags, reinterpret_cast<ImGuiWindowClass*>(windowClass));
         return _result;
     */
 
-    private static native int nDockSpace(int imGuiID, int imGuiDockNodeFlags, long windowClass); /*
-        return ImGui::DockSpace(imGuiID, ImVec2(0,0), imGuiDockNodeFlags, reinterpret_cast<ImGuiWindowClass*>(windowClass));
+    private static native int nDockSpace(int dockspace_id, int imGuiDockNodeFlags, long windowClass); /*
+        return ImGui::DockSpace(dockspace_id, ImVec2(0,0), imGuiDockNodeFlags, reinterpret_cast<ImGuiWindowClass*>(windowClass));
     */
 
-    private static native int nDockSpace(int imGuiID, long windowClass); /*
-        return ImGui::DockSpace(imGuiID, ImVec2(0,0), 0, reinterpret_cast<ImGuiWindowClass*>(windowClass));
+    private static native int nDockSpace(int dockspace_id, long windowClass); /*
+        return ImGui::DockSpace(dockspace_id, ImVec2(0,0), 0, reinterpret_cast<ImGuiWindowClass*>(windowClass));
     */
 
-    private static native int nDockSpace(int imGuiID, float sizeX, float sizeY, long windowClass); /*MANUAL
+    private static native int nDockSpace(int dockspace_id, float sizeX, float sizeY, long windowClass); /*MANUAL
         ImVec2 size = ImVec2(sizeX, sizeY);
-        auto _result = ImGui::DockSpace(imGuiID, size, 0, reinterpret_cast<ImGuiWindowClass*>(windowClass));
+        auto _result = ImGui::DockSpace(dockspace_id, size, 0, reinterpret_cast<ImGuiWindowClass*>(windowClass));
         return _result;
     */
 
@@ -11495,40 +11508,48 @@ public class ImGui {
         return nDockSpaceOverViewport();
     }
 
-    public static int dockSpaceOverViewport(final ImGuiViewport viewport) {
-        return nDockSpaceOverViewport(viewport.ptr);
+    public static int dockSpaceOverViewport(final int dockspace_id) {
+        return nDockSpaceOverViewport(dockspace_id);
     }
 
-    public static int dockSpaceOverViewport(final ImGuiViewport viewport, final int imGuiDockNodeFlags) {
-        return nDockSpaceOverViewport(viewport.ptr, imGuiDockNodeFlags);
+    public static int dockSpaceOverViewport(final int dockspace_id, final ImGuiViewport viewport) {
+        return nDockSpaceOverViewport(dockspace_id, viewport.ptr);
     }
 
-    public static int dockSpaceOverViewport(final ImGuiViewport viewport, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
-        return nDockSpaceOverViewport(viewport.ptr, imGuiDockNodeFlags, windowClass.ptr);
+    public static int dockSpaceOverViewport(final int dockspace_id, final ImGuiViewport viewport, final int imGuiDockNodeFlags) {
+        return nDockSpaceOverViewport(dockspace_id, viewport.ptr, imGuiDockNodeFlags);
     }
 
-    public static int dockSpaceOverViewport(final ImGuiViewport viewport, final ImGuiWindowClass windowClass) {
-        return nDockSpaceOverViewport(viewport.ptr, windowClass.ptr);
+    public static int dockSpaceOverViewport(final int dockspace_id, final ImGuiViewport viewport, final int imGuiDockNodeFlags, final ImGuiWindowClass windowClass) {
+        return nDockSpaceOverViewport(dockspace_id, viewport.ptr, imGuiDockNodeFlags, windowClass.ptr);
+    }
+
+    public static int dockSpaceOverViewport(final int dockspace_id, final ImGuiViewport viewport, final ImGuiWindowClass windowClass) {
+        return nDockSpaceOverViewport(dockspace_id, viewport.ptr, windowClass.ptr);
     }
 
     private static native int nDockSpaceOverViewport(); /*
         return ImGui::DockSpaceOverViewport();
     */
 
-    private static native int nDockSpaceOverViewport(long viewport); /*
-        return ImGui::DockSpaceOverViewport(reinterpret_cast<ImGuiViewport*>(viewport));
+    private static native int nDockSpaceOverViewport(int dockspace_id); /*
+        return ImGui::DockSpaceOverViewport(dockspace_id);
     */
 
-    private static native int nDockSpaceOverViewport(long viewport, int imGuiDockNodeFlags); /*
-        return ImGui::DockSpaceOverViewport(reinterpret_cast<ImGuiViewport*>(viewport), imGuiDockNodeFlags);
+    private static native int nDockSpaceOverViewport(int dockspace_id, long viewport); /*
+        return ImGui::DockSpaceOverViewport(dockspace_id, reinterpret_cast<ImGuiViewport*>(viewport));
     */
 
-    private static native int nDockSpaceOverViewport(long viewport, int imGuiDockNodeFlags, long windowClass); /*
-        return ImGui::DockSpaceOverViewport(reinterpret_cast<ImGuiViewport*>(viewport), imGuiDockNodeFlags, reinterpret_cast<ImGuiWindowClass*>(windowClass));
+    private static native int nDockSpaceOverViewport(int dockspace_id, long viewport, int imGuiDockNodeFlags); /*
+        return ImGui::DockSpaceOverViewport(dockspace_id, reinterpret_cast<ImGuiViewport*>(viewport), imGuiDockNodeFlags);
     */
 
-    private static native int nDockSpaceOverViewport(long viewport, long windowClass); /*
-        return ImGui::DockSpaceOverViewport(reinterpret_cast<ImGuiViewport*>(viewport), 0, reinterpret_cast<ImGuiWindowClass*>(windowClass));
+    private static native int nDockSpaceOverViewport(int dockspace_id, long viewport, int imGuiDockNodeFlags, long windowClass); /*
+        return ImGui::DockSpaceOverViewport(dockspace_id, reinterpret_cast<ImGuiViewport*>(viewport), imGuiDockNodeFlags, reinterpret_cast<ImGuiWindowClass*>(windowClass));
+    */
+
+    private static native int nDockSpaceOverViewport(int dockspace_id, long viewport, long windowClass); /*
+        return ImGui::DockSpaceOverViewport(dockspace_id, reinterpret_cast<ImGuiViewport*>(viewport), 0, reinterpret_cast<ImGuiWindowClass*>(windowClass));
     */
 
     /**
@@ -12738,23 +12759,59 @@ public class ImGui {
         ImGui::ColorConvertHSVtoRGB(hsv[0], hsv[1], hsv[2], rgb[0], rgb[1], rgb[2]);
     */
 
+    // Inputs Utilities: Shortcut Testing & Routing [BETA]
+    // - ImGuiKeyChord = a ImGuiKey + optional ImGuiMod_Alt/ImGuiMod_Ctrl/ImGuiMod_Shift/ImGuiMod_Super.
+    //       ImGuiKey_C                          // Accepted by functions taking ImGuiKey or ImGuiKeyChord arguments)
+    //       ImGuiMod_Ctrl | ImGuiKey_C          // Accepted by functions taking ImGuiKeyChord arguments)
+    //   only ImGuiMod_XXX values are legal to combine with an ImGuiKey. You CANNOT combine two ImGuiKey values.
+    // - The general idea is that several callers may register interest in a shortcut, and only one owner gets it.
+    //      Parent   -> call Shortcut(Ctrl+S)    // When Parent is focused, Parent gets the shortcut.
+    //        Child1 -> call Shortcut(Ctrl+S)    // When Child1 is focused, Child1 gets the shortcut (Child1 overrides Parent shortcuts)
+    //        Child2 -> no call                  // When Child2 is focused, Parent gets the shortcut.
+    //   The whole system is order independent, so if Child1 makes its calls before Parent, results will be identical.
+    //   This is an important property as it facilitate working with foreign code or larger codebase.
+    // - To understand the difference:
+    //   - IsKeyChordPressed() compares mods and call IsKeyPressed() -> function has no side-effect.
+    //   - Shortcut() submits a route, routes are resolved, if it currently can be routed it calls IsKeyChordPressed() -> function has (desirable) side-effects as it can prevents another call from getting the route.
+    // - Visualize registered routes in 'Metrics/Debugger->Inputs'.
+    public static boolean shortcut(final int key_chord) {
+        return nShortcut(key_chord);
+    }
+
+    public static boolean shortcut(final int key_chord, final int flags) {
+        return nShortcut(key_chord, flags);
+    }
+
+    private static native boolean nShortcut(int key_chord); /*
+        return ImGui::Shortcut(static_cast<ImGuiKeyChord>(key_chord));
+    */
+
+    private static native boolean nShortcut(int key_chord, int flags); /*
+        return ImGui::Shortcut(static_cast<ImGuiKeyChord>(key_chord), flags);
+    */
+
+    public static void setNextItemShortcut(final int key_chord) {
+        nSetNextItemShortcut(key_chord);
+    }
+
+    public static void setNextItemShortcut(final int key_chord, final int flags) {
+        nSetNextItemShortcut(key_chord, flags);
+    }
+
+    private static native void nSetNextItemShortcut(int key_chord); /*
+        ImGui::SetNextItemShortcut(static_cast<ImGuiKeyChord>(key_chord));
+    */
+
+    private static native void nSetNextItemShortcut(int key_chord, int flags); /*
+        ImGui::SetNextItemShortcut(static_cast<ImGuiKeyChord>(key_chord), flags);
+    */
+
     // Inputs Utilities: Keyboard/Mouse/Gamepad
     // - the ImGuiKey enum contains all possible keyboard, mouse and gamepad inputs (e.g. ImGuiKey_A, ImGuiKey_MouseLeft, ImGuiKey_GamepadDpadUp...).
     // - before v1.87, we used ImGuiKey to carry native/user indices as defined by each backends. About use of those legacy ImGuiKey values:
     //  - without IMGUI_DISABLE_OBSOLETE_KEYIO (legacy support): you can still use your legacy native/user indices (< 512) according to how your backend/engine stored them in io.KeysDown[], but need to cast them to ImGuiKey.
     //  - with    IMGUI_DISABLE_OBSOLETE_KEYIO (this is the way forward): any use of ImGuiKey will assert with key < 512. GetKeyIndex() is pass-through and therefore deprecated (gone if IMGUI_DISABLE_OBSOLETE_KEYIO is defined).
 
-    /**
-     * Map ImGuiKey_* values into user's key index. == io.KeyMap[key]
-     */
-    @Deprecated
-    public static int getKeyIndex(final int key) {
-        return nGetKeyIndex(key);
-    }
-
-    private static native int nGetKeyIndex(int key); /*
-        return ImGui::GetKeyIndex(static_cast<ImGuiKey>(key));
-    */
 
     /**
      * Is key being held. == io.KeysDown[user_key_index].
@@ -13409,6 +13466,22 @@ public class ImGui {
         auto text = obj_text == NULL ? NULL : (char*)env->GetStringUTFChars(obj_text, JNI_FALSE);
         ImGui::DebugTextEncoding(text);
         if (text != NULL) env->ReleaseStringUTFChars(obj_text, text);
+    */
+
+    public static void debugFlashStyleColor(final int imGuiCol) {
+        nDebugFlashStyleColor(imGuiCol);
+    }
+
+    private static native void nDebugFlashStyleColor(int imGuiCol); /*
+        ImGui::DebugFlashStyleColor(imGuiCol);
+    */
+
+    public static void debugStartItemPicker() {
+        nDebugStartItemPicker();
+    }
+
+    private static native void nDebugStartItemPicker(); /*
+        ImGui::DebugStartItemPicker();
     */
 
     public static boolean debugCheckVersionAndDataLayout(final String versionStr, final int szIo, final int szStyle, final int szVec2, final int szVec4, final int szDrawVert, final int szDrawIdx) {

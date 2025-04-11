@@ -106,10 +106,10 @@ public final class ImDrawList extends ImGuiStruct {
     public native void AddNgonFilled(ImVec2 center, float radius, int col, int num_segments);
 
     @BindingMethod
-    public native void AddEllipse(ImVec2 center, float radius_x, float radius_y, int col, @OptArg float rot, @OptArg int num_segments, @OptArg float thickness);
+    public native void AddEllipse(ImVec2 center, ImVec2 radius, int col, @OptArg float rot, @OptArg int num_segments, @OptArg float thickness);
 
     @BindingMethod
-    public native void AddEllipseFilled(ImVec2 center, float radius_x, float radius_y, int col, @OptArg float rot, @OptArg int num_segments, @OptArg float thickness);
+    public native void AddEllipseFilled(ImVec2 center, ImVec2 radius, int col, @OptArg float rot, @OptArg int num_segments);
 
     @BindingMethod
     public native void AddText(ImVec2 pos, int col, String textBegin, @OptArg String textEnd);
@@ -122,6 +122,9 @@ public final class ImDrawList extends ImGuiStruct {
 
     @BindingMethod
     public native void AddConvexPolyFilled(ImVec2[] points, int numPoints, int col);
+
+    @BindingMethod
+    public native void AddConcavePolyFilled(ImVec2[] points, int numPoints, int col);
 
     /**
      * Cubic Bezier (4 control points)
@@ -166,6 +169,11 @@ public final class ImDrawList extends ImGuiStruct {
      */
     @BindingMethod
     public native void PathFillConvex(int col);
+    /**
+     * Note: Anti-aliased filling requires points to be in clockwise order.
+     */
+    @BindingMethod
+    public native void PathFillConcave(int col);
 
     @BindingMethod
     public native void PathStroke(int col, @OptArg(callValue = "0") int imDrawFlags, @OptArg float thickness);
@@ -183,7 +191,7 @@ public final class ImDrawList extends ImGuiStruct {
      * Ellipse
      */
     @BindingMethod
-    public native void PathEllipticalArcTo(ImVec2 center, float radius_x, float radius_y, float rot, float a_min, float a_max, @OptArg int num_segments);
+    public native void PathEllipticalArcTo(ImVec2 center, ImVec2 radius, float rot, float a_min, float a_max, @OptArg int num_segments);
 
     /**
      * Cubic Bezier (4 control points)

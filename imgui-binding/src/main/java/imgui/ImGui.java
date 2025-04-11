@@ -1061,7 +1061,7 @@ public class ImGui {
      * Square button with an arrow shape
      */
     @BindingMethod
-    public static native boolean ArrowButton(String strId, int dir);
+    public static native boolean ArrowButton(String strId, @ArgValue(staticCast = "ImGuiDir") int dir);
 
     public static boolean checkbox(String label, boolean active) {
         return nCheckbox(label, active);
@@ -2084,6 +2084,14 @@ public class ImGui {
     public static native void TableSetColumnEnabled(int columnN, boolean value);
 
     /**
+     * return hovered column. return -1 when table is not hovered. return columns_count if the unused space at the right of visible columns is hovered.
+     * <p>
+     * Can also use (TableGetColumnFlags() & ImGuiTableColumnFlags_IsHovered) instead.
+     */
+    @BindingMethod
+    public static native int TableGetHoveredColumn();
+
+    /**
      * Change the color of a cell, row, or column. See ImGuiTableBgTarget_ flags for details.
      */
     @BindingMethod
@@ -2190,10 +2198,10 @@ public class ImGui {
     //   e.g. if you have multiple tabs with a dockspace inside each tab: submit the non-visible dockspaces with ImGuiDockNodeFlags_KeepAliveOnly.
 
     @BindingMethod
-    public static native int DockSpace(int imGuiID, @OptArg(callValue = "ImVec2(0,0)") ImVec2 size, @OptArg(callValue = "0") int imGuiDockNodeFlags, @OptArg ImGuiWindowClass windowClass);
+    public static native int DockSpace(int dockspace_id, @OptArg(callValue = "ImVec2(0,0)") ImVec2 size, @OptArg(callValue = "0") int imGuiDockNodeFlags, @OptArg ImGuiWindowClass windowClass);
 
     @BindingMethod
-    public static native int DockSpaceOverViewport(@OptArg ImGuiViewport viewport, @OptArg(callValue = "0") int imGuiDockNodeFlags, @OptArg ImGuiWindowClass windowClass);
+    public static native int DockSpaceOverViewport(@OptArg int dockspace_id, @OptArg ImGuiViewport viewport, @OptArg(callValue = "0") int imGuiDockNodeFlags, @OptArg ImGuiWindowClass windowClass);
 
     /**
      * Set next window dock id
@@ -2685,18 +2693,33 @@ public class ImGui {
         ImGui::ColorConvertHSVtoRGB(hsv[0], hsv[1], hsv[2], rgb[0], rgb[1], rgb[2]);
     */
 
+    // Inputs Utilities: Shortcut Testing & Routing [BETA]
+    // - ImGuiKeyChord = a ImGuiKey + optional ImGuiMod_Alt/ImGuiMod_Ctrl/ImGuiMod_Shift/ImGuiMod_Super.
+    //       ImGuiKey_C                          // Accepted by functions taking ImGuiKey or ImGuiKeyChord arguments)
+    //       ImGuiMod_Ctrl | ImGuiKey_C          // Accepted by functions taking ImGuiKeyChord arguments)
+    //   only ImGuiMod_XXX values are legal to combine with an ImGuiKey. You CANNOT combine two ImGuiKey values.
+    // - The general idea is that several callers may register interest in a shortcut, and only one owner gets it.
+    //      Parent   -> call Shortcut(Ctrl+S)    // When Parent is focused, Parent gets the shortcut.
+    //        Child1 -> call Shortcut(Ctrl+S)    // When Child1 is focused, Child1 gets the shortcut (Child1 overrides Parent shortcuts)
+    //        Child2 -> no call                  // When Child2 is focused, Parent gets the shortcut.
+    //   The whole system is order independent, so if Child1 makes its calls before Parent, results will be identical.
+    //   This is an important property as it facilitate working with foreign code or larger codebase.
+    // - To understand the difference:
+    //   - IsKeyChordPressed() compares mods and call IsKeyPressed() -> function has no side-effect.
+    //   - Shortcut() submits a route, routes are resolved, if it currently can be routed it calls IsKeyChordPressed() -> function has (desirable) side-effects as it can prevents another call from getting the route.
+    // - Visualize registered routes in 'Metrics/Debugger->Inputs'.
+    @BindingMethod
+    public static native boolean Shortcut(@ArgValue(staticCast = "ImGuiKeyChord") int key_chord, @OptArg int flags);
+
+    @BindingMethod
+    public static native void SetNextItemShortcut(@ArgValue(staticCast = "ImGuiKeyChord") int key_chord, @OptArg int flags);
+
     // Inputs Utilities: Keyboard/Mouse/Gamepad
     // - the ImGuiKey enum contains all possible keyboard, mouse and gamepad inputs (e.g. ImGuiKey_A, ImGuiKey_MouseLeft, ImGuiKey_GamepadDpadUp...).
     // - before v1.87, we used ImGuiKey to carry native/user indices as defined by each backends. About use of those legacy ImGuiKey values:
     //  - without IMGUI_DISABLE_OBSOLETE_KEYIO (legacy support): you can still use your legacy native/user indices (< 512) according to how your backend/engine stored them in io.KeysDown[], but need to cast them to ImGuiKey.
     //  - with    IMGUI_DISABLE_OBSOLETE_KEYIO (this is the way forward): any use of ImGuiKey will assert with key < 512. GetKeyIndex() is pass-through and therefore deprecated (gone if IMGUI_DISABLE_OBSOLETE_KEYIO is defined).
 
-    /**
-     * Map ImGuiKey_* values into user's key index. == io.KeyMap[key]
-     */
-    @BindingMethod
-    @Deprecated
-    public static native int GetKeyIndex(@ArgValue(staticCast = "ImGuiKey") int key);
 
     /**
      * Is key being held. == io.KeysDown[user_key_index].
@@ -2887,6 +2910,12 @@ public class ImGui {
 
     @BindingMethod
     public static native void DebugTextEncoding(String text);
+
+    @BindingMethod
+    public static native void DebugFlashStyleColor(int imGuiCol);
+
+    @BindingMethod
+    public static native void DebugStartItemPicker();
 
     @BindingMethod
     public static native boolean DebugCheckVersionAndDataLayout(String versionStr, int szIo, int szStyle, int szVec2, int szVec4, int szDrawVert, int szDrawIdx);
