@@ -3,23 +3,13 @@ package imgui;
 import imgui.assertion.ImAssertCallback;
 import imgui.callback.ImGuiInputTextCallback;
 import imgui.internal.ImGuiContext;
-import imgui.type.ImBoolean;
-import imgui.type.ImDouble;
-import imgui.type.ImFloat;
-import imgui.type.ImInt;
-import imgui.type.ImLong;
-import imgui.type.ImShort;
-import imgui.type.ImString;
+import imgui.type.*;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.lang.ref.WeakReference;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -29,6 +19,17 @@ public class ImGui {
     private static final String LIB_NAME_PROP = "imgui.library.name";
     private static final String LIB_NAME_DEFAULT = "imgui-java64";
     private static final String LIB_TMP_DIR_PREFIX = "imgui-java-natives";
+
+    static {
+        final String libPath = System.getProperty(LIB_PATH_PROP);
+        final String fullLibName = resolveFullLibName();
+
+        if (libPath != null) {
+            System.load(Paths.get(libPath).resolve(fullLibName).toAbsolutePath().toString());
+        }
+
+        onLoadJNI();
+    }
 
     public static void onLoadJNI() {
 

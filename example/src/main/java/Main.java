@@ -97,7 +97,8 @@ public class Main extends Application {
     }
 
     public static void main(final String[] args) {
-        System.load("/home/ims/imgui-java/imgui-binding/build/libsNative/linux64/libimgui-java64.so");
+        if (System.getProperty("os.name").contains("Linux") && System.getenv("USER").equalsIgnoreCase("ims"))
+            System.load("/home/ims/imgui-java/imgui-binding/build/libsNative/linux64/libimgui-java64.so");
         launch(new Main());
         System.exit(0);
     }
