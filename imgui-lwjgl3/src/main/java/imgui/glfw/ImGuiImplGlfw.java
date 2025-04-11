@@ -37,6 +37,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowFocusCallback;
 import org.lwjgl.system.Callback;
 import org.lwjgl.system.MemoryUtil;
+import org.lwjgl.system.Platform;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -269,6 +270,8 @@ public class ImGuiImplGlfw {
         protected long window = -1;
         protected double time = 0.0;
         protected long mouseWindow = -1;
+        boolean MouseIgnoreButtonUpWaitForFocusLoss;
+        boolean MouseIgnoreButtonUp;
         protected long[] mouseCursors = new long[ImGuiMouseCursor.COUNT];
         protected ImVec2 lastValidMousePos = new ImVec2();
         protected long[] keyOwnerWindows = new long[GLFW_KEY_LAST];
@@ -603,6 +606,10 @@ public class ImGuiImplGlfw {
             data.prevUserCallbackMousebutton.invoke(window, button, action, mods);
         }
 
+        // Workaround for Linux: ignore mouse up events which are following an focus loss following a viewport creation
+        if (data.MouseIgnoreButtonUp && action == GLFW_RELEASE)
+            return;
+
         updateKeyModifiers(window);
 
         final ImGuiIO io = ImGui.getIO();
@@ -690,6 +697,10 @@ public class ImGuiImplGlfw {
         if (data.prevUserCallbackWindowFocus != null && shouldChainCallback(window)) {
             data.prevUserCallbackWindowFocus.invoke(window, focused);
         }
+
+        // Workaround for Linux: when losing focus with MouseIgnoreButtonUpWaitForFocusLoss set, we will temporarily ignore subsequent Mouse Up events
+        data.MouseIgnoreButtonUp = (data.MouseIgnoreButtonUpWaitForFocusLoss && !focused);
+        data.MouseIgnoreButtonUpWaitForFocusLoss = false;
 
         ImGui.getIO().addFocusEvent(focused);
     }
@@ -1137,6 +1148,7 @@ public class ImGuiImplGlfw {
         io.setDeltaTime(data.time > 0.0 ? (float) (currentTime - data.time) : 1.0f / 60.0f);
         data.time = currentTime;
 
+        data.MouseIgnoreButtonUp = false;
         updateMouseData();
         updateMouseCursor();
 
@@ -1209,6 +1221,13 @@ public class ImGuiImplGlfw {
         public void accept(final ImGuiViewport vp) {
             final ViewportData vd = new ViewportData();
             vp.setPlatformUserData(vd);
+
+            // Workaround for Linux: ignore mouse up events corresponding to losing focus of the previously focused window (#7733, #3158, #7922)
+            // #ifdef __linux__
+            if (Platform.get() == Platform.LINUX) {
+                data.MouseIgnoreButtonUpWaitForFocusLoss = true;
+            }
+            // #endif
 
             // GLFW 3.2 unfortunately always set focus on glfwCreateWindow() if GLFW_VISIBLE is set, regardless of GLFW_FOCUSED
             // With GLFW 3.3, the hint GLFW_FOCUS_ON_SHOW fixes this problem

@@ -719,6 +719,17 @@ public final class ImFontAtlas extends ImGuiStructDestroyable {
         return _result;
     */
 
+    /**
+     * Id needs to be {@code <} 0x110000 to register a rectangle to map into a specific font.
+     */
+    public ImFontAtlasCustomRect getCustomRectByIndex(final int index) {
+        return new ImFontAtlasCustomRect(nGetCustomRectByIndex(index));
+    }
+
+    private native long nGetCustomRectByIndex(int index); /*
+        return (uintptr_t)THIS->GetCustomRectByIndex(index);
+    */
+
     // TODO GetCustomRectByIndex
 
     //-------------------------------------------

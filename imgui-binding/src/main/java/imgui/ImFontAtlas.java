@@ -351,6 +351,12 @@ public final class ImFontAtlas extends ImGuiStructDestroyable {
     @BindingMethod
     public native int AddCustomRectFontGlyph(ImFont imFont, @ArgValue(callPrefix = "(ImWchar)") short id, int width, int height, float advanceX, @OptArg ImVec2 offset);
 
+    /**
+     * Id needs to be {@code <} 0x110000 to register a rectangle to map into a specific font.
+     */
+    @BindingMethod
+    public native ImFontAtlasCustomRect GetCustomRectByIndex(int index);
+
     // TODO GetCustomRectByIndex
 
     //-------------------------------------------

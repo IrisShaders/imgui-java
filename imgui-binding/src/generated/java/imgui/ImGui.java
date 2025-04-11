@@ -30,25 +30,7 @@ public class ImGui {
     private static final String LIB_NAME_DEFAULT = "imgui-java64";
     private static final String LIB_TMP_DIR_PREFIX = "imgui-java-natives";
 
-    static {
-        final String libPath = System.getProperty(LIB_PATH_PROP);
-        final String libName = System.getProperty(LIB_NAME_PROP, LIB_NAME_DEFAULT);
-        final String fullLibName = resolveFullLibName();
-
-        if (libPath != null) {
-            System.load(Paths.get(libPath).resolve(fullLibName).toAbsolutePath().toString());
-        } else {
-            try {
-                System.loadLibrary(libName);
-            } catch (Exception | Error e) {
-                final String extractedLibAbsPath = tryLoadFromClasspath(fullLibName);
-                if (extractedLibAbsPath != null) {
-                    System.load(extractedLibAbsPath);
-                } else {
-                    throw e;
-                }
-            }
-        }
+    public static void onLoadJNI() {
 
         nInitJni();
         ImFontAtlas.nInit();

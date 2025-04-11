@@ -8,7 +8,7 @@ ext {
 
 allprojects {
     group = 'imgui-java'
-    version = 'git describe --tags --always'.execute().text.trim().substring(1)
+    version = '1.90.9'
 
     repositories {
         mavenCentral()
