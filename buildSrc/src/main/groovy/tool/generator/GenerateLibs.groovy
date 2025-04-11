@@ -110,17 +110,20 @@ class GenerateLibs extends DefaultTask {
         }
 
         // Generate platform dependant ant configs and header files
-        def buildConfig = new BuildConfig('imgui-java', tmpDir, libsDirName, jniDir, new FileDescriptor(rootDir))
+        def buildConfig = new BuildConfig('imgui-java', tmpDir, libsDirPath, jniDir, new FileDescriptor(rootDir))
         List<BuildTarget> buildTargets = new ArrayList<>()
 
         buildConfig.multiThreadedCompile = true
+        Os os = null
         if (forWindows) {
+            os = Os.Windows
             def win64 = BuildTarget.newDefaultTarget(Os.Windows, Architecture.Bitness._64)
             addFreeTypeIfEnabled(win64)
             buildTargets += win64
         }
 
         if (forLinux) {
+            os = Os.Linux
             def linux64 = BuildTarget.newDefaultTarget(Os.Linux, Architecture.Bitness._64)
             linux64.cFlags += '-g'
             linux64.cppFlags += '-g'
@@ -129,6 +132,7 @@ class GenerateLibs extends DefaultTask {
         }
 
         if (forMac) {
+            os = Os.MacOsX
             buildTargets += createMacTarget(Architecture.x86)
         }
 
@@ -144,10 +148,8 @@ class GenerateLibs extends DefaultTask {
         printf("Build dir: " + buildConfig.buildDir.toString())
         PlatformBuilder.copyHeaders(new FileDescriptor(jniDir))
 
-        new PlatformBuilder().build(Os.Linux, buildConfig, buildTargets)
+        new PlatformBuilder().build(os, buildConfig, buildTargets)
 
-        Files.createDirectories(Path.of("/home/ims/imgui-java/imgui-binding/build/libsNative/linux64/"))
-        Files.copy(Path.of("/home/ims/.gradle/daemon/8.12/libsNative/linux64/libimgui-java64.so"), Path.of("/home/ims/imgui-java/imgui-binding/build/libsNative/linux64/libimgui-java64.so"))
 
         if (forWindows)
             checkLibExist("windows64/imgui-java64.dll")
