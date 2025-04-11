@@ -1880,6 +1880,28 @@ public class ImGui {
         ImGui::PushStyleVar(imGuiStyleVar, val);
     */
 
+    /**
+     * modify X component of a style ImVec2 variable.
+     */
+    public static void pushStyleVarX(final int imGuiStyleVar, final float val) {
+        nPushStyleVarX(imGuiStyleVar, val);
+    }
+
+    private static native void nPushStyleVarX(int imGuiStyleVar, float val); /*
+        ImGui::PushStyleVarX(imGuiStyleVar, val);
+    */
+
+    /**
+     * modify Y component of a style ImVec2 variable.
+     */
+    public static void pushStyleVarY(final int imGuiStyleVar, final float val) {
+        nPushStyleVarY(imGuiStyleVar, val);
+    }
+
+    private static native void nPushStyleVarY(int imGuiStyleVar, float val); /*
+        ImGui::PushStyleVarY(imGuiStyleVar, val);
+    */
+
     public static void popStyleVar() {
         nPopStyleVar();
     }
@@ -1894,6 +1916,25 @@ public class ImGui {
 
     private static native void nPopStyleVar(int count); /*
         ImGui::PopStyleVar(count);
+    */
+
+    /**
+     * modify specified shared item flag, e.g. PushItemFlag(ImGuiItemFlags_NoTabStop, true)
+     */
+    public static void pushItemFlag(final int option, final boolean enabled) {
+        nPushItemFlag(option, enabled);
+    }
+
+    private static native void nPushItemFlag(int option, boolean enabled); /*
+        ImGui::PushItemFlag(option, enabled);
+    */
+
+    public static void popItemFlag() {
+        nPopItemFlag();
+    }
+
+    private static native void nPopItemFlag(); /*
+        ImGui::PopItemFlag();
     */
 
     /**
@@ -2732,6 +2773,14 @@ public class ImGui {
         return ImGui::GetID((void*)ptrId);
     */
 
+    public static int getID(final int id) {
+        return nGetID(id);
+    }
+
+    private static native int nGetID(int id); /*
+        return ImGui::GetID(id);
+    */
+
     // Widgets: Text
 
     /**
@@ -3117,47 +3166,60 @@ public class ImGui {
         ImGui::Bullet();
     */
 
-    // Widgets: Images
+  /*  /**
+     * hyperlink text button, return true when clicked
+     */
+ /*   public static boolean textLink(String label) {
+        return nTextLink(label);
+    }
+
+    private static native boolean nTextLink(String label); /*
+        return ImGui::TextLink(label);
+    */
+
+      // Widgets: Images
     // - Read about ImTextureID here: https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples
 
+    /**
+     * hyperlink text button, automatically open file/url when clicked
+     */
     public static void image(final long userTextureId, final ImVec2 size) {
         nImage(userTextureId, size.x, size.y);
     }
 
+    /**
+     * hyperlink text button, automatically open file/url when clicked
+     */
     public static void image(final long userTextureId, final float sizeX, final float sizeY) {
         nImage(userTextureId, sizeX, sizeY);
     }
 
+    /**
+     * hyperlink text button, automatically open file/url when clicked
+     */
     public static void image(final long userTextureId, final ImVec2 size, final ImVec2 uv0) {
         nImage(userTextureId, size.x, size.y, uv0.x, uv0.y);
     }
 
+    /**
+     * hyperlink text button, automatically open file/url when clicked
+     */
     public static void image(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y) {
         nImage(userTextureId, sizeX, sizeY, uv0X, uv0Y);
     }
 
+    /**
+     * hyperlink text button, automatically open file/url when clicked
+     */
     public static void image(final long userTextureId, final ImVec2 size, final ImVec2 uv0, final ImVec2 uv1) {
         nImage(userTextureId, size.x, size.y, uv0.x, uv0.y, uv1.x, uv1.y);
     }
 
+    /**
+     * hyperlink text button, automatically open file/url when clicked
+     */
     public static void image(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y, final float uv1X, final float uv1Y) {
         nImage(userTextureId, sizeX, sizeY, uv0X, uv0Y, uv1X, uv1Y);
-    }
-
-    public static void image(final long userTextureId, final ImVec2 size, final ImVec2 uv0, final ImVec2 uv1, final ImVec4 tintCol) {
-        nImage(userTextureId, size.x, size.y, uv0.x, uv0.y, uv1.x, uv1.y, tintCol.x, tintCol.y, tintCol.z, tintCol.w);
-    }
-
-    public static void image(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y, final float uv1X, final float uv1Y, final float tintColX, final float tintColY, final float tintColZ, final float tintColW) {
-        nImage(userTextureId, sizeX, sizeY, uv0X, uv0Y, uv1X, uv1Y, tintColX, tintColY, tintColZ, tintColW);
-    }
-
-    public static void image(final long userTextureId, final ImVec2 size, final ImVec2 uv0, final ImVec2 uv1, final ImVec4 tintCol, final ImVec4 borderCol) {
-        nImage(userTextureId, size.x, size.y, uv0.x, uv0.y, uv1.x, uv1.y, tintCol.x, tintCol.y, tintCol.z, tintCol.w, borderCol.x, borderCol.y, borderCol.z, borderCol.w);
-    }
-
-    public static void image(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y, final float uv1X, final float uv1Y, final float tintColX, final float tintColY, final float tintColZ, final float tintColW, final float borderColX, final float borderColY, final float borderColZ, final float borderColW) {
-        nImage(userTextureId, sizeX, sizeY, uv0X, uv0Y, uv1X, uv1Y, tintColX, tintColY, tintColZ, tintColW, borderColX, borderColY, borderColZ, borderColW);
     }
 
     private static native void nImage(long userTextureId, float sizeX, float sizeY); /*MANUAL
@@ -3178,21 +3240,79 @@ public class ImGui {
         ImGui::Image((ImTextureID)(uintptr_t)userTextureId, size, uv0, uv1);
     */
 
-    private static native void nImage(long userTextureId, float sizeX, float sizeY, float uv0X, float uv0Y, float uv1X, float uv1Y, float tintColX, float tintColY, float tintColZ, float tintColW); /*MANUAL
+    public static void imageWithBg(final long userTextureId, final ImVec2 size) {
+        nImageWithBg(userTextureId, size.x, size.y);
+    }
+
+    public static void imageWithBg(final long userTextureId, final float sizeX, final float sizeY) {
+        nImageWithBg(userTextureId, sizeX, sizeY);
+    }
+
+    public static void imageWithBg(final long userTextureId, final ImVec2 size, final ImVec2 uv0) {
+        nImageWithBg(userTextureId, size.x, size.y, uv0.x, uv0.y);
+    }
+
+    public static void imageWithBg(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y) {
+        nImageWithBg(userTextureId, sizeX, sizeY, uv0X, uv0Y);
+    }
+
+    public static void imageWithBg(final long userTextureId, final ImVec2 size, final ImVec2 uv0, final ImVec2 uv1) {
+        nImageWithBg(userTextureId, size.x, size.y, uv0.x, uv0.y, uv1.x, uv1.y);
+    }
+
+    public static void imageWithBg(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y, final float uv1X, final float uv1Y) {
+        nImageWithBg(userTextureId, sizeX, sizeY, uv0X, uv0Y, uv1X, uv1Y);
+    }
+
+    public static void imageWithBg(final long userTextureId, final ImVec2 size, final ImVec2 uv0, final ImVec2 uv1, final ImVec4 bgCol) {
+        nImageWithBg(userTextureId, size.x, size.y, uv0.x, uv0.y, uv1.x, uv1.y, bgCol.x, bgCol.y, bgCol.z, bgCol.w);
+    }
+
+    public static void imageWithBg(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y, final float uv1X, final float uv1Y, final float bgColX, final float bgColY, final float bgColZ, final float bgColW) {
+        nImageWithBg(userTextureId, sizeX, sizeY, uv0X, uv0Y, uv1X, uv1Y, bgColX, bgColY, bgColZ, bgColW);
+    }
+
+    public static void imageWithBg(final long userTextureId, final ImVec2 size, final ImVec2 uv0, final ImVec2 uv1, final ImVec4 bgCol, final ImVec4 tintCol) {
+        nImageWithBg(userTextureId, size.x, size.y, uv0.x, uv0.y, uv1.x, uv1.y, bgCol.x, bgCol.y, bgCol.z, bgCol.w, tintCol.x, tintCol.y, tintCol.z, tintCol.w);
+    }
+
+    public static void imageWithBg(final long userTextureId, final float sizeX, final float sizeY, final float uv0X, final float uv0Y, final float uv1X, final float uv1Y, final float bgColX, final float bgColY, final float bgColZ, final float bgColW, final float tintColX, final float tintColY, final float tintColZ, final float tintColW) {
+        nImageWithBg(userTextureId, sizeX, sizeY, uv0X, uv0Y, uv1X, uv1Y, bgColX, bgColY, bgColZ, bgColW, tintColX, tintColY, tintColZ, tintColW);
+    }
+
+    private static native void nImageWithBg(long userTextureId, float sizeX, float sizeY); /*MANUAL
         ImVec2 size = ImVec2(sizeX, sizeY);
-        ImVec2 uv0 = ImVec2(uv0X, uv0Y);
-        ImVec2 uv1 = ImVec2(uv1X, uv1Y);
-        ImVec4 tintCol = ImVec4(tintColX, tintColY, tintColZ, tintColW);
-        ImGui::Image((ImTextureID)(uintptr_t)userTextureId, size, uv0, uv1, tintCol);
+        ImGui::ImageWithBg((ImTextureID)(uintptr_t)userTextureId, size);
     */
 
-    private static native void nImage(long userTextureId, float sizeX, float sizeY, float uv0X, float uv0Y, float uv1X, float uv1Y, float tintColX, float tintColY, float tintColZ, float tintColW, float borderColX, float borderColY, float borderColZ, float borderColW); /*MANUAL
+    private static native void nImageWithBg(long userTextureId, float sizeX, float sizeY, float uv0X, float uv0Y); /*MANUAL
+        ImVec2 size = ImVec2(sizeX, sizeY);
+        ImVec2 uv0 = ImVec2(uv0X, uv0Y);
+        ImGui::ImageWithBg((ImTextureID)(uintptr_t)userTextureId, size, uv0);
+    */
+
+    private static native void nImageWithBg(long userTextureId, float sizeX, float sizeY, float uv0X, float uv0Y, float uv1X, float uv1Y); /*MANUAL
         ImVec2 size = ImVec2(sizeX, sizeY);
         ImVec2 uv0 = ImVec2(uv0X, uv0Y);
         ImVec2 uv1 = ImVec2(uv1X, uv1Y);
+        ImGui::ImageWithBg((ImTextureID)(uintptr_t)userTextureId, size, uv0, uv1);
+    */
+
+    private static native void nImageWithBg(long userTextureId, float sizeX, float sizeY, float uv0X, float uv0Y, float uv1X, float uv1Y, float bgColX, float bgColY, float bgColZ, float bgColW); /*MANUAL
+        ImVec2 size = ImVec2(sizeX, sizeY);
+        ImVec2 uv0 = ImVec2(uv0X, uv0Y);
+        ImVec2 uv1 = ImVec2(uv1X, uv1Y);
+        ImVec4 bgCol = ImVec4(bgColX, bgColY, bgColZ, bgColW);
+        ImGui::ImageWithBg((ImTextureID)(uintptr_t)userTextureId, size, uv0, uv1, bgCol);
+    */
+
+    private static native void nImageWithBg(long userTextureId, float sizeX, float sizeY, float uv0X, float uv0Y, float uv1X, float uv1Y, float bgColX, float bgColY, float bgColZ, float bgColW, float tintColX, float tintColY, float tintColZ, float tintColW); /*MANUAL
+        ImVec2 size = ImVec2(sizeX, sizeY);
+        ImVec2 uv0 = ImVec2(uv0X, uv0Y);
+        ImVec2 uv1 = ImVec2(uv1X, uv1Y);
+        ImVec4 bgCol = ImVec4(bgColX, bgColY, bgColZ, bgColW);
         ImVec4 tintCol = ImVec4(tintColX, tintColY, tintColZ, tintColW);
-        ImVec4 borderCol = ImVec4(borderColX, borderColY, borderColZ, borderColW);
-        ImGui::Image((ImTextureID)(uintptr_t)userTextureId, size, uv0, uv1, tintCol, borderCol);
+        ImGui::ImageWithBg((ImTextureID)(uintptr_t)userTextureId, size, uv0, uv1, bgCol, tintCol);
     */
 
     public static boolean imageButton(final String strId, final long userTextureId, final ImVec2 size) {
@@ -9300,6 +9420,17 @@ public class ImGui {
         ImGui::SetNextItemOpen(isOpen, cond);
     */
 
+    /**
+     * set id to use for open/close storage (default to same as item id).
+     */
+    public static void setNextItemStorageID(final int id) {
+        nSetNextItemStorageID(id);
+    }
+
+    private static native void nSetNextItemStorageID(int id); /*
+        ImGui::SetNextItemStorageID((ImGuiID)id);
+    */
+
     // Widgets: Selectables
     // - A selectable highlights when hovered, and can display another color when selected.
     // - Neighbors selectable extend their highlight bounds in order to leave no gap between them.
@@ -12015,6 +12146,17 @@ public class ImGui {
         ImGui::SetKeyboardFocusHere(offset);
     */
 
+    /**
+     * alter visibility of keyboard/gamepad cursor. by default: show when using an arrow key, hide when clicking with mouse.
+     */
+    public static void setNavCursorVisible(final boolean visible) {
+        nSetNavCursorVisible(visible);
+    }
+
+    private static native void nSetNavCursorVisible(boolean visible); /*
+        ImGui::SetNavCursorVisible(visible);
+    */
+
     // Overlapping mode
 
     /**
@@ -12788,6 +12930,19 @@ public class ImGui {
         ImGui::SetNextItemShortcut(static_cast<ImGuiKeyChord>(key_chord), flags);
     */
 
+    // Inputs Utilities: Key/Input Ownership [BETA]
+    // - One common use case would be to allow your items to disable standard inputs behaviors such
+    //   as Tab or Alt key handling, Mouse Wheel scrolling, etc.
+    //   e.g. Button(...); SetItemKeyOwner(ImGuiKey_MouseWheelY); to make hovering/activating a button disable wheel for scrolling.
+    // - Reminder ImGuiKey enum include access to mouse buttons and gamepad, so key ownership can apply to them.
+    // - Many related features are still in imgui_internal.h. For instance, most IsKeyXXX()/IsMouseXXX() functions have an owner-id-aware version.
+
+/*
+    public native void nSetItemKeyOwner(int key); /*
+        ImGui::SetItemKeyOwner((ImGuiKey) key);
+    */
+
+
     // Inputs Utilities: Keyboard/Mouse/Gamepad
     // - the ImGuiKey enum contains all possible keyboard, mouse and gamepad inputs (e.g. ImGuiKey_A, ImGuiKey_MouseLeft, ImGuiKey_GamepadDpadUp...).
     // - before v1.87, we used ImGuiKey to carry native/user indices as defined by each backends. About use of those legacy ImGuiKey values:
@@ -12944,6 +13099,17 @@ public class ImGui {
 
     private static native boolean nIsMouseDoubleClicked(int button); /*
         return ImGui::IsMouseDoubleClicked(button);
+    */
+
+    /**
+     * delayed mouse release (use very sparingly!). Generally used with 'delay >= io.MouseDoubleClickTime' + combined with a 'io.MouseClickedLastCount==1' test. This is a very rarely used UI idiom, but some apps use this: e.g. MS Explorer single click on an icon to rename.
+     */
+    public static boolean isMouseReleasedWithDelay(final int button, final float delay) {
+        return nIsMouseReleasedWithDelay(button, delay);
+    }
+
+    private static native boolean nIsMouseReleasedWithDelay(int button, float delay); /*
+        return ImGui::IsMouseReleasedWithDelay(button, delay);
     */
 
     /**

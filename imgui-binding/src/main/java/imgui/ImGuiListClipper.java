@@ -81,6 +81,9 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
     @BindingField(accessors = BindingField.Accessor.GETTER)
     public float StartPosY;
 
+    @BindingField(accessors = BindingField.Accessor.GETTER)
+    public float StartSeekOffsetY;
+
     @BindingMethod
     public native void Begin(int itemsCount, @OptArg float itemsHeight);
 
@@ -111,6 +114,14 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
      */
     @BindingMethod
     public native void IncludeItemsByIndex(int itemBegin, int itemEnd);
+
+    /**
+     * Seek cursor toward given item. This is automatically called while stepping.
+     * - The only reason to call this is: you can use ImGuiListClipper::Begin(INT_MAX) if you don't know item count ahead of time.
+     * - In this case, after all steps are done, you'll want to call SeekCursorForItem(item_count).
+     */
+    @BindingMethod
+    public native void SeekCursorForItem(int itemIndex);
 
     /**
      * Shortcut to use {@link ImGuiListClipper} instance.

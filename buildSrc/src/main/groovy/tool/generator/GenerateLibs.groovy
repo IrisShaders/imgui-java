@@ -1,14 +1,18 @@
 package tool.generator
 
 import com.badlogic.gdx.jnigen.*
-import com.badlogic.gdx.utils.Architecture
-import com.badlogic.gdx.utils.Os
+import com.badlogic.gdx.jnigen.build.PlatformBuilder
+import com.badlogic.gdx.jnigen.commons.Architecture
+import com.badlogic.gdx.jnigen.commons.Os
 import groovy.transform.CompileStatic
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.CopySpec
 import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
+
+import java.nio.file.Files
+import java.nio.file.Path
 
 @CompileStatic
 class GenerateLibs extends DefaultTask {
@@ -40,7 +44,7 @@ class GenerateLibs extends DefaultTask {
 
     private final String sourceDir = project.file('src/generated/java')
     private final String classpath = project.file('build/classes/java/main')
-    private final String rootDir = (isLocal ? project.buildDir.path : '/tmp/imgui')
+    private final String rootDir = (isLocal ? project.getLayout().getBuildDirectory().get().asFile.absolutePath : '/tmp/imgui')
     private final String jniDir = "$rootDir/jni"
     private final String tmpDir = "$rootDir/tmp"
     private final String libsDirName = 'libsNative'
@@ -51,6 +55,7 @@ class GenerateLibs extends DefaultTask {
         println "Build targets: $buildEnvs"
         println "Local: $isLocal"
         println "FreeType: $withFreeType"
+        println "Location: $rootDir"
         println '====================================='
 
         if (!buildEnvs) {
@@ -59,7 +64,9 @@ class GenerateLibs extends DefaultTask {
 
         new File(jniDir).deleteDir()
         new File(tmpDir).deleteDir()
-        new File("$rootDir/$libsDirName").deleteDir()
+        String libsDirPath = "$rootDir/$libsDirName"
+        File libsDir = new File("$rootDir/$libsDirName")
+        libsDir.deleteDir()
 
         // Generate h/cpp files for JNI
         new NativeCodeGenerator().generate(sourceDir, classpath, jniDir)
@@ -103,9 +110,10 @@ class GenerateLibs extends DefaultTask {
         }
 
         // Generate platform dependant ant configs and header files
-        def buildConfig = new BuildConfig('imgui-java', tmpDir, libsDirName, jniDir)
-        BuildTarget[] buildTargets = []
+        def buildConfig = new BuildConfig('imgui-java', tmpDir, libsDirName, jniDir, new FileDescriptor(rootDir))
+        List<BuildTarget> buildTargets = new ArrayList<>()
 
+        buildConfig.multiThreadedCompile = true
         if (forWindows) {
             def win64 = BuildTarget.newDefaultTarget(Os.Windows, Architecture.Bitness._64)
             addFreeTypeIfEnabled(win64)
@@ -114,6 +122,8 @@ class GenerateLibs extends DefaultTask {
 
         if (forLinux) {
             def linux64 = BuildTarget.newDefaultTarget(Os.Linux, Architecture.Bitness._64)
+            linux64.cFlags += '-g'
+            linux64.cppFlags += '-g'
             addFreeTypeIfEnabled(linux64)
             buildTargets += linux64
         }
@@ -126,23 +136,18 @@ class GenerateLibs extends DefaultTask {
             buildTargets += createMacTarget(Architecture.ARM)
         }
 
-        new AntScriptGenerator().generate(buildConfig, buildTargets)
 
         // Generate native libraries
         // Comment/uncomment lines with OS you need.
 
         def commonParams = ['-v', '-Dhas-compiler=true', '-Drelease=true', 'clean', 'postcompile'] as String[]
+        printf("Build dir: " + buildConfig.buildDir.toString())
+        PlatformBuilder.copyHeaders(new FileDescriptor(jniDir))
 
-        if (forWindows)
-            BuildExecutor.executeAnt(jniDir + '/build-windows64.xml', commonParams)
-        if (forLinux)
-            BuildExecutor.executeAnt(jniDir + '/build-linux64.xml', commonParams)
-        if (forMac)
-            BuildExecutor.executeAnt(jniDir + '/build-macosx64.xml', commonParams)
-        if (forMacArm64)
-            BuildExecutor.executeAnt(jniDir + '/build-macosxarm64.xml', commonParams)
+        new PlatformBuilder().build(Os.Linux, buildConfig, buildTargets)
 
-        BuildExecutor.executeAnt(jniDir + '/build.xml', '-v', 'pack-natives')
+        Files.createDirectories(Path.of("/home/ims/imgui-java/imgui-binding/build/libsNative/linux64/"))
+        Files.copy(Path.of("/home/ims/.gradle/daemon/8.12/libsNative/linux64/libimgui-java64.so"), Path.of("/home/ims/imgui-java/imgui-binding/build/libsNative/linux64/libimgui-java64.so"))
 
         if (forWindows)
             checkLibExist("windows64/imgui-java64.dll")
@@ -167,8 +172,8 @@ class GenerateLibs extends DefaultTask {
         def macTarget = BuildTarget.newDefaultTarget(Os.MacOsX, Architecture.Bitness._64, arch)
         macTarget.libName = "libimgui-java64.dylib" // Lib for arm64 will be named the same for consistency.
         macTarget.cppFlags += ' -std=c++14'
-        macTarget.cppFlags = macTarget.cppFlags.replace('10.7', minMacOsVersion)
-        macTarget.linkerFlags = macTarget.linkerFlags.replace('10.7', minMacOsVersion)
+       // macTarget.cppFlags = macTarget.cppFlags.replace('10.7', minMacOsVersion)
+       // macTarget.linkerFlags = macTarget.linkerFlags.replace('10.7', minMacOsVersion)
         addFreeTypeIfEnabled(macTarget)
         return macTarget
     }

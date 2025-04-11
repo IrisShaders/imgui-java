@@ -206,66 +206,6 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->PixelSnapH = value;
     */
 
-    /**
-     * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
-     */
-    public ImVec2 getGlyphExtraSpacing() {
-        final ImVec2 dst = new ImVec2();
-        nGetGlyphExtraSpacing(dst);
-        return dst;
-    }
-
-    /**
-     * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
-     */
-    public float getGlyphExtraSpacingX() {
-        return nGetGlyphExtraSpacingX();
-    }
-
-    /**
-     * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
-     */
-    public float getGlyphExtraSpacingY() {
-        return nGetGlyphExtraSpacingY();
-    }
-
-    /**
-     * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
-     */
-    public void getGlyphExtraSpacing(final ImVec2 dst) {
-        nGetGlyphExtraSpacing(dst);
-    }
-
-    /**
-     * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
-     */
-    public void setGlyphExtraSpacing(final ImVec2 value) {
-        nSetGlyphExtraSpacing(value.x, value.y);
-    }
-
-    /**
-     * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
-     */
-    public void setGlyphExtraSpacing(final float valueX, final float valueY) {
-        nSetGlyphExtraSpacing(valueX, valueY);
-    }
-
-    private native void nGetGlyphExtraSpacing(ImVec2 dst); /*
-        Jni::ImVec2Cpy(env, THIS->GlyphExtraSpacing, dst);
-    */
-
-    private native float nGetGlyphExtraSpacingX(); /*
-        return THIS->GlyphExtraSpacing.x;
-    */
-
-    private native float nGetGlyphExtraSpacingY(); /*
-        return THIS->GlyphExtraSpacing.y;
-    */
-
-    private native void nSetGlyphExtraSpacing(float valueX, float valueY); /*MANUAL
-        ImVec2 value = ImVec2(valueX, valueY);
-        THIS->GlyphExtraSpacing = value;
-    */
 
     /**
      * Offset all glyphs from this font input.
@@ -393,6 +333,28 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
 
     private native void nSetGlyphMaxAdvanceX(float value); /*
         THIS->GlyphMaxAdvanceX = value;
+    */
+
+    /**
+     * Extra spacing (in pixels) between glyphs. Please contact us if you are using this.
+     */
+    public float getGlyphExtraAdvanceX() {
+        return nGetGlyphExtraAdvanceX();
+    }
+
+    /**
+     * Extra spacing (in pixels) between glyphs. Please contact us if you are using this.
+     */
+    public void setGlyphExtraAdvanceX(final float value) {
+        nSetGlyphExtraAdvanceX(value);
+    }
+
+    private native float nGetGlyphExtraAdvanceX(); /*
+        return THIS->GlyphExtraAdvanceX;
+    */
+
+    private native void nSetGlyphExtraAdvanceX(float value); /*
+        THIS->GlyphExtraAdvanceX = value;
     */
 
     /**

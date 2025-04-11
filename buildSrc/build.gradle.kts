@@ -11,13 +11,25 @@ java {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
 }
 
 dependencies {
     implementation(gradleApi())
     implementation(localGroovy())
 
-    implementation("com.badlogicgames.gdx:gdx-jnigen:2.5.2")
+    implementation("com.badlogicgames.jnigen:jnigen-core:3.0.1-SNAPSHOT")
+    implementation("com.badlogicgames.jnigen:jnigen-commons:3.0.1-SNAPSHOT")
+    implementation("com.badlogicgames.jnigen:jnigen-generator:3.0.1-SNAPSHOT")
+    implementation("com.badlogicgames.jnigen:jnigen-loader:3.0.1-SNAPSHOT")
+    implementation("com.badlogicgames.jnigen:jnigen-runtime:3.0.1-SNAPSHOT")
+    implementation("com.badlogicgames.jnigen:jnigen-runtime-platform:3.0.1-SNAPSHOT:natives-desktop")
+    implementation("com.badlogicgames.jnigen:jnigen-runtime-platform:3.0.1-SNAPSHOT:natives-x86_64")
     implementation("org.reflections:reflections:0.10.2")
     implementation("com.lordcodes.turtle:turtle:0.6.0")
     implementation("fr.inria.gforge.spoon:spoon-core:10.3.0")

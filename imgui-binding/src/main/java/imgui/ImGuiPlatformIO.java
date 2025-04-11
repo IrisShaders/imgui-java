@@ -1,13 +1,7 @@
 package imgui;
 
 import imgui.binding.ImGuiStruct;
-import imgui.callback.ImPlatformFuncViewport;
-import imgui.callback.ImPlatformFuncViewportFloat;
-import imgui.callback.ImPlatformFuncViewportImVec2;
-import imgui.callback.ImPlatformFuncViewportString;
-import imgui.callback.ImPlatformFuncViewportSuppBoolean;
-import imgui.callback.ImPlatformFuncViewportSuppFloat;
-import imgui.callback.ImPlatformFuncViewportSuppImVec2;
+import imgui.callback.*;
 
 /**
  * -----------------------------------------------------------------------------
@@ -176,6 +170,41 @@ public final class ImGuiPlatformIO extends ImGuiStruct {
      */
     public native void setPlatformSetWindowPos(ImPlatformFuncViewportImVec2 func); /*
         IM_PLATFORM_FUNC_VIEWPORT_IM_VEC2_METHOD_TMPL(SetWindowPos)
+    */
+
+
+    // Optional: Access OS clipboard
+    // (default to use native Win32 clipIsMouseDraggingboard on Windows, otherwise uses a private clipboard. Override to access OS clipboard on other architectures)
+
+    /*JNI
+        jobject _setClipboardTextCallback = NULL;
+        jobject _getClipboardTextCallback = NULL;
+
+        void setClipboardTextStub(ImGuiContext* userData, const char* text) {
+            Jni::CallImStrConsumer(Jni::GetEnv(), _setClipboardTextCallback, text);
+        }
+
+        const char* getClipboardTextStub(ImGuiContext* user_data) {
+            JNIEnv* env = Jni::GetEnv();
+            jstring jstr = Jni::CallImStrSupplier(env, _getClipboardTextCallback);
+            return env->GetStringUTFChars(jstr, 0);
+        }
+     */
+
+    public native void setSetClipboardTextFn(ImStrConsumer setClipboardTextCallback); /*
+        if (_setClipboardTextCallback != NULL) {
+            env->DeleteGlobalRef(_setClipboardTextCallback);
+        }
+        _setClipboardTextCallback = env->NewGlobalRef(setClipboardTextCallback);
+        IMGUI_PLATFORM_IO->Platform_SetClipboardTextFn = setClipboardTextStub;
+    */
+
+    public native void setGetClipboardTextFn(ImStrSupplier getClipboardTextCallback); /*
+        if (_getClipboardTextCallback != NULL) {
+            env->DeleteGlobalRef(_getClipboardTextCallback);
+        }
+        _getClipboardTextCallback = env->NewGlobalRef(getClipboardTextCallback);
+        IMGUI_PLATFORM_IO->Platform_GetClipboardTextFn = getClipboardTextStub;
     */
 
     /*JNI
@@ -392,6 +421,7 @@ public final class ImGuiPlatformIO extends ImGuiStruct {
     public native void setPlatformOnChangedViewport(ImPlatformFuncViewport func); /*
         IM_PLATFORM_FUNC_VIEWPORT_METHOD_TMPL(OnChangedViewport)
     */
+
 
     // (Optional) Renderer functions (e.g. DirectX, OpenGL, Vulkan)
 

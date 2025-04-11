@@ -66,13 +66,19 @@ public final class ImFont extends ImGuiStructDestroyable {
      * Bigger than 1 when merging multiple font sources into one ImFont.
      */
     @BindingField
-    public short ConfigDataCount;
+    public short SourcesCount;
 
     /**
      * Character used for ellipsis rendering.
      */
     @BindingField
     public short EllipsisChar;
+
+    /**
+     * Character used if a glyph isn't found (U+FFFD, '?')
+     */
+    @BindingField
+    public short FallbackChar;
 
     @BindingField
     public short EllipsisCharCount;

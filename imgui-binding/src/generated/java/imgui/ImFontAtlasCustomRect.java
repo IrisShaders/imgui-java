@@ -85,6 +85,28 @@ public final class ImFontAtlasCustomRect extends ImGuiStructDestroyable {
     */
 
     /**
+     * For custom font glyphs only: glyph is colored, removed tinting
+     */
+    public int getGlyphColored() {
+        return nGetGlyphColored();
+    }
+
+    /**
+     * For custom font glyphs only: glyph is colored, removed tinting
+     */
+    public void setGlyphColored(final int value) {
+        nSetGlyphColored(value);
+    }
+
+    private native int nGetGlyphColored(); /*
+        return THIS->GlyphColored;
+    */
+
+    private native void nSetGlyphColored(int value); /*
+        THIS->GlyphColored = value;
+    */
+
+    /**
      * Packed position in Atlas
      */
     public short getX() {

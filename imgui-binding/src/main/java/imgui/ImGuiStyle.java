@@ -67,6 +67,13 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     public float WindowBorderSize;
 
     /**
+     * Hit-testing extent outside/inside resizing border. Also extend determination of hovered window.
+     * Generally meaningfully larger than WindowBorderSize to make it easy to reach borders.
+     */
+    @BindingField
+    public float WindowBorderHoverPadding;
+
+    /**
      * Minimum window size. This is a global setting. If you want to constrain individual windows, use SetNextWindowSizeConstraints().
      */
     @BindingField
@@ -196,6 +203,12 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     public float LogSliderDeadzone;
 
     /**
+     * Thickness of border around Image() calls.
+     */
+    @BindingField
+    public float ImageBorderSize;
+
+    /**
      * Radius of upper corners of a tab. Set to 0.0f to have rectangular tabs.
      */
     @BindingField
@@ -208,17 +221,28 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     public float TabBorderSize;
 
     /**
-     * Minimum width for close button to appear on an unselected tab when hovered.
-     * Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
+     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width.
      */
     @BindingField
-    public float TabMinWidthForCloseButton;
+    public float TabCloseButtonMinWidthSelected;
+
+    /**
+     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width. FLT_MAX: never show close button when unselected.
+     */
+    @BindingField
+    public float TabCloseButtonMinWidthUnselected;
 
     /**
      * Thickness of tab-bar separator, which takes on the tab active color to denote focus.
      */
     @BindingField
     public float TabBarBorderSize;
+
+    /**
+     * Thickness of tab-bar overline, which highlights the selected tab-bar.
+     */
+    @BindingField
+    public float TabBarOverlineSize;
 
     /**
      * Angle of angled headers (supported values range from -50.0f degrees to +50.0f degrees).

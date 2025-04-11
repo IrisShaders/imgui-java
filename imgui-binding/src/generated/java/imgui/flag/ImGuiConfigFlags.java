@@ -28,20 +28,6 @@ public final class ImGuiConfigFlags {
     public static final int NavEnableGamepad = 2;
 
     /**
-     * Instruct navigation to move the mouse cursor. May be useful on TV/console systems where moving a virtual mouse is awkward. Will update io.MousePos and set io.WantSetMousePos=true. If enabled you MUST honor io.WantSetMousePos requests in your backend, otherwise ImGui will react as if the mouse is jumping around back and forth.
-     *
-     * <p>Definition: {@code 1 << 2}
-     */
-    public static final int NavEnableSetMousePos = 4;
-
-    /**
-     * Instruct navigation to not set the io.WantCaptureKeyboard flag when io.NavActive is set.
-     *
-     * <p>Definition: {@code 1 << 3}
-     */
-    public static final int NavNoCaptureKeyboard = 8;
-
-    /**
      * Instruct dear imgui to disable mouse inputs and interactions.
      *
      * <p>Definition: {@code 1 << 4}
@@ -103,4 +89,18 @@ public final class ImGuiConfigFlags {
      * <p>Definition: {@code 1 << 21}
      */
     public static final int IsTouchScreen = 2097152;
+
+    /**
+     * [moved/renamed in 1.91.4] {@code ->} use bool io.ConfigNavMoveSetMousePos
+     *
+     * <p>Definition: {@code 1 << 2}
+     */
+    public static final int NavEnableSetMousePos = 4;
+
+    /**
+     * [moved/renamed in 1.91.4] {@code ->} use bool io.ConfigNavCaptureKeyboard
+     *
+     * <p>Definition: {@code 1 << 3}
+     */
+    public static final int NavNoCaptureKeyboard = 8;
 }

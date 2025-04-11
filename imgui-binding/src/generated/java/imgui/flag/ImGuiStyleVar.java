@@ -125,59 +125,69 @@ public final class ImGuiStyleVar {
     public static final int GrabRounding = 21;
 
     /**
+     * float     ImageBorderSize
+     */
+    public static final int ImageBorderSize = 22;
+
+    /**
      * float     TabRounding
      */
-    public static final int TabRounding = 22;
+    public static final int TabRounding = 23;
 
     /**
      * float     TabBorderSize
      */
-    public static final int TabBorderSize = 23;
+    public static final int TabBorderSize = 24;
 
     /**
      * float     TabBarBorderSize
      */
-    public static final int TabBarBorderSize = 24;
+    public static final int TabBarBorderSize = 25;
+
+    /**
+     * float     TabBarOverlineSize
+     */
+    public static final int TabBarOverlineSize = 26;
 
     /**
      * float     TableAngledHeadersAngle
      */
-    public static final int TableAngledHeadersAngle = 25;
+    public static final int TableAngledHeadersAngle = 27;
 
     /**
      * ImVec2  TableAngledHeadersTextAlign
      */
-    public static final int TableAngledHeadersTextAlign = 26;
+    public static final int TableAngledHeadersTextAlign = 28;
 
     /**
      * ImVec2    ButtonTextAlign
      */
-    public static final int ButtonTextAlign = 27;
+    public static final int ButtonTextAlign = 29;
 
     /**
      * ImVec2    SelectableTextAlign
      */
-    public static final int SelectableTextAlign = 28;
+    public static final int SelectableTextAlign = 30;
 
     /**
      * float     SeparatorTextBorderSize
      */
-    public static final int SeparatorTextBorderSize = 29;
+    public static final int SeparatorTextBorderSize = 31;
 
     /**
      * ImVec2    SeparatorTextAlign
      */
-    public static final int SeparatorTextAlign = 30;
+    public static final int SeparatorTextAlign = 32;
 
     /**
      * ImVec2    SeparatorTextPadding
      */
-    public static final int SeparatorTextPadding = 31;
+    public static final int SeparatorTextPadding = 33;
 
     /**
      * float     DockingSeparatorSize
      */
-    public static final int DockingSeparatorSize = 32;
+    public static final int DockingSeparatorSize = 34;
 
-    public static final int COUNT = 33;
+    public static final int COUNT = 35;
 }

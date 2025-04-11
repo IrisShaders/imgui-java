@@ -126,14 +126,14 @@ public final class ImGuiWindowFlags {
     public static final int AlwaysHorizontalScrollbar = 32768;
 
     /**
-     * No gamepad/keyboard navigation within the window
+     * No keyboard/gamepad navigation within the window
      *
      * <p>Definition: {@code 1 << 16}
      */
     public static final int NoNavInputs = 65536;
 
     /**
-     * No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB)
+     * No focusing toward this window with keyboard/gamepad navigation (e.g. skipped by CTRL+TAB)
      *
      * <p>Definition: {@code 1 << 17}
      */
@@ -167,6 +167,13 @@ public final class ImGuiWindowFlags {
      * Definition: {@code ImGuiWindowFlags_NoMouseInputs | ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus}
      */
     public static final int NoInputs = 197120;
+
+    /**
+     * Don't use! For internal use by Begin()/NewFrame()
+     *
+     * <p>Definition: {@code 1 << 23}
+     */
+    public static final int DockNodeHost = 8388608;
 
     /**
      * Don't use! For internal use by BeginChild()
@@ -204,23 +211,16 @@ public final class ImGuiWindowFlags {
     public static final int ChildMenu = 268435456;
 
     /**
-     * Don't use! For internal use by Begin()/NewFrame()
+     * Obsoleted in 1.90.9: Use ImGuiChildFlags_NavFlattened in BeginChild() call.
      *
      * <p>Definition: {@code 1 << 29}
      */
-    public static final int DockNodeHost = 536870912;
+    public static final int NavFlattened = 536870912;
 
     /**
-     * Obsoleted in 1.90: Use ImGuiChildFlags_AlwaysUseWindowPadding in BeginChild() call.
+     * Obsoleted in 1.90.0: Use ImGuiChildFlags_AlwaysUseWindowPadding in BeginChild() call.
      *
      * <p>Definition: {@code 1 << 30}
      */
     public static final int AlwaysUseWindowPadding = 1073741824;
-
-    /**
-     * Obsoleted in 1.90.9: Use ImGuiChildFlags_NavFlattened in BeginChild() call.
-     *
-     * <p>Definition: {@code 1 << 31}
-     */
-    public static final int NavFlattened = -2147483648;
 }

@@ -1,9 +1,9 @@
 {
   "info" : {
     "source" : "include/imgui/imgui.h",
-    "hash" : "45f8995c598ff890c6f0023cc00285b5",
+    "hash" : "ef371fd604cbf2ecfdd43fd04c0f0cd8",
     "url" : "https://github.com/ocornut/imgui",
-    "revision" : "3369cbd2776d7567ac198b1a3017a4fa2d547cc3"
+    "revision" : "4806a1924ff6181180bf5e4b8b79ab4394118875"
   },
   "decls" : [ {
     "@type" : "AstRecordDecl",
@@ -14,7 +14,20 @@
         "@type" : "AstParagraphComment",
         "decls" : [ {
           "@type" : "AstTextComment",
-          "text" : " Forward declarations"
+          "text" : " Forward declarations: ImDrawList, ImFontAtlas layer"
+        } ]
+      } ]
+    } ]
+  }, {
+    "@type" : "AstRecordDecl",
+    "name" : "ImGuiContext",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Forward declarations: ImGui layer"
         } ]
       } ]
     } ]
@@ -58,10 +71,10 @@
           "text" : " ImVec2: 2D vector used to store positions, sizes etc. [Compile-time configurable type]"
         }, {
           "@type" : "AstTextComment",
-          "text" : " This is a frequently used type in the API. Consider using IM_VEC2_CLASS_EXTRA to create implicit cast from/to our preferred type."
+          "text" : " - This is a frequently used type in the API. Consider using IM_VEC2_CLASS_EXTRA to create implicit cast from/to our preferred type."
         }, {
           "@type" : "AstTextComment",
-          "text" : " Add '#define IMGUI_DEFINE_MATH_OPERATORS' in your imconfig.h file to benefit from courtesy maths operators for those types."
+          "text" : " - Add '#define IMGUI_DEFINE_MATH_OPERATORS' before including this file (or in imconfig.h) to access courtesy maths operators for ImVec2 and ImVec4."
         } ]
       } ]
     }, {
@@ -197,6 +210,10 @@
           } ]
         } ]
       } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetPlatformIO",
+      "resultType" : "ImGuiPlatformIO &"
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "GetStyle",
@@ -472,7 +489,7 @@
             "text" : " - Before 1.90 (November 2023), the \"ImGuiChildFlags child_flags = 0\" parameter was \"bool border = false\"."
           }, {
             "@type" : "AstTextComment",
-            "text" : "   This API is backward compatible with old code, as we guarantee that ImGuiChildFlags_Border == true."
+            "text" : "   This API is backward compatible with old code, as we guarantee that ImGuiChildFlags_Borders == true."
           }, {
             "@type" : "AstTextComment",
             "text" : "   Consider updating your old code:"
@@ -481,7 +498,7 @@
             "text" : "      BeginChild(\"Name\", size, false)   -> Begin(\"Name\", size, 0); or Begin(\"Name\", size, ImGuiChildFlags_None);"
           }, {
             "@type" : "AstTextComment",
-            "text" : "      BeginChild(\"Name\", size, true)    -> Begin(\"Name\", size, ImGuiChildFlags_Border);"
+            "text" : "      BeginChild(\"Name\", size, true)    -> Begin(\"Name\", size, ImGuiChildFlags_Borders);"
           }, {
             "@type" : "AstTextComment",
             "text" : " - Manual sizing (each axis can use a different setting e.g. ImVec2(0.0f, 400.0f)):"
@@ -901,38 +918,6 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
-      "name" : "GetContentRegionAvail",
-      "resultType" : "ImVec2",
-      "decls" : [ {
-        "@type" : "AstFullComment",
-        "decls" : [ {
-          "@type" : "AstParagraphComment",
-          "decls" : [ {
-            "@type" : "AstTextComment",
-            "text" : " Content region"
-          }, {
-            "@type" : "AstTextComment",
-            "text" : " - Retrieve available space from a given point. GetContentRegionAvail() is frequently useful."
-          }, {
-            "@type" : "AstTextComment",
-            "text" : " - Those functions are bound to be redesigned (they are confusing, incomplete and the Min/Max return values are in local window coordinates which increases confusion)"
-          } ]
-        } ]
-      } ]
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "GetContentRegionMax",
-      "resultType" : "ImVec2"
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "GetWindowContentRegionMin",
-      "resultType" : "ImVec2"
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "GetWindowContentRegionMax",
-      "resultType" : "ImVec2"
-    }, {
-      "@type" : "AstFunctionDecl",
       "name" : "GetScrollX",
       "resultType" : "float",
       "decls" : [ {
@@ -1133,6 +1118,36 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "PushStyleVarX",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "idx",
+        "qualType" : "ImGuiStyleVar",
+        "desugaredQualType" : "int"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "val_x",
+        "qualType" : "float",
+        "desugaredQualType" : "float"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PushStyleVarY",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "idx",
+        "qualType" : "ImGuiStyleVar",
+        "desugaredQualType" : "int"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "val_y",
+        "qualType" : "float",
+        "desugaredQualType" : "float"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "PopStyleVar",
       "resultType" : "void",
       "decls" : [ {
@@ -1144,31 +1159,22 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
-      "name" : "PushTabStop",
+      "name" : "PushItemFlag",
       "resultType" : "void",
       "decls" : [ {
         "@type" : "AstParmVarDecl",
-        "name" : "tab_stop",
+        "name" : "option",
+        "qualType" : "ImGuiItemFlags",
+        "desugaredQualType" : "int"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "enabled",
         "qualType" : "bool",
         "desugaredQualType" : "bool"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
-      "name" : "PopTabStop",
-      "resultType" : "void"
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "PushButtonRepeat",
-      "resultType" : "void",
-      "decls" : [ {
-        "@type" : "AstParmVarDecl",
-        "name" : "repeat",
-        "qualType" : "bool",
-        "desugaredQualType" : "bool"
-      } ]
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "PopButtonRepeat",
+      "name" : "PopItemFlag",
       "resultType" : "void"
     }, {
       "@type" : "AstFunctionDecl",
@@ -1321,16 +1327,22 @@
             "text" : " - You can call SameLine() between widgets to undo the last carriage return and output at the right of the preceding widget."
           }, {
             "@type" : "AstTextComment",
+            "text" : " - YOU CAN DO 99% OF WHAT YOU NEED WITH ONLY GetCursorScreenPos() and GetContentRegionAvail()."
+          }, {
+            "@type" : "AstTextComment",
             "text" : " - Attention! We currently have inconsistencies between window-local and absolute positions we will aim to fix with future API:"
           }, {
             "@type" : "AstTextComment",
             "text" : "    - Absolute coordinate:        GetCursorScreenPos(), SetCursorScreenPos(), all ImDrawList:: functions. -> this is the preferred way forward."
           }, {
             "@type" : "AstTextComment",
-            "text" : "    - Window-local coordinates:   SameLine(), GetCursorPos(), SetCursorPos(), GetCursorStartPos(), GetContentRegionMax(), GetWindowContentRegion*(), PushTextWrapPos()"
+            "text" : "    - Window-local coordinates:   SameLine(offset), GetCursorPos(), SetCursorPos(), GetCursorStartPos(), PushTextWrapPos()"
           }, {
             "@type" : "AstTextComment",
-            "text" : " - GetCursorScreenPos() = GetCursorPos() + GetWindowPos(). GetWindowPos() is almost only ever useful to convert from window-local to absolute coordinates."
+            "text" : "    - Window-local coordinates:   GetContentRegionMax(), GetWindowContentRegionMin(), GetWindowContentRegionMax() --> all obsoleted. YOU DON'T NEED THEM."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - GetCursorScreenPos() = GetCursorPos() + GetWindowPos(). GetWindowPos() is almost only ever useful to convert from window-local to absolute coordinates. Try not to use it."
           } ]
         } ]
       } ]
@@ -1344,6 +1356,10 @@
         "qualType" : "const ImVec2 &",
         "desugaredQualType" : "const ImVec2 &"
       } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetContentRegionAvail",
+      "resultType" : "ImVec2"
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "GetCursorPos",
@@ -1611,6 +1627,16 @@
         "name" : "ptr_id",
         "qualType" : "const void *",
         "desugaredQualType" : "const void *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetID",
+      "resultType" : "ImGuiID",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "int_id",
+        "qualType" : "int",
+        "desugaredQualType" : "int"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -2072,13 +2098,87 @@
       "resultType" : "void"
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "TextLink",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "label",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "TextLinkOpenURL",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "label",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "url",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *",
+        "defaultValue" : "NULL"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "Image",
       "resultType" : "void",
       "decls" : [ {
         "@type" : "AstParmVarDecl",
         "name" : "user_texture_id",
         "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
+        "desugaredQualType" : "unsigned long long"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "image_size",
+        "qualType" : "const ImVec2 &",
+        "desugaredQualType" : "const ImVec2 &"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "uv0",
+        "qualType" : "const ImVec2 &",
+        "desugaredQualType" : "const ImVec2 &",
+        "defaultValue" : "ImVec2(0, 0)"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "uv1",
+        "qualType" : "const ImVec2 &",
+        "desugaredQualType" : "const ImVec2 &",
+        "defaultValue" : "ImVec2(1, 1)"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " Widgets: Images"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Read about ImTextureID here: https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - 'uv0' and 'uv1' are texture coordinates. Read about them from the same link above."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Image() pads adds style.ImageBorderSize on each side, ImageButton() adds style.FramePadding on each side."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - ImageButton() draws a background based on regular Button() color + optionally an inner background if specified."
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "ImageWithBg",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "user_texture_id",
+        "qualType" : "ImTextureID",
+        "desugaredQualType" : "unsigned long long"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "image_size",
@@ -2098,34 +2198,16 @@
         "defaultValue" : "ImVec2(1, 1)"
       }, {
         "@type" : "AstParmVarDecl",
-        "name" : "tint_col",
-        "qualType" : "const ImVec4 &",
-        "desugaredQualType" : "const ImVec4 &",
-        "defaultValue" : "ImVec4(1, 1, 1, 1)"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "border_col",
+        "name" : "bg_col",
         "qualType" : "const ImVec4 &",
         "desugaredQualType" : "const ImVec4 &",
         "defaultValue" : "ImVec4(0, 0, 0, 0)"
       }, {
-        "@type" : "AstFullComment",
-        "decls" : [ {
-          "@type" : "AstParagraphComment",
-          "decls" : [ {
-            "@type" : "AstTextComment",
-            "text" : " Widgets: Images"
-          }, {
-            "@type" : "AstTextComment",
-            "text" : " - Read about ImTextureID here: https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples"
-          }, {
-            "@type" : "AstTextComment",
-            "text" : " - 'uv0' and 'uv1' are texture coordinates. Read about them from the same link above."
-          }, {
-            "@type" : "AstTextComment",
-            "text" : " - Note that Image() may add +2.0f to provided size if a border is visible, ImageButton() adds style.FramePadding*2.0f to provided size."
-          } ]
-        } ]
+        "@type" : "AstParmVarDecl",
+        "name" : "tint_col",
+        "qualType" : "const ImVec4 &",
+        "desugaredQualType" : "const ImVec4 &",
+        "defaultValue" : "ImVec4(1, 1, 1, 1)"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -2140,7 +2222,7 @@
         "@type" : "AstParmVarDecl",
         "name" : "user_texture_id",
         "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
+        "desugaredQualType" : "unsigned long long"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "image_size",
@@ -2378,7 +2460,7 @@
             "text" : " - Format string may also be set to NULL or use the default format (\"%f\" or \"%d\")."
           }, {
             "@type" : "AstTextComment",
-            "text" : " - Speed are per-pixel of mouse movement (v_speed=0.2f: mouse needs to move by 5 pixels to increase value by 1). For gamepad/keyboard navigation, minimum speed is Max(v_speed, minimum_step_at_given_precision)."
+            "text" : " - Speed are per-pixel of mouse movement (v_speed=0.2f: mouse needs to move by 5 pixels to increase value by 1). For keyboard/gamepad navigation, minimum speed is Max(v_speed, minimum_step_at_given_precision)."
           }, {
             "@type" : "AstTextComment",
             "text" : " - Use v_min "
@@ -4471,6 +4553,16 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "SetNextItemStorageID",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "storage_id",
+        "qualType" : "ImGuiID",
+        "desugaredQualType" : "unsigned int"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "Selectable",
       "resultType" : "bool",
       "decls" : [ {
@@ -4541,6 +4633,79 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "BeginMultiSelect",
+      "resultType" : "ImGuiMultiSelectIO *",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "flags",
+        "qualType" : "ImGuiMultiSelectFlags",
+        "desugaredQualType" : "int"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "selection_size",
+        "qualType" : "int",
+        "desugaredQualType" : "int",
+        "defaultValue" : "-1"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "items_count",
+        "qualType" : "int",
+        "desugaredQualType" : "int",
+        "defaultValue" : "-1"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " Multi-selection system for Selectable(), Checkbox(), TreeNode() functions [BETA]"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - This enables standard multi-selection/range-selection idioms (CTRL+Mouse/Keyboard, SHIFT+Mouse/Keyboard, etc.) in a way that also allow a clipper to be used."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - ImGuiSelectionUserData is often used to store your item index within the current view (but may store something else)."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Read comments near ImGuiMultiSelectIO for instructions/details and see 'Demo->Widgets->Selection State "
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "&"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " Multi-Select' for demo."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - TreeNode() is technically supported but... using this correctly is more complicated. You need some sort of linear/random access to your tree,"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   which is suited to advanced trees setups already implementing filters and clipper. We will work simplifying the current demo."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - 'selection_size' and 'items_count' parameters are optional and used by a few features. If they are costly for you to compute, you may avoid them."
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "EndMultiSelect",
+      "resultType" : "ImGuiMultiSelectIO *"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "SetNextItemSelectionUserData",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "selection_user_data",
+        "qualType" : "ImGuiSelectionUserData",
+        "desugaredQualType" : "long long"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "IsItemToggledSelection",
+      "resultType" : "bool"
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "BeginListBox",
       "resultType" : "bool",
       "decls" : [ {
@@ -4564,6 +4729,9 @@
           }, {
             "@type" : "AstTextComment",
             "text" : " - This is essentially a thin wrapper to using BeginChild/EndChild with the ImGuiChildFlags_FrameStyle flag for stylistic changes + displaying a label."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - If you don't need a label you can probably simply use BeginChild() with the ImGuiChildFlags_FrameStyle flag for the same result."
           }, {
             "@type" : "AstTextComment",
             "text" : " - You can submit contents and manage your selection state however you want it, by creating e.g. Selectable() or any other items."
@@ -5843,7 +6011,7 @@
         "defaultValue" : "NULL"
       }, {
         "@type" : "AstParmVarDecl",
-        "name" : "border",
+        "name" : "borders",
         "qualType" : "bool",
         "desugaredQualType" : "bool",
         "defaultValue" : "true"
@@ -6356,7 +6524,7 @@
             "text" : " - Tooltips windows by exception are opted out of disabling."
           }, {
             "@type" : "AstTextComment",
-            "text" : " - BeginDisabled(false) essentially does nothing useful but is provided to facilitate use of boolean expressions. If you can avoid calling BeginDisabled(False)/EndDisabled() best to avoid it."
+            "text" : " - BeginDisabled(false)/EndDisabled() essentially does nothing but is provided to facilitate use of boolean expressions (as a micro-optimization: if you have tens of thousands of BeginDisabled(false)/EndDisabled() pairs, you might want to reformulate your code to avoid making those calls)"
           } ]
         } ]
       } ]
@@ -6411,9 +6579,6 @@
           "decls" : [ {
             "@type" : "AstTextComment",
             "text" : " Focus, Activation"
-          }, {
-            "@type" : "AstTextComment",
-            "text" : " - Prefer using \"SetItemDefaultFocus()\" over \"if (IsWindowAppearing()) SetScrollHereY()\" when applicable to signify \"this is the default item\""
           } ]
         } ]
       } ]
@@ -6427,6 +6592,25 @@
         "qualType" : "int",
         "desugaredQualType" : "int",
         "defaultValue" : "0"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "SetNavCursorVisible",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "visible",
+        "qualType" : "bool",
+        "desugaredQualType" : "bool"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " Keyboard/Gamepad Navigation"
+          } ]
+        } ]
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -6820,25 +7004,16 @@
             "text" : " - the ImGuiKey enum contains all possible keyboard, mouse and gamepad inputs (e.g. ImGuiKey_A, ImGuiKey_MouseLeft, ImGuiKey_GamepadDpadUp...)."
           }, {
             "@type" : "AstTextComment",
-            "text" : " - before v1.87, we used ImGuiKey to carry native/user indices as defined by each backends. About use of those legacy ImGuiKey values:"
+            "text" : " - (legacy: before v1.87, we used ImGuiKey to carry native/user indices as defined by each backends. This was obsoleted in 1.87 (2022-02) and completely removed in 1.91.5 (2024-11). See https://github.com/ocornut/imgui/issues/4921)"
           }, {
             "@type" : "AstTextComment",
-            "text" : "  - without IMGUI_DISABLE_OBSOLETE_KEYIO (legacy support): you can still use your legacy native/user indices ("
-          }, {
-            "@type" : "AstTextComment",
-            "text" : "<"
-          }, {
-            "@type" : "AstTextComment",
-            "text" : " 512) according to how your backend/engine stored them in io.KeysDown[], but need to cast them to ImGuiKey."
-          }, {
-            "@type" : "AstTextComment",
-            "text" : "  - with    IMGUI_DISABLE_OBSOLETE_KEYIO (this is the way forward): any use of ImGuiKey will assert with key "
+            "text" : " - (legacy: any use of ImGuiKey will assert when key "
           }, {
             "@type" : "AstTextComment",
             "text" : "<"
           }, {
             "@type" : "AstTextComment",
-            "text" : " 512. GetKeyIndex() is pass-through and therefore deprecated (gone if IMGUI_DISABLE_OBSOLETE_KEYIO is defined)."
+            "text" : " 512 to detect passing legacy native/user indices)"
           } ]
         } ]
       } ]
@@ -7009,6 +7184,40 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "SetItemKeyOwner",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "key",
+        "qualType" : "ImGuiKey",
+        "desugaredQualType" : "ImGuiKey"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " Inputs Utilities: Key/Input Ownership [BETA]"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - One common use case would be to allow your items to disable standard inputs behaviors such"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   as Tab or Alt key handling, Mouse Wheel scrolling, etc."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   e.g. Button(...); SetItemKeyOwner(ImGuiKey_MouseWheelY); to make hovering/activating a button disable wheel for scrolling."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Reminder ImGuiKey enum include access to mouse buttons and gamepad, so key ownership can apply to them."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Many related features are still in imgui_internal.h. For instance, most IsKeyXXX()/IsMouseXXX() functions have an owner-id-aware version."
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "IsMouseDown",
       "resultType" : "bool",
       "decls" : [ {
@@ -7022,7 +7231,7 @@
           "@type" : "AstParagraphComment",
           "decls" : [ {
             "@type" : "AstTextComment",
-            "text" : " Inputs Utilities: Mouse specific"
+            "text" : " Inputs Utilities: Mouse"
           }, {
             "@type" : "AstTextComment",
             "text" : " - To refer to a mouse button, you may use named enums in your code e.g. ImGuiMouseButton_Left, ImGuiMouseButton_Right."
@@ -7070,6 +7279,21 @@
         "name" : "button",
         "qualType" : "ImGuiMouseButton",
         "desugaredQualType" : "int"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "IsMouseReleasedWithDelay",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "button",
+        "qualType" : "ImGuiMouseButton",
+        "desugaredQualType" : "int"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "delay",
+        "qualType" : "float",
+        "desugaredQualType" : "float"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -7363,6 +7587,41 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "DebugLog",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "fmt",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "#FORMAT_ATTR_MARKER#",
+        "qualType" : "#FORMAT_ATTR_MARKER#",
+        "desugaredQualType" : "#FORMAT_ATTR_MARKER#"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "DebugLogV",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "fmt",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "args",
+        "qualType" : "__va_list_tag *",
+        "desugaredQualType" : "__va_list_tag *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "#FORMAT_ATTR_MARKER#",
+        "qualType" : "#FORMAT_ATTR_MARKER#",
+        "desugaredQualType" : "#FORMAT_ATTR_MARKER#"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "SetAllocatorFunctions",
       "resultType" : "void",
       "decls" : [ {
@@ -7442,8 +7701,8 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
-      "name" : "GetPlatformIO",
-      "resultType" : "ImGuiPlatformIO &",
+      "name" : "UpdatePlatformWindows",
+      "resultType" : "void",
       "decls" : [ {
         "@type" : "AstFullComment",
         "decls" : [ {
@@ -7460,10 +7719,6 @@
           } ]
         } ]
       } ]
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "UpdatePlatformWindows",
-      "resultType" : "void"
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "RenderPlatformWindowsDefault",
@@ -7659,7 +7914,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiWindowFlags_NoNavInputs",
-      "docComment" : "No gamepad/keyboard navigation within the window",
+      "docComment" : "No keyboard/gamepad navigation within the window",
       "qualType" : "ImGuiWindowFlags_",
       "order" : 17,
       "value" : "1 << 16",
@@ -7667,7 +7922,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiWindowFlags_NoNavFocus",
-      "docComment" : "No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB)",
+      "docComment" : "No focusing toward this window with keyboard/gamepad navigation (e.g. skipped by CTRL+TAB)",
       "qualType" : "ImGuiWindowFlags_",
       "order" : 18,
       "value" : "1 << 17",
@@ -7711,10 +7966,18 @@
       "evaluatedValue" : 197120
     }, {
       "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiWindowFlags_DockNodeHost",
+      "docComment" : "Don't use! For internal use by Begin()/NewFrame()",
+      "qualType" : "ImGuiWindowFlags_",
+      "order" : 24,
+      "value" : "1 << 23",
+      "evaluatedValue" : 8388608
+    }, {
+      "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiWindowFlags_ChildWindow",
       "docComment" : "Don't use! For internal use by BeginChild()",
       "qualType" : "ImGuiWindowFlags_",
-      "order" : 24,
+      "order" : 25,
       "value" : "1 << 24",
       "evaluatedValue" : 16777216
     }, {
@@ -7722,7 +7985,7 @@
       "name" : "ImGuiWindowFlags_Tooltip",
       "docComment" : "Don't use! For internal use by BeginTooltip()",
       "qualType" : "ImGuiWindowFlags_",
-      "order" : 25,
+      "order" : 26,
       "value" : "1 << 25",
       "evaluatedValue" : 33554432
     }, {
@@ -7730,7 +7993,7 @@
       "name" : "ImGuiWindowFlags_Popup",
       "docComment" : "Don't use! For internal use by BeginPopup()",
       "qualType" : "ImGuiWindowFlags_",
-      "order" : 26,
+      "order" : 27,
       "value" : "1 << 26",
       "evaluatedValue" : 67108864
     }, {
@@ -7738,7 +8001,7 @@
       "name" : "ImGuiWindowFlags_Modal",
       "docComment" : "Don't use! For internal use by BeginPopupModal()",
       "qualType" : "ImGuiWindowFlags_",
-      "order" : 27,
+      "order" : 28,
       "value" : "1 << 27",
       "evaluatedValue" : 134217728
     }, {
@@ -7746,33 +8009,25 @@
       "name" : "ImGuiWindowFlags_ChildMenu",
       "docComment" : "Don't use! For internal use by BeginMenu()",
       "qualType" : "ImGuiWindowFlags_",
-      "order" : 28,
+      "order" : 29,
       "value" : "1 << 28",
       "evaluatedValue" : 268435456
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiWindowFlags_DockNodeHost",
-      "docComment" : "Don't use! For internal use by Begin()/NewFrame()",
-      "qualType" : "ImGuiWindowFlags_",
-      "order" : 29,
-      "value" : "1 << 29",
-      "evaluatedValue" : 536870912
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiWindowFlags_AlwaysUseWindowPadding",
-      "docComment" : "Obsoleted in 1.90: Use ImGuiChildFlags_AlwaysUseWindowPadding in BeginChild() call.",
-      "qualType" : "ImGuiWindowFlags_",
-      "order" : 30,
-      "value" : "1 << 30",
-      "evaluatedValue" : 1073741824
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiWindowFlags_NavFlattened",
       "docComment" : "Obsoleted in 1.90.9: Use ImGuiChildFlags_NavFlattened in BeginChild() call.",
       "qualType" : "ImGuiWindowFlags_",
+      "order" : 30,
+      "value" : "1 << 29",
+      "evaluatedValue" : 536870912
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiWindowFlags_AlwaysUseWindowPadding",
+      "docComment" : "Obsoleted in 1.90.0: Use ImGuiChildFlags_AlwaysUseWindowPadding in BeginChild() call.",
+      "qualType" : "ImGuiWindowFlags_",
       "order" : 31,
-      "value" : "1 << 31",
-      "evaluatedValue" : -2147483648
+      "value" : "1 << 30",
+      "evaluatedValue" : 1073741824
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -7786,7 +8041,7 @@
           "text" : " Flags for ImGui::BeginChild()"
         }, {
           "@type" : "AstTextComment",
-          "text" : " (Legacy: bit 0 must always correspond to ImGuiChildFlags_Border to be backward compatible with old API using 'bool border = false'."
+          "text" : " (Legacy: bit 0 must always correspond to ImGuiChildFlags_Borders to be backward compatible with old API using 'bool border = false'."
         }, {
           "@type" : "AstTextComment",
           "text" : " About using AutoResizeX/AutoResizeY flags:"
@@ -7819,7 +8074,7 @@
       "evaluatedValue" : 0
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiChildFlags_Border",
+      "name" : "ImGuiChildFlags_Borders",
       "docComment" : "Show an outer border and enable WindowPadding. (IMPORTANT: this is always == 1 == true for legacy reason)",
       "qualType" : "ImGuiChildFlags_",
       "order" : 1,
@@ -7884,11 +8139,91 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiChildFlags_NavFlattened",
-      "docComment" : "Share focus scope, allow gamepad/keyboard navigation to cross over parent border to this child or between sibling child windows.",
+      "docComment" : "[BETA] Share focus scope, allow keyboard/gamepad navigation to cross over parent border to this child or between sibling child windows.",
       "qualType" : "ImGuiChildFlags_",
       "order" : 9,
       "value" : "1 << 8",
       "evaluatedValue" : 256
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiChildFlags_Border",
+      "docComment" : "Renamed in 1.91.1 (August 2024) for consistency.",
+      "qualType" : "ImGuiChildFlags_",
+      "order" : 10,
+      "value" : "ImGuiChildFlags_Borders",
+      "evaluatedValue" : 1
+    } ]
+  }, {
+    "@type" : "AstEnumDecl",
+    "name" : "ImGuiItemFlags_",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Flags for ImGui::PushItemFlag()"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " (Those are shared by all items)"
+        } ]
+      } ]
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiItemFlags_None",
+      "docComment" : "(Default)",
+      "qualType" : "ImGuiItemFlags_",
+      "order" : 0,
+      "value" : "0",
+      "evaluatedValue" : 0
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiItemFlags_NoTabStop",
+      "docComment" : "false    // Disable keyboard tabbing. This is a \"lighter\" version of ImGuiItemFlags_NoNav.",
+      "qualType" : "ImGuiItemFlags_",
+      "order" : 1,
+      "value" : "1 << 0",
+      "evaluatedValue" : 1
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiItemFlags_NoNav",
+      "docComment" : "false    // Disable any form of focusing (keyboard/gamepad directional navigation and SetKeyboardFocusHere() calls).",
+      "qualType" : "ImGuiItemFlags_",
+      "order" : 2,
+      "value" : "1 << 1",
+      "evaluatedValue" : 2
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiItemFlags_NoNavDefaultFocus",
+      "docComment" : "false    // Disable item being a candidate for default focus (e.g. used by title bar items).",
+      "qualType" : "ImGuiItemFlags_",
+      "order" : 3,
+      "value" : "1 << 2",
+      "evaluatedValue" : 4
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiItemFlags_ButtonRepeat",
+      "docComment" : "false    // Any button-like behavior will have repeat mode enabled (based on io.KeyRepeatDelay and io.KeyRepeatRate values). Note that you can also call IsItemActive() after any button to tell if it is being held.",
+      "qualType" : "ImGuiItemFlags_",
+      "order" : 4,
+      "value" : "1 << 3",
+      "evaluatedValue" : 8
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiItemFlags_AutoClosePopups",
+      "docComment" : "true     // MenuItem()/Selectable() automatically close their parent popup window.",
+      "qualType" : "ImGuiItemFlags_",
+      "order" : 5,
+      "value" : "1 << 4",
+      "evaluatedValue" : 16
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiItemFlags_AllowDuplicateId",
+      "docComment" : "false    // Allow submitting an item with the same identifier as an item already submitted this frame without triggering a warning tooltip if io.ConfigDebugHighlightIdConflicts is set.",
+      "qualType" : "ImGuiItemFlags_",
+      "order" : 6,
+      "value" : "1 << 5",
+      "evaluatedValue" : 32
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -7964,7 +8299,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiInputTextFlags_EnterReturnsTrue",
-      "docComment" : "Return 'true' when Enter is pressed (as opposed to every time the value was modified). Consider looking at the IsItemDeactivatedAfterEdit() function.",
+      "docComment" : "Return 'true' when Enter is pressed (as opposed to every time the value was modified). Consider using IsItemDeactivatedAfterEdit() instead!",
       "qualType" : "ImGuiInputTextFlags_",
       "order" : 7,
       "value" : "1 << 6",
@@ -8051,52 +8386,60 @@
       "evaluatedValue" : 65536
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiInputTextFlags_CallbackCompletion",
-      "docComment" : "Callback on pressing TAB (for completion handling)",
+      "name" : "ImGuiInputTextFlags_ElideLeft",
+      "docComment" : "When text doesn't fit, elide left side to ensure right side stays visible. Useful for path/filenames. Single-line only!",
       "qualType" : "ImGuiInputTextFlags_",
       "order" : 18,
       "value" : "1 << 17",
       "evaluatedValue" : 131072
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiInputTextFlags_CallbackHistory",
-      "docComment" : "Callback on pressing Up/Down arrows (for history handling)",
+      "name" : "ImGuiInputTextFlags_CallbackCompletion",
+      "docComment" : "Callback on pressing TAB (for completion handling)",
       "qualType" : "ImGuiInputTextFlags_",
       "order" : 19,
       "value" : "1 << 18",
       "evaluatedValue" : 262144
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiInputTextFlags_CallbackAlways",
-      "docComment" : "Callback on each iteration. User code may query cursor position, modify text buffer.",
+      "name" : "ImGuiInputTextFlags_CallbackHistory",
+      "docComment" : "Callback on pressing Up/Down arrows (for history handling)",
       "qualType" : "ImGuiInputTextFlags_",
       "order" : 20,
       "value" : "1 << 19",
       "evaluatedValue" : 524288
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiInputTextFlags_CallbackCharFilter",
-      "docComment" : "Callback on character inputs to replace or discard them. Modify 'EventChar' to replace or discard, or return 1 in callback to discard.",
+      "name" : "ImGuiInputTextFlags_CallbackAlways",
+      "docComment" : "Callback on each iteration. User code may query cursor position, modify text buffer.",
       "qualType" : "ImGuiInputTextFlags_",
       "order" : 21,
       "value" : "1 << 20",
       "evaluatedValue" : 1048576
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiInputTextFlags_CallbackResize",
-      "docComment" : "Callback on buffer capacity changes request (beyond 'buf_size' parameter value), allowing the string to grow. Notify when the string wants to be resized (for string types which hold a cache of their Size). You will be provided a new BufSize in the callback and NEED to honor it. (see misc/cpp/imgui_stdlib.h for an example of using this)",
+      "name" : "ImGuiInputTextFlags_CallbackCharFilter",
+      "docComment" : "Callback on character inputs to replace or discard them. Modify 'EventChar' to replace or discard, or return 1 in callback to discard.",
       "qualType" : "ImGuiInputTextFlags_",
       "order" : 22,
       "value" : "1 << 21",
       "evaluatedValue" : 2097152
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiInputTextFlags_CallbackEdit",
-      "docComment" : "Callback on any edit (note that InputText() already returns true on edit, the callback is useful mainly to manipulate the underlying buffer while focus is active)",
+      "name" : "ImGuiInputTextFlags_CallbackResize",
+      "docComment" : "Callback on buffer capacity changes request (beyond 'buf_size' parameter value), allowing the string to grow. Notify when the string wants to be resized (for string types which hold a cache of their Size). You will be provided a new BufSize in the callback and NEED to honor it. (see misc/cpp/imgui_stdlib.h for an example of using this)",
       "qualType" : "ImGuiInputTextFlags_",
       "order" : 23,
       "value" : "1 << 22",
       "evaluatedValue" : 4194304
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiInputTextFlags_CallbackEdit",
+      "docComment" : "Callback on any edit. Note that InputText() already returns true on edit + you can always use IsItemEdited(). The callback is useful to manipulate the underlying buffer while focus is active.",
+      "qualType" : "ImGuiInputTextFlags_",
+      "order" : 24,
+      "value" : "1 << 23",
+      "evaluatedValue" : 8388608
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -8168,7 +8511,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiTreeNodeFlags_OpenOnDoubleClick",
-      "docComment" : "Need double-click to open node",
+      "docComment" : "Open on double-click instead of simple click (default for multi-select unless any _OpenOnXXX behavior is set explicitly). Both behaviors may be combined.",
       "qualType" : "ImGuiTreeNodeFlags_",
       "order" : 7,
       "value" : "1 << 6",
@@ -8176,7 +8519,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiTreeNodeFlags_OpenOnArrow",
-      "docComment" : "Only open when clicking on the arrow part. If ImGuiTreeNodeFlags_OpenOnDoubleClick is also set, single-click arrow or double-click all box to open.",
+      "docComment" : "Open when clicking on the arrow part (default for multi-select unless any _OpenOnXXX behavior is set explicitly). Both behaviors may be combined.",
       "qualType" : "ImGuiTreeNodeFlags_",
       "order" : 8,
       "value" : "1 << 7",
@@ -8223,7 +8566,7 @@
       "evaluatedValue" : 4096
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiTreeNodeFlags_SpanTextWidth",
+      "name" : "ImGuiTreeNodeFlags_SpanLabelWidth",
       "docComment" : "Narrow hit box + narrow hovering highlight, will only cover the label text.",
       "qualType" : "ImGuiTreeNodeFlags_",
       "order" : 14,
@@ -8232,25 +8575,32 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiTreeNodeFlags_SpanAllColumns",
-      "docComment" : "Frame will span all columns of its container table (text will still fit in current column)",
+      "docComment" : "Frame will span all columns of its container table (label will still fit in current column)",
       "qualType" : "ImGuiTreeNodeFlags_",
       "order" : 15,
       "value" : "1 << 14",
       "evaluatedValue" : 16384
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiTreeNodeFlags_NavLeftJumpsBackHere",
-      "docComment" : "(WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)",
+      "name" : "ImGuiTreeNodeFlags_LabelSpanAllColumns",
+      "docComment" : "Label will span all columns of its container table",
       "qualType" : "ImGuiTreeNodeFlags_",
       "order" : 16,
       "value" : "1 << 15",
       "evaluatedValue" : 32768
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiTreeNodeFlags_CollapsingHeader",
-      "docComment" : "ImGuiTreeNodeFlags_NoScrollOnOpen     = 1 < < 16,  // FIXME: TODO: Disable automatic scroll on TreePop() if node got just open and contents is not visible",
+      "name" : "ImGuiTreeNodeFlags_NavLeftJumpsBackHere",
+      "docComment" : "(WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)",
       "qualType" : "ImGuiTreeNodeFlags_",
       "order" : 17,
+      "value" : "1 << 17",
+      "evaluatedValue" : 131072
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiTreeNodeFlags_CollapsingHeader",
+      "qualType" : "ImGuiTreeNodeFlags_",
+      "order" : 18,
       "value" : "ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_NoAutoOpenOnLog",
       "evaluatedValue" : 26
     }, {
@@ -8258,9 +8608,17 @@
       "name" : "ImGuiTreeNodeFlags_AllowItemOverlap",
       "docComment" : "Renamed in 1.89.7",
       "qualType" : "ImGuiTreeNodeFlags_",
-      "order" : 18,
+      "order" : 19,
       "value" : "ImGuiTreeNodeFlags_AllowOverlap",
       "evaluatedValue" : 4
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiTreeNodeFlags_SpanTextWidth",
+      "docComment" : "Renamed in 1.90.7",
+      "qualType" : "ImGuiTreeNodeFlags_",
+      "order" : 20,
+      "value" : "ImGuiTreeNodeFlags_SpanLabelWidth",
+      "evaluatedValue" : 8192
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -8409,8 +8767,8 @@
       "evaluatedValue" : 0
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiSelectableFlags_DontClosePopups",
-      "docComment" : "Clicking this doesn't close parent popup window",
+      "name" : "ImGuiSelectableFlags_NoAutoClosePopups",
+      "docComment" : "Clicking this doesn't close parent popup window (overrides ImGuiItemFlags_AutoClosePopups)",
       "qualType" : "ImGuiSelectableFlags_",
       "order" : 1,
       "value" : "1 << 0",
@@ -8449,10 +8807,26 @@
       "evaluatedValue" : 16
     }, {
       "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSelectableFlags_Highlight",
+      "docComment" : "Make the item be displayed as if it is hovered",
+      "qualType" : "ImGuiSelectableFlags_",
+      "order" : 6,
+      "value" : "1 << 5",
+      "evaluatedValue" : 32
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSelectableFlags_DontClosePopups",
+      "docComment" : "Renamed in 1.91.0",
+      "qualType" : "ImGuiSelectableFlags_",
+      "order" : 7,
+      "value" : "ImGuiSelectableFlags_NoAutoClosePopups",
+      "evaluatedValue" : 1
+    }, {
+      "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiSelectableFlags_AllowItemOverlap",
       "docComment" : "Renamed in 1.89.7",
       "qualType" : "ImGuiSelectableFlags_",
-      "order" : 6,
+      "order" : 8,
       "value" : "ImGuiSelectableFlags_AllowOverlap",
       "evaluatedValue" : 16
     } ]
@@ -8921,7 +9295,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiHoveredFlags_NoNavOverride",
-      "docComment" : "IsItemHovered() only: Disable using gamepad/keyboard navigation state when active, always query mouse",
+      "docComment" : "IsItemHovered() only: Disable using keyboard/gamepad navigation state when active, always query mouse",
       "qualType" : "ImGuiHoveredFlags_",
       "order" : 11,
       "value" : "1 << 11",
@@ -9302,10 +9676,24 @@
       "evaluatedValue" : 9
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiDataType_COUNT",
+      "name" : "ImGuiDataType_Bool",
+      "docComment" : "bool (provided for user convenience, not supported by scalar widgets)",
       "qualType" : "ImGuiDataType_",
       "order" : 10,
       "evaluatedValue" : 10
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiDataType_String",
+      "docComment" : "char* (provided for user convenience, not supported by scalar widgets)",
+      "qualType" : "ImGuiDataType_",
+      "order" : 11,
+      "evaluatedValue" : 11
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiDataType_COUNT",
+      "qualType" : "ImGuiDataType_",
+      "order" : 12,
+      "evaluatedValue" : 12
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -9409,7 +9797,7 @@
           "text" : " A key identifier (ImGuiKey_XXX or ImGuiMod_XXX value): can represent Keyboard, Mouse and Gamepad values."
         }, {
           "@type" : "AstTextComment",
-          "text" : " All our named keys are >= 512. Keys value 0 to 511 are left unused as legacy native/opaque key values ("
+          "text" : " All our named keys are >= 512. Keys value 0 to 511 are left unused and were legacy native/opaque key values ("
         }, {
           "@type" : "AstTextComment",
           "text" : "<"
@@ -9418,10 +9806,10 @@
           "text" : " 1.87)."
         }, {
           "@type" : "AstTextComment",
-          "text" : " Since >= 1.89 we increased typing (went from int to enum), some legacy code may need a cast to ImGuiKey."
+          "text" : " Support for legacy keys was completely removed in 1.91.5."
         }, {
           "@type" : "AstTextComment",
-          "text" : " Read details about the 1.87 and 1.89 transition : https://github.com/ocornut/imgui/issues/4921"
+          "text" : " Read details about the 1.87+ transition : https://github.com/ocornut/imgui/issues/4921"
         }, {
           "@type" : "AstTextComment",
           "text" : " Note that \"Keys\" related to physical keys and are not the same concept as input \"Characters\", the later are submitted via io.AddInputCharacter()."
@@ -9440,990 +9828,1005 @@
       "evaluatedValue" : 0
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiKey_Tab",
-      "docComment" : "== ImGuiKey_NamedKey_BEGIN",
+      "name" : "ImGuiKey_NamedKey_BEGIN",
+      "docComment" : "First valid key value (other than 0)",
       "qualType" : "ImGuiKey",
       "order" : 1,
       "value" : "512",
       "evaluatedValue" : 512
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiKey_LeftArrow",
+      "name" : "ImGuiKey_Tab",
+      "docComment" : "== ImGuiKey_NamedKey_BEGIN",
       "qualType" : "ImGuiKey",
       "order" : 2,
+      "value" : "512",
+      "evaluatedValue" : 512
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiKey_LeftArrow",
+      "qualType" : "ImGuiKey",
+      "order" : 3,
       "evaluatedValue" : 513
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_RightArrow",
       "qualType" : "ImGuiKey",
-      "order" : 3,
+      "order" : 4,
       "evaluatedValue" : 514
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_UpArrow",
       "qualType" : "ImGuiKey",
-      "order" : 4,
+      "order" : 5,
       "evaluatedValue" : 515
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_DownArrow",
       "qualType" : "ImGuiKey",
-      "order" : 5,
+      "order" : 6,
       "evaluatedValue" : 516
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_PageUp",
       "qualType" : "ImGuiKey",
-      "order" : 6,
+      "order" : 7,
       "evaluatedValue" : 517
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_PageDown",
       "qualType" : "ImGuiKey",
-      "order" : 7,
+      "order" : 8,
       "evaluatedValue" : 518
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Home",
       "qualType" : "ImGuiKey",
-      "order" : 8,
+      "order" : 9,
       "evaluatedValue" : 519
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_End",
       "qualType" : "ImGuiKey",
-      "order" : 9,
+      "order" : 10,
       "evaluatedValue" : 520
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Insert",
       "qualType" : "ImGuiKey",
-      "order" : 10,
+      "order" : 11,
       "evaluatedValue" : 521
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Delete",
       "qualType" : "ImGuiKey",
-      "order" : 11,
+      "order" : 12,
       "evaluatedValue" : 522
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Backspace",
       "qualType" : "ImGuiKey",
-      "order" : 12,
+      "order" : 13,
       "evaluatedValue" : 523
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Space",
       "qualType" : "ImGuiKey",
-      "order" : 13,
+      "order" : 14,
       "evaluatedValue" : 524
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Enter",
       "qualType" : "ImGuiKey",
-      "order" : 14,
+      "order" : 15,
       "evaluatedValue" : 525
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Escape",
       "qualType" : "ImGuiKey",
-      "order" : 15,
+      "order" : 16,
       "evaluatedValue" : 526
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_LeftCtrl",
       "qualType" : "ImGuiKey",
-      "order" : 16,
+      "order" : 17,
       "evaluatedValue" : 527
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_LeftShift",
       "qualType" : "ImGuiKey",
-      "order" : 17,
+      "order" : 18,
       "evaluatedValue" : 528
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_LeftAlt",
       "qualType" : "ImGuiKey",
-      "order" : 18,
+      "order" : 19,
       "evaluatedValue" : 529
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_LeftSuper",
       "qualType" : "ImGuiKey",
-      "order" : 19,
+      "order" : 20,
       "evaluatedValue" : 530
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_RightCtrl",
       "qualType" : "ImGuiKey",
-      "order" : 20,
+      "order" : 21,
       "evaluatedValue" : 531
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_RightShift",
       "qualType" : "ImGuiKey",
-      "order" : 21,
+      "order" : 22,
       "evaluatedValue" : 532
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_RightAlt",
       "qualType" : "ImGuiKey",
-      "order" : 22,
+      "order" : 23,
       "evaluatedValue" : 533
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_RightSuper",
       "qualType" : "ImGuiKey",
-      "order" : 23,
+      "order" : 24,
       "evaluatedValue" : 534
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Menu",
       "qualType" : "ImGuiKey",
-      "order" : 24,
+      "order" : 25,
       "evaluatedValue" : 535
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_0",
       "qualType" : "ImGuiKey",
-      "order" : 25,
+      "order" : 26,
       "evaluatedValue" : 536
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_1",
       "qualType" : "ImGuiKey",
-      "order" : 26,
+      "order" : 27,
       "evaluatedValue" : 537
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_2",
       "qualType" : "ImGuiKey",
-      "order" : 27,
+      "order" : 28,
       "evaluatedValue" : 538
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_3",
       "qualType" : "ImGuiKey",
-      "order" : 28,
+      "order" : 29,
       "evaluatedValue" : 539
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_4",
       "qualType" : "ImGuiKey",
-      "order" : 29,
+      "order" : 30,
       "evaluatedValue" : 540
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_5",
       "qualType" : "ImGuiKey",
-      "order" : 30,
+      "order" : 31,
       "evaluatedValue" : 541
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_6",
       "qualType" : "ImGuiKey",
-      "order" : 31,
+      "order" : 32,
       "evaluatedValue" : 542
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_7",
       "qualType" : "ImGuiKey",
-      "order" : 32,
+      "order" : 33,
       "evaluatedValue" : 543
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_8",
       "qualType" : "ImGuiKey",
-      "order" : 33,
+      "order" : 34,
       "evaluatedValue" : 544
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_9",
       "qualType" : "ImGuiKey",
-      "order" : 34,
+      "order" : 35,
       "evaluatedValue" : 545
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_A",
       "qualType" : "ImGuiKey",
-      "order" : 35,
+      "order" : 36,
       "evaluatedValue" : 546
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_B",
       "qualType" : "ImGuiKey",
-      "order" : 36,
+      "order" : 37,
       "evaluatedValue" : 547
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_C",
       "qualType" : "ImGuiKey",
-      "order" : 37,
+      "order" : 38,
       "evaluatedValue" : 548
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_D",
       "qualType" : "ImGuiKey",
-      "order" : 38,
+      "order" : 39,
       "evaluatedValue" : 549
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_E",
       "qualType" : "ImGuiKey",
-      "order" : 39,
+      "order" : 40,
       "evaluatedValue" : 550
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F",
       "qualType" : "ImGuiKey",
-      "order" : 40,
+      "order" : 41,
       "evaluatedValue" : 551
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_G",
       "qualType" : "ImGuiKey",
-      "order" : 41,
+      "order" : 42,
       "evaluatedValue" : 552
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_H",
       "qualType" : "ImGuiKey",
-      "order" : 42,
+      "order" : 43,
       "evaluatedValue" : 553
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_I",
       "qualType" : "ImGuiKey",
-      "order" : 43,
+      "order" : 44,
       "evaluatedValue" : 554
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_J",
       "qualType" : "ImGuiKey",
-      "order" : 44,
+      "order" : 45,
       "evaluatedValue" : 555
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_K",
       "qualType" : "ImGuiKey",
-      "order" : 45,
+      "order" : 46,
       "evaluatedValue" : 556
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_L",
       "qualType" : "ImGuiKey",
-      "order" : 46,
+      "order" : 47,
       "evaluatedValue" : 557
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_M",
       "qualType" : "ImGuiKey",
-      "order" : 47,
+      "order" : 48,
       "evaluatedValue" : 558
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_N",
       "qualType" : "ImGuiKey",
-      "order" : 48,
+      "order" : 49,
       "evaluatedValue" : 559
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_O",
       "qualType" : "ImGuiKey",
-      "order" : 49,
+      "order" : 50,
       "evaluatedValue" : 560
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_P",
       "qualType" : "ImGuiKey",
-      "order" : 50,
+      "order" : 51,
       "evaluatedValue" : 561
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Q",
       "qualType" : "ImGuiKey",
-      "order" : 51,
+      "order" : 52,
       "evaluatedValue" : 562
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_R",
       "qualType" : "ImGuiKey",
-      "order" : 52,
+      "order" : 53,
       "evaluatedValue" : 563
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_S",
       "qualType" : "ImGuiKey",
-      "order" : 53,
+      "order" : 54,
       "evaluatedValue" : 564
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_T",
       "qualType" : "ImGuiKey",
-      "order" : 54,
+      "order" : 55,
       "evaluatedValue" : 565
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_U",
       "qualType" : "ImGuiKey",
-      "order" : 55,
+      "order" : 56,
       "evaluatedValue" : 566
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_V",
       "qualType" : "ImGuiKey",
-      "order" : 56,
+      "order" : 57,
       "evaluatedValue" : 567
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_W",
       "qualType" : "ImGuiKey",
-      "order" : 57,
+      "order" : 58,
       "evaluatedValue" : 568
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_X",
       "qualType" : "ImGuiKey",
-      "order" : 58,
+      "order" : 59,
       "evaluatedValue" : 569
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Y",
       "qualType" : "ImGuiKey",
-      "order" : 59,
+      "order" : 60,
       "evaluatedValue" : 570
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Z",
       "qualType" : "ImGuiKey",
-      "order" : 60,
+      "order" : 61,
       "evaluatedValue" : 571
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F1",
       "qualType" : "ImGuiKey",
-      "order" : 61,
+      "order" : 62,
       "evaluatedValue" : 572
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F2",
       "qualType" : "ImGuiKey",
-      "order" : 62,
+      "order" : 63,
       "evaluatedValue" : 573
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F3",
       "qualType" : "ImGuiKey",
-      "order" : 63,
+      "order" : 64,
       "evaluatedValue" : 574
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F4",
       "qualType" : "ImGuiKey",
-      "order" : 64,
+      "order" : 65,
       "evaluatedValue" : 575
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F5",
       "qualType" : "ImGuiKey",
-      "order" : 65,
+      "order" : 66,
       "evaluatedValue" : 576
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F6",
       "qualType" : "ImGuiKey",
-      "order" : 66,
+      "order" : 67,
       "evaluatedValue" : 577
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F7",
       "qualType" : "ImGuiKey",
-      "order" : 67,
+      "order" : 68,
       "evaluatedValue" : 578
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F8",
       "qualType" : "ImGuiKey",
-      "order" : 68,
+      "order" : 69,
       "evaluatedValue" : 579
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F9",
       "qualType" : "ImGuiKey",
-      "order" : 69,
+      "order" : 70,
       "evaluatedValue" : 580
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F10",
       "qualType" : "ImGuiKey",
-      "order" : 70,
+      "order" : 71,
       "evaluatedValue" : 581
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F11",
       "qualType" : "ImGuiKey",
-      "order" : 71,
+      "order" : 72,
       "evaluatedValue" : 582
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F12",
       "qualType" : "ImGuiKey",
-      "order" : 72,
+      "order" : 73,
       "evaluatedValue" : 583
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F13",
       "qualType" : "ImGuiKey",
-      "order" : 73,
+      "order" : 74,
       "evaluatedValue" : 584
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F14",
       "qualType" : "ImGuiKey",
-      "order" : 74,
+      "order" : 75,
       "evaluatedValue" : 585
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F15",
       "qualType" : "ImGuiKey",
-      "order" : 75,
+      "order" : 76,
       "evaluatedValue" : 586
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F16",
       "qualType" : "ImGuiKey",
-      "order" : 76,
+      "order" : 77,
       "evaluatedValue" : 587
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F17",
       "qualType" : "ImGuiKey",
-      "order" : 77,
+      "order" : 78,
       "evaluatedValue" : 588
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F18",
       "qualType" : "ImGuiKey",
-      "order" : 78,
+      "order" : 79,
       "evaluatedValue" : 589
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F19",
       "qualType" : "ImGuiKey",
-      "order" : 79,
+      "order" : 80,
       "evaluatedValue" : 590
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F20",
       "qualType" : "ImGuiKey",
-      "order" : 80,
+      "order" : 81,
       "evaluatedValue" : 591
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F21",
       "qualType" : "ImGuiKey",
-      "order" : 81,
+      "order" : 82,
       "evaluatedValue" : 592
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F22",
       "qualType" : "ImGuiKey",
-      "order" : 82,
+      "order" : 83,
       "evaluatedValue" : 593
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F23",
       "qualType" : "ImGuiKey",
-      "order" : 83,
+      "order" : 84,
       "evaluatedValue" : 594
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_F24",
       "qualType" : "ImGuiKey",
-      "order" : 84,
+      "order" : 85,
       "evaluatedValue" : 595
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Apostrophe",
       "docComment" : "'",
       "qualType" : "ImGuiKey",
-      "order" : 85,
+      "order" : 86,
       "evaluatedValue" : 596
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Comma",
       "docComment" : ",",
       "qualType" : "ImGuiKey",
-      "order" : 86,
+      "order" : 87,
       "evaluatedValue" : 597
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Minus",
       "docComment" : "-",
       "qualType" : "ImGuiKey",
-      "order" : 87,
+      "order" : 88,
       "evaluatedValue" : 598
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Period",
       "docComment" : ".",
       "qualType" : "ImGuiKey",
-      "order" : 88,
+      "order" : 89,
       "evaluatedValue" : 599
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Slash",
       "docComment" : "/",
       "qualType" : "ImGuiKey",
-      "order" : 89,
+      "order" : 90,
       "evaluatedValue" : 600
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Semicolon",
       "docComment" : ";",
       "qualType" : "ImGuiKey",
-      "order" : 90,
+      "order" : 91,
       "evaluatedValue" : 601
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Equal",
       "docComment" : "=",
       "qualType" : "ImGuiKey",
-      "order" : 91,
+      "order" : 92,
       "evaluatedValue" : 602
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_LeftBracket",
       "docComment" : "[",
       "qualType" : "ImGuiKey",
-      "order" : 92,
+      "order" : 93,
       "evaluatedValue" : 603
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Backslash",
       "docComment" : " \\ (this text inhibit multiline comment caused by backslash)",
       "qualType" : "ImGuiKey",
-      "order" : 93,
+      "order" : 94,
       "evaluatedValue" : 604
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_RightBracket",
       "docComment" : "]",
       "qualType" : "ImGuiKey",
-      "order" : 94,
+      "order" : 95,
       "evaluatedValue" : 605
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GraveAccent",
       "docComment" : "`",
       "qualType" : "ImGuiKey",
-      "order" : 95,
+      "order" : 96,
       "evaluatedValue" : 606
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_CapsLock",
       "qualType" : "ImGuiKey",
-      "order" : 96,
+      "order" : 97,
       "evaluatedValue" : 607
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_ScrollLock",
       "qualType" : "ImGuiKey",
-      "order" : 97,
+      "order" : 98,
       "evaluatedValue" : 608
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_NumLock",
       "qualType" : "ImGuiKey",
-      "order" : 98,
+      "order" : 99,
       "evaluatedValue" : 609
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_PrintScreen",
       "qualType" : "ImGuiKey",
-      "order" : 99,
+      "order" : 100,
       "evaluatedValue" : 610
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Pause",
       "qualType" : "ImGuiKey",
-      "order" : 100,
+      "order" : 101,
       "evaluatedValue" : 611
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad0",
       "qualType" : "ImGuiKey",
-      "order" : 101,
+      "order" : 102,
       "evaluatedValue" : 612
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad1",
       "qualType" : "ImGuiKey",
-      "order" : 102,
+      "order" : 103,
       "evaluatedValue" : 613
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad2",
       "qualType" : "ImGuiKey",
-      "order" : 103,
+      "order" : 104,
       "evaluatedValue" : 614
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad3",
       "qualType" : "ImGuiKey",
-      "order" : 104,
+      "order" : 105,
       "evaluatedValue" : 615
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad4",
       "qualType" : "ImGuiKey",
-      "order" : 105,
+      "order" : 106,
       "evaluatedValue" : 616
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad5",
       "qualType" : "ImGuiKey",
-      "order" : 106,
+      "order" : 107,
       "evaluatedValue" : 617
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad6",
       "qualType" : "ImGuiKey",
-      "order" : 107,
+      "order" : 108,
       "evaluatedValue" : 618
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad7",
       "qualType" : "ImGuiKey",
-      "order" : 108,
+      "order" : 109,
       "evaluatedValue" : 619
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad8",
       "qualType" : "ImGuiKey",
-      "order" : 109,
+      "order" : 110,
       "evaluatedValue" : 620
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_Keypad9",
       "qualType" : "ImGuiKey",
-      "order" : 110,
+      "order" : 111,
       "evaluatedValue" : 621
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_KeypadDecimal",
       "qualType" : "ImGuiKey",
-      "order" : 111,
+      "order" : 112,
       "evaluatedValue" : 622
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_KeypadDivide",
       "qualType" : "ImGuiKey",
-      "order" : 112,
+      "order" : 113,
       "evaluatedValue" : 623
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_KeypadMultiply",
       "qualType" : "ImGuiKey",
-      "order" : 113,
+      "order" : 114,
       "evaluatedValue" : 624
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_KeypadSubtract",
       "qualType" : "ImGuiKey",
-      "order" : 114,
+      "order" : 115,
       "evaluatedValue" : 625
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_KeypadAdd",
       "qualType" : "ImGuiKey",
-      "order" : 115,
+      "order" : 116,
       "evaluatedValue" : 626
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_KeypadEnter",
       "qualType" : "ImGuiKey",
-      "order" : 116,
+      "order" : 117,
       "evaluatedValue" : 627
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_KeypadEqual",
       "qualType" : "ImGuiKey",
-      "order" : 117,
+      "order" : 118,
       "evaluatedValue" : 628
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_AppBack",
       "docComment" : "Available on some keyboard/mouses. Often referred as \"Browser Back\"",
       "qualType" : "ImGuiKey",
-      "order" : 118,
+      "order" : 119,
       "evaluatedValue" : 629
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_AppForward",
       "qualType" : "ImGuiKey",
-      "order" : 119,
+      "order" : 120,
       "evaluatedValue" : 630
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiKey_Oem102",
+      "docComment" : "Non-US backslash.",
+      "qualType" : "ImGuiKey",
+      "order" : 121,
+      "evaluatedValue" : 631
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadStart",
       "docComment" : "Menu (Xbox)      + (Switch)   Start/Options (PS)",
       "qualType" : "ImGuiKey",
-      "order" : 120,
-      "evaluatedValue" : 631
+      "order" : 122,
+      "evaluatedValue" : 632
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadBack",
       "docComment" : "View (Xbox)      - (Switch)   Share (PS)",
       "qualType" : "ImGuiKey",
-      "order" : 121,
-      "evaluatedValue" : 632
+      "order" : 123,
+      "evaluatedValue" : 633
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadFaceLeft",
       "docComment" : "X (Xbox)         Y (Switch)   Square (PS)        // Tap: Toggle Menu. Hold: Windowing mode (Focus/Move/Resize windows)",
       "qualType" : "ImGuiKey",
-      "order" : 122,
-      "evaluatedValue" : 633
+      "order" : 124,
+      "evaluatedValue" : 634
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadFaceRight",
       "docComment" : "B (Xbox)         A (Switch)   Circle (PS)        // Cancel / Close / Exit",
       "qualType" : "ImGuiKey",
-      "order" : 123,
-      "evaluatedValue" : 634
+      "order" : 125,
+      "evaluatedValue" : 635
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadFaceUp",
       "docComment" : "Y (Xbox)         X (Switch)   Triangle (PS)      // Text Input / On-screen Keyboard",
       "qualType" : "ImGuiKey",
-      "order" : 124,
-      "evaluatedValue" : 635
+      "order" : 126,
+      "evaluatedValue" : 636
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadFaceDown",
       "docComment" : "A (Xbox)         B (Switch)   Cross (PS)         // Activate / Open / Toggle / Tweak",
       "qualType" : "ImGuiKey",
-      "order" : 125,
-      "evaluatedValue" : 636
+      "order" : 127,
+      "evaluatedValue" : 637
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadDpadLeft",
       "docComment" : "D-pad Left                                       // Move / Tweak / Resize Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 126,
-      "evaluatedValue" : 637
+      "order" : 128,
+      "evaluatedValue" : 638
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadDpadRight",
       "docComment" : "D-pad Right                                      // Move / Tweak / Resize Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 127,
-      "evaluatedValue" : 638
+      "order" : 129,
+      "evaluatedValue" : 639
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadDpadUp",
       "docComment" : "D-pad Up                                         // Move / Tweak / Resize Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 128,
-      "evaluatedValue" : 639
+      "order" : 130,
+      "evaluatedValue" : 640
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadDpadDown",
       "docComment" : "D-pad Down                                       // Move / Tweak / Resize Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 129,
-      "evaluatedValue" : 640
+      "order" : 131,
+      "evaluatedValue" : 641
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadL1",
       "docComment" : "L Bumper (Xbox)  L (Switch)   L1 (PS)            // Tweak Slower / Focus Previous (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 130,
-      "evaluatedValue" : 641
+      "order" : 132,
+      "evaluatedValue" : 642
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadR1",
       "docComment" : "R Bumper (Xbox)  R (Switch)   R1 (PS)            // Tweak Faster / Focus Next (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 131,
-      "evaluatedValue" : 642
+      "order" : 133,
+      "evaluatedValue" : 643
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadL2",
       "docComment" : "L Trig. (Xbox)   ZL (Switch)  L2 (PS) [Analog]",
       "qualType" : "ImGuiKey",
-      "order" : 132,
-      "evaluatedValue" : 643
+      "order" : 134,
+      "evaluatedValue" : 644
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadR2",
       "docComment" : "R Trig. (Xbox)   ZR (Switch)  R2 (PS) [Analog]",
       "qualType" : "ImGuiKey",
-      "order" : 133,
-      "evaluatedValue" : 644
+      "order" : 135,
+      "evaluatedValue" : 645
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadL3",
       "docComment" : "L Stick (Xbox)   L3 (Switch)  L3 (PS)",
       "qualType" : "ImGuiKey",
-      "order" : 134,
-      "evaluatedValue" : 645
+      "order" : 136,
+      "evaluatedValue" : 646
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadR3",
       "docComment" : "R Stick (Xbox)   R3 (Switch)  R3 (PS)",
       "qualType" : "ImGuiKey",
-      "order" : 135,
-      "evaluatedValue" : 646
+      "order" : 137,
+      "evaluatedValue" : 647
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadLStickLeft",
       "docComment" : "[Analog]                                         // Move Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 136,
-      "evaluatedValue" : 647
+      "order" : 138,
+      "evaluatedValue" : 648
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadLStickRight",
       "docComment" : "[Analog]                                         // Move Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 137,
-      "evaluatedValue" : 648
+      "order" : 139,
+      "evaluatedValue" : 649
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadLStickUp",
       "docComment" : "[Analog]                                         // Move Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 138,
-      "evaluatedValue" : 649
+      "order" : 140,
+      "evaluatedValue" : 650
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadLStickDown",
       "docComment" : "[Analog]                                         // Move Window (in Windowing mode)",
       "qualType" : "ImGuiKey",
-      "order" : 139,
-      "evaluatedValue" : 650
+      "order" : 141,
+      "evaluatedValue" : 651
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadRStickLeft",
       "docComment" : "[Analog]",
       "qualType" : "ImGuiKey",
-      "order" : 140,
-      "evaluatedValue" : 651
+      "order" : 142,
+      "evaluatedValue" : 652
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadRStickRight",
       "docComment" : "[Analog]",
       "qualType" : "ImGuiKey",
-      "order" : 141,
-      "evaluatedValue" : 652
+      "order" : 143,
+      "evaluatedValue" : 653
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadRStickUp",
       "docComment" : "[Analog]",
       "qualType" : "ImGuiKey",
-      "order" : 142,
-      "evaluatedValue" : 653
+      "order" : 144,
+      "evaluatedValue" : 654
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_GamepadRStickDown",
       "docComment" : "[Analog]",
       "qualType" : "ImGuiKey",
-      "order" : 143,
-      "evaluatedValue" : 654
+      "order" : 145,
+      "evaluatedValue" : 655
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_MouseLeft",
       "docComment" : "Aliases: Mouse Buttons (auto-submitted from AddMouseButtonEvent() calls) - This is mirroring the data also written to io.MouseDown[], io.MouseWheel, in a format allowing them to be accessed via standard key API.",
       "qualType" : "ImGuiKey",
-      "order" : 144,
-      "evaluatedValue" : 655
+      "order" : 146,
+      "evaluatedValue" : 656
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_MouseRight",
       "docComment" : "Aliases: Mouse Buttons (auto-submitted from AddMouseButtonEvent() calls) - This is mirroring the data also written to io.MouseDown[], io.MouseWheel, in a format allowing them to be accessed via standard key API.",
       "qualType" : "ImGuiKey",
-      "order" : 145,
-      "evaluatedValue" : 656
+      "order" : 147,
+      "evaluatedValue" : 657
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_MouseMiddle",
       "docComment" : "Aliases: Mouse Buttons (auto-submitted from AddMouseButtonEvent() calls) - This is mirroring the data also written to io.MouseDown[], io.MouseWheel, in a format allowing them to be accessed via standard key API.",
       "qualType" : "ImGuiKey",
-      "order" : 146,
-      "evaluatedValue" : 657
+      "order" : 148,
+      "evaluatedValue" : 658
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_MouseX1",
       "docComment" : "Aliases: Mouse Buttons (auto-submitted from AddMouseButtonEvent() calls) - This is mirroring the data also written to io.MouseDown[], io.MouseWheel, in a format allowing them to be accessed via standard key API.",
       "qualType" : "ImGuiKey",
-      "order" : 147,
-      "evaluatedValue" : 658
+      "order" : 149,
+      "evaluatedValue" : 659
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_MouseX2",
       "docComment" : "Aliases: Mouse Buttons (auto-submitted from AddMouseButtonEvent() calls) - This is mirroring the data also written to io.MouseDown[], io.MouseWheel, in a format allowing them to be accessed via standard key API.",
       "qualType" : "ImGuiKey",
-      "order" : 148,
-      "evaluatedValue" : 659
+      "order" : 150,
+      "evaluatedValue" : 660
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_MouseWheelX",
       "docComment" : "Aliases: Mouse Buttons (auto-submitted from AddMouseButtonEvent() calls) - This is mirroring the data also written to io.MouseDown[], io.MouseWheel, in a format allowing them to be accessed via standard key API.",
       "qualType" : "ImGuiKey",
-      "order" : 149,
-      "evaluatedValue" : 660
+      "order" : 151,
+      "evaluatedValue" : 661
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_MouseWheelY",
       "docComment" : "Aliases: Mouse Buttons (auto-submitted from AddMouseButtonEvent() calls) - This is mirroring the data also written to io.MouseDown[], io.MouseWheel, in a format allowing them to be accessed via standard key API.",
       "qualType" : "ImGuiKey",
-      "order" : 150,
-      "evaluatedValue" : 661
+      "order" : 152,
+      "evaluatedValue" : 662
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_ReservedForModCtrl",
       "docComment" : "[Internal] Reserved for mod storage",
       "qualType" : "ImGuiKey",
-      "order" : 151,
-      "evaluatedValue" : 662
+      "order" : 153,
+      "evaluatedValue" : 663
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_ReservedForModShift",
       "docComment" : "[Internal] Reserved for mod storage",
       "qualType" : "ImGuiKey",
-      "order" : 152,
-      "evaluatedValue" : 663
+      "order" : 154,
+      "evaluatedValue" : 664
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_ReservedForModAlt",
       "docComment" : "[Internal] Reserved for mod storage",
       "qualType" : "ImGuiKey",
-      "order" : 153,
-      "evaluatedValue" : 664
+      "order" : 155,
+      "evaluatedValue" : 665
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_ReservedForModSuper",
       "docComment" : "[Internal] Reserved for mod storage",
       "qualType" : "ImGuiKey",
-      "order" : 154,
-      "evaluatedValue" : 665
+      "order" : 156,
+      "evaluatedValue" : 666
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiKey_COUNT",
+      "name" : "ImGuiKey_NamedKey_END",
       "docComment" : "[Internal] Reserved for mod storage",
       "qualType" : "ImGuiKey",
-      "order" : 155,
-      "evaluatedValue" : 666
+      "order" : 157,
+      "evaluatedValue" : 667
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiMod_None",
       "docComment" : "Keyboard Modifiers (explicitly submitted by backend via AddKeyEvent() calls) - This is mirroring the data also written to io.KeyCtrl, io.KeyShift, io.KeyAlt, io.KeySuper, in a format allowing them to be accessed via standard key API, allowing calls such as IsKeyPressed(), IsKeyReleased(), querying duration etc. - Code polling every key (e.g. an interface to detect a key press for input mapping) might want to ignore those and prefer using the real keys (e.g. ImGuiKey_LeftCtrl, ImGuiKey_RightCtrl instead of ImGuiMod_Ctrl). - In theory the value of keyboard modifiers should be roughly equivalent to a logical or of the equivalent left/right keys. In practice: it's complicated; mods are often provided from different sources. Keyboard layout, IME, sticky keys and backends tend to interfere and break that equivalence. The safer decision is to relay that ambiguity down to the end-user... - On macOS, we swap Cmd(Super) and Ctrl keys at the time of the io.AddKeyEvent() call.",
       "qualType" : "ImGuiKey",
-      "order" : 156,
+      "order" : 158,
       "value" : "0",
       "evaluatedValue" : 0
     }, {
@@ -10431,7 +10834,7 @@
       "name" : "ImGuiMod_Ctrl",
       "docComment" : "Ctrl (non-macOS), Cmd (macOS)",
       "qualType" : "ImGuiKey",
-      "order" : 157,
+      "order" : 159,
       "value" : "1 << 12",
       "evaluatedValue" : 4096
     }, {
@@ -10439,7 +10842,7 @@
       "name" : "ImGuiMod_Shift",
       "docComment" : "Shift",
       "qualType" : "ImGuiKey",
-      "order" : 158,
+      "order" : 160,
       "value" : "1 << 13",
       "evaluatedValue" : 8192
     }, {
@@ -10447,7 +10850,7 @@
       "name" : "ImGuiMod_Alt",
       "docComment" : "Option/Menu",
       "qualType" : "ImGuiKey",
-      "order" : 159,
+      "order" : 161,
       "value" : "1 << 14",
       "evaluatedValue" : 16384
     }, {
@@ -10455,7 +10858,7 @@
       "name" : "ImGuiMod_Super",
       "docComment" : "Windows/Super (non-macOS), Ctrl (macOS)",
       "qualType" : "ImGuiKey",
-      "order" : 160,
+      "order" : 162,
       "value" : "1 << 15",
       "evaluatedValue" : 32768
     }, {
@@ -10463,55 +10866,31 @@
       "name" : "ImGuiMod_Mask_",
       "docComment" : "4-bits",
       "qualType" : "ImGuiKey",
-      "order" : 161,
+      "order" : 163,
       "value" : "0xF000",
       "evaluatedValue" : 61440
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiKey_NamedKey_BEGIN",
-      "docComment" : "[Internal] Prior to 1.87 we required user to fill io.KeysDown[512] using their own native index + the io.KeyMap[] array. We are ditching this method but keeping a legacy path for user code doing e.g. IsKeyPressed(MY_NATIVE_KEY_CODE) If you need to iterate all keys (for e.g. an input mapper) you may use ImGuiKey_NamedKey_BEGIN..ImGuiKey_NamedKey_END.",
-      "qualType" : "ImGuiKey",
-      "order" : 162,
-      "value" : "512",
-      "evaluatedValue" : 512
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiKey_NamedKey_END",
-      "docComment" : "[Internal] Prior to 1.87 we required user to fill io.KeysDown[512] using their own native index + the io.KeyMap[] array. We are ditching this method but keeping a legacy path for user code doing e.g. IsKeyPressed(MY_NATIVE_KEY_CODE) If you need to iterate all keys (for e.g. an input mapper) you may use ImGuiKey_NamedKey_BEGIN..ImGuiKey_NamedKey_END.",
-      "qualType" : "ImGuiKey",
-      "order" : 163,
-      "value" : "ImGuiKey_COUNT",
-      "evaluatedValue" : 666
-    }, {
-      "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiKey_NamedKey_COUNT",
-      "docComment" : "[Internal] Prior to 1.87 we required user to fill io.KeysDown[512] using their own native index + the io.KeyMap[] array. We are ditching this method but keeping a legacy path for user code doing e.g. IsKeyPressed(MY_NATIVE_KEY_CODE) If you need to iterate all keys (for e.g. an input mapper) you may use ImGuiKey_NamedKey_BEGIN..ImGuiKey_NamedKey_END.",
+      "docComment" : "[Internal] If you need to iterate all keys (for e.g. an input mapper) you may use ImGuiKey_NamedKey_BEGIN..ImGuiKey_NamedKey_END.",
       "qualType" : "ImGuiKey",
       "order" : 164,
       "value" : "ImGuiKey_NamedKey_END - ImGuiKey_NamedKey_BEGIN",
-      "evaluatedValue" : 154
+      "evaluatedValue" : 155
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiKey_KeysData_SIZE",
-      "docComment" : "Size of KeysData[]: hold legacy 0..512 keycodes + named keys",
+      "name" : "ImGuiKey_COUNT",
+      "docComment" : "Obsoleted in 1.91.5 because it was extremely misleading (since named keys don't start at 0 anymore)",
       "qualType" : "ImGuiKey",
       "order" : 165,
-      "value" : "ImGuiKey_COUNT",
-      "evaluatedValue" : 666
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiKey_KeysData_OFFSET",
-      "docComment" : "Accesses to io.KeysData[] must use (key - ImGuiKey_KeysData_OFFSET) index.",
-      "qualType" : "ImGuiKey",
-      "order" : 166,
-      "value" : "0",
-      "evaluatedValue" : 0
+      "value" : "ImGuiKey_NamedKey_END",
+      "evaluatedValue" : 667
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiMod_Shortcut",
       "docComment" : "Removed in 1.90.7, you can now simply use ImGuiMod_Ctrl",
       "qualType" : "ImGuiKey",
-      "order" : 167,
+      "order" : 166,
       "value" : "ImGuiMod_Ctrl",
       "evaluatedValue" : 4096
     }, {
@@ -10519,7 +10898,7 @@
       "name" : "ImGuiKey_ModCtrl",
       "docComment" : "Renamed in 1.89",
       "qualType" : "ImGuiKey",
-      "order" : 168,
+      "order" : 167,
       "value" : "ImGuiMod_Ctrl",
       "evaluatedValue" : 4096
     }, {
@@ -10527,7 +10906,7 @@
       "name" : "ImGuiKey_ModShift",
       "docComment" : "Renamed in 1.89",
       "qualType" : "ImGuiKey",
-      "order" : 169,
+      "order" : 168,
       "value" : "ImGuiMod_Shift",
       "evaluatedValue" : 8192
     }, {
@@ -10535,7 +10914,7 @@
       "name" : "ImGuiKey_ModAlt",
       "docComment" : "Renamed in 1.89",
       "qualType" : "ImGuiKey",
-      "order" : 170,
+      "order" : 169,
       "value" : "ImGuiMod_Alt",
       "evaluatedValue" : 16384
     }, {
@@ -10543,7 +10922,7 @@
       "name" : "ImGuiKey_ModSuper",
       "docComment" : "Renamed in 1.89",
       "qualType" : "ImGuiKey",
-      "order" : 171,
+      "order" : 170,
       "value" : "ImGuiMod_Super",
       "evaluatedValue" : 32768
     } ]
@@ -10655,127 +11034,6 @@
     } ]
   }, {
     "@type" : "AstEnumDecl",
-    "name" : "ImGuiNavInput",
-    "decls" : [ {
-      "@type" : "AstFullComment",
-      "decls" : [ {
-        "@type" : "AstParagraphComment",
-        "decls" : [ {
-          "@type" : "AstTextComment",
-          "text" : " OBSOLETED in 1.88 (from July 2022): ImGuiNavInput and io.NavInputs[]."
-        }, {
-          "@type" : "AstTextComment",
-          "text" : " Official backends between 1.60 and 1.86: will keep working and feed gamepad inputs as long as IMGUI_DISABLE_OBSOLETE_KEYIO is not set."
-        }, {
-          "@type" : "AstTextComment",
-          "text" : " Custom backends: feed gamepad inputs via io.AddKeyEvent() and ImGuiKey_GamepadXXX enums."
-        } ]
-      } ]
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_Activate",
-      "qualType" : "ImGuiNavInput",
-      "order" : 0,
-      "evaluatedValue" : 0
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_Cancel",
-      "qualType" : "ImGuiNavInput",
-      "order" : 1,
-      "evaluatedValue" : 1
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_Input",
-      "qualType" : "ImGuiNavInput",
-      "order" : 2,
-      "evaluatedValue" : 2
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_Menu",
-      "qualType" : "ImGuiNavInput",
-      "order" : 3,
-      "evaluatedValue" : 3
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_DpadLeft",
-      "qualType" : "ImGuiNavInput",
-      "order" : 4,
-      "evaluatedValue" : 4
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_DpadRight",
-      "qualType" : "ImGuiNavInput",
-      "order" : 5,
-      "evaluatedValue" : 5
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_DpadUp",
-      "qualType" : "ImGuiNavInput",
-      "order" : 6,
-      "evaluatedValue" : 6
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_DpadDown",
-      "qualType" : "ImGuiNavInput",
-      "order" : 7,
-      "evaluatedValue" : 7
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_LStickLeft",
-      "qualType" : "ImGuiNavInput",
-      "order" : 8,
-      "evaluatedValue" : 8
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_LStickRight",
-      "qualType" : "ImGuiNavInput",
-      "order" : 9,
-      "evaluatedValue" : 9
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_LStickUp",
-      "qualType" : "ImGuiNavInput",
-      "order" : 10,
-      "evaluatedValue" : 10
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_LStickDown",
-      "qualType" : "ImGuiNavInput",
-      "order" : 11,
-      "evaluatedValue" : 11
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_FocusPrev",
-      "qualType" : "ImGuiNavInput",
-      "order" : 12,
-      "evaluatedValue" : 12
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_FocusNext",
-      "qualType" : "ImGuiNavInput",
-      "order" : 13,
-      "evaluatedValue" : 13
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_TweakSlow",
-      "qualType" : "ImGuiNavInput",
-      "order" : 14,
-      "evaluatedValue" : 14
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_TweakFast",
-      "qualType" : "ImGuiNavInput",
-      "order" : 15,
-      "evaluatedValue" : 15
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiNavInput_COUNT",
-      "qualType" : "ImGuiNavInput",
-      "order" : 16,
-      "evaluatedValue" : 16
-    } ]
-  }, {
-    "@type" : "AstEnumDecl",
     "name" : "ImGuiConfigFlags_",
     "decls" : [ {
       "@type" : "AstFullComment",
@@ -10811,26 +11069,10 @@
       "evaluatedValue" : 2
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiConfigFlags_NavEnableSetMousePos",
-      "docComment" : "Instruct navigation to move the mouse cursor. May be useful on TV/console systems where moving a virtual mouse is awkward. Will update io.MousePos and set io.WantSetMousePos=true. If enabled you MUST honor io.WantSetMousePos requests in your backend, otherwise ImGui will react as if the mouse is jumping around back and forth.",
-      "qualType" : "ImGuiConfigFlags_",
-      "order" : 3,
-      "value" : "1 << 2",
-      "evaluatedValue" : 4
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiConfigFlags_NavNoCaptureKeyboard",
-      "docComment" : "Instruct navigation to not set the io.WantCaptureKeyboard flag when io.NavActive is set.",
-      "qualType" : "ImGuiConfigFlags_",
-      "order" : 4,
-      "value" : "1 << 3",
-      "evaluatedValue" : 8
-    }, {
-      "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiConfigFlags_NoMouse",
       "docComment" : "Instruct dear imgui to disable mouse inputs and interactions.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 5,
+      "order" : 3,
       "value" : "1 << 4",
       "evaluatedValue" : 16
     }, {
@@ -10838,7 +11080,7 @@
       "name" : "ImGuiConfigFlags_NoMouseCursorChange",
       "docComment" : "Instruct backend to not alter mouse cursor shape and visibility. Use if the backend cursor changes are interfering with yours and you don't want to use SetMouseCursor() to change mouse cursor. You may want to honor requests from imgui by reading GetMouseCursor() yourself instead.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 6,
+      "order" : 4,
       "value" : "1 << 5",
       "evaluatedValue" : 32
     }, {
@@ -10846,7 +11088,7 @@
       "name" : "ImGuiConfigFlags_NoKeyboard",
       "docComment" : "Instruct dear imgui to disable keyboard inputs and interactions. This is done by ignoring keyboard events and clearing existing states.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 7,
+      "order" : 5,
       "value" : "1 << 6",
       "evaluatedValue" : 64
     }, {
@@ -10854,7 +11096,7 @@
       "name" : "ImGuiConfigFlags_DockingEnable",
       "docComment" : "Docking enable flags.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 8,
+      "order" : 6,
       "value" : "1 << 7",
       "evaluatedValue" : 128
     }, {
@@ -10862,7 +11104,7 @@
       "name" : "ImGuiConfigFlags_ViewportsEnable",
       "docComment" : "Viewport enable flags (require both ImGuiBackendFlags_PlatformHasViewports + ImGuiBackendFlags_RendererHasViewports set by the respective backends)",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 9,
+      "order" : 7,
       "value" : "1 << 10",
       "evaluatedValue" : 1024
     }, {
@@ -10870,7 +11112,7 @@
       "name" : "ImGuiConfigFlags_DpiEnableScaleViewports",
       "docComment" : "[BETA: Don't use] FIXME-DPI: Reposition and resize imgui windows when the DpiScale of a viewport changed (mostly useful for the main viewport hosting other window). Note that resizing the main window itself is up to your application.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 10,
+      "order" : 8,
       "value" : "1 << 14",
       "evaluatedValue" : 16384
     }, {
@@ -10878,7 +11120,7 @@
       "name" : "ImGuiConfigFlags_DpiEnableScaleFonts",
       "docComment" : "[BETA: Don't use] FIXME-DPI: Request bitmap-scaled fonts to match DpiScale. This is a very low-quality workaround. The correct way to handle DPI is _currently_ to replace the atlas and/or fonts in the Platform_OnChangedViewport callback, but this is all early work in progress.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 11,
+      "order" : 9,
       "value" : "1 << 15",
       "evaluatedValue" : 32768
     }, {
@@ -10886,7 +11128,7 @@
       "name" : "ImGuiConfigFlags_IsSRGB",
       "docComment" : "Application is SRGB-aware.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 12,
+      "order" : 10,
       "value" : "1 << 20",
       "evaluatedValue" : 1048576
     }, {
@@ -10894,9 +11136,25 @@
       "name" : "ImGuiConfigFlags_IsTouchScreen",
       "docComment" : "Application is using a touch screen instead of a mouse.",
       "qualType" : "ImGuiConfigFlags_",
-      "order" : 13,
+      "order" : 11,
       "value" : "1 << 21",
       "evaluatedValue" : 2097152
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiConfigFlags_NavEnableSetMousePos",
+      "docComment" : "[moved/renamed in 1.91.4] -> use bool io.ConfigNavMoveSetMousePos",
+      "qualType" : "ImGuiConfigFlags_",
+      "order" : 12,
+      "value" : "1 << 2",
+      "evaluatedValue" : 4
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiConfigFlags_NavNoCaptureKeyboard",
+      "docComment" : "[moved/renamed in 1.91.4] -> use bool io.ConfigNavCaptureKeyboard",
+      "qualType" : "ImGuiConfigFlags_",
+      "order" : 13,
+      "value" : "1 << 3",
+      "evaluatedValue" : 8
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -10936,7 +11194,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiBackendFlags_HasSetMousePos",
-      "docComment" : "Backend Platform supports io.WantSetMousePos requests to reposition the OS mouse position (only used if ImGuiConfigFlags_NavEnableSetMousePos is set).",
+      "docComment" : "Backend Platform supports io.WantSetMousePos requests to reposition the OS mouse position (only used if io.ConfigNavMoveSetMousePos is set).",
       "qualType" : "ImGuiBackendFlags_",
       "order" : 3,
       "value" : "1 << 2",
@@ -11318,57 +11576,64 @@
       "evaluatedValue" : 50
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiCol_TextSelectedBg",
+      "name" : "ImGuiCol_TextLink",
+      "docComment" : "Hyperlink color",
       "qualType" : "ImGuiCol_",
       "order" : 51,
       "evaluatedValue" : 51
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiCol_DragDropTarget",
-      "docComment" : "Rectangle highlighting a drop target",
+      "name" : "ImGuiCol_TextSelectedBg",
       "qualType" : "ImGuiCol_",
       "order" : 52,
       "evaluatedValue" : 52
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiCol_NavHighlight",
-      "docComment" : "Gamepad/keyboard: current highlighted item",
+      "name" : "ImGuiCol_DragDropTarget",
+      "docComment" : "Rectangle highlighting a drop target",
       "qualType" : "ImGuiCol_",
       "order" : 53,
       "evaluatedValue" : 53
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiCol_NavWindowingHighlight",
-      "docComment" : "Highlight window when using CTRL+TAB",
+      "name" : "ImGuiCol_NavCursor",
+      "docComment" : "Color of keyboard/gamepad navigation cursor/rectangle, when visible",
       "qualType" : "ImGuiCol_",
       "order" : 54,
       "evaluatedValue" : 54
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiCol_NavWindowingDimBg",
-      "docComment" : "Darken/colorize entire screen behind the CTRL+TAB window list, when active",
+      "name" : "ImGuiCol_NavWindowingHighlight",
+      "docComment" : "Highlight window when using CTRL+TAB",
       "qualType" : "ImGuiCol_",
       "order" : 55,
       "evaluatedValue" : 55
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiCol_ModalWindowDimBg",
-      "docComment" : "Darken/colorize entire screen behind a modal window, when one is active",
+      "name" : "ImGuiCol_NavWindowingDimBg",
+      "docComment" : "Darken/colorize entire screen behind the CTRL+TAB window list, when active",
       "qualType" : "ImGuiCol_",
       "order" : 56,
       "evaluatedValue" : 56
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiCol_COUNT",
+      "name" : "ImGuiCol_ModalWindowDimBg",
+      "docComment" : "Darken/colorize entire screen behind a modal window, when one is active",
       "qualType" : "ImGuiCol_",
       "order" : 57,
       "evaluatedValue" : 57
     }, {
       "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiCol_COUNT",
+      "qualType" : "ImGuiCol_",
+      "order" : 58,
+      "evaluatedValue" : 58
+    }, {
+      "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiCol_TabActive",
       "docComment" : "[renamed in 1.90.9]",
       "qualType" : "ImGuiCol_",
-      "order" : 58,
+      "order" : 59,
       "value" : "ImGuiCol_TabSelected",
       "evaluatedValue" : 35
     }, {
@@ -11376,7 +11641,7 @@
       "name" : "ImGuiCol_TabUnfocused",
       "docComment" : "[renamed in 1.90.9]",
       "qualType" : "ImGuiCol_",
-      "order" : 59,
+      "order" : 60,
       "value" : "ImGuiCol_TabDimmed",
       "evaluatedValue" : 37
     }, {
@@ -11384,9 +11649,17 @@
       "name" : "ImGuiCol_TabUnfocusedActive",
       "docComment" : "[renamed in 1.90.9]",
       "qualType" : "ImGuiCol_",
-      "order" : 60,
+      "order" : 61,
       "value" : "ImGuiCol_TabDimmedSelected",
       "evaluatedValue" : 38
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiCol_NavHighlight",
+      "docComment" : "[renamed in 1.91.4]",
+      "qualType" : "ImGuiCol_",
+      "order" : 62,
+      "value" : "ImGuiCol_NavCursor",
+      "evaluatedValue" : 54
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -11577,87 +11850,101 @@
       "evaluatedValue" : 21
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_TabRounding",
-      "docComment" : "float     TabRounding",
+      "name" : "ImGuiStyleVar_ImageBorderSize",
+      "docComment" : "float     ImageBorderSize",
       "qualType" : "ImGuiStyleVar_",
       "order" : 22,
       "evaluatedValue" : 22
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_TabBorderSize",
-      "docComment" : "float     TabBorderSize",
+      "name" : "ImGuiStyleVar_TabRounding",
+      "docComment" : "float     TabRounding",
       "qualType" : "ImGuiStyleVar_",
       "order" : 23,
       "evaluatedValue" : 23
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_TabBarBorderSize",
-      "docComment" : "float     TabBarBorderSize",
+      "name" : "ImGuiStyleVar_TabBorderSize",
+      "docComment" : "float     TabBorderSize",
       "qualType" : "ImGuiStyleVar_",
       "order" : 24,
       "evaluatedValue" : 24
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_TableAngledHeadersAngle",
-      "docComment" : "float     TableAngledHeadersAngle",
+      "name" : "ImGuiStyleVar_TabBarBorderSize",
+      "docComment" : "float     TabBarBorderSize",
       "qualType" : "ImGuiStyleVar_",
       "order" : 25,
       "evaluatedValue" : 25
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_TableAngledHeadersTextAlign",
-      "docComment" : "ImVec2  TableAngledHeadersTextAlign",
+      "name" : "ImGuiStyleVar_TabBarOverlineSize",
+      "docComment" : "float     TabBarOverlineSize",
       "qualType" : "ImGuiStyleVar_",
       "order" : 26,
       "evaluatedValue" : 26
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_ButtonTextAlign",
-      "docComment" : "ImVec2    ButtonTextAlign",
+      "name" : "ImGuiStyleVar_TableAngledHeadersAngle",
+      "docComment" : "float     TableAngledHeadersAngle",
       "qualType" : "ImGuiStyleVar_",
       "order" : 27,
       "evaluatedValue" : 27
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_SelectableTextAlign",
-      "docComment" : "ImVec2    SelectableTextAlign",
+      "name" : "ImGuiStyleVar_TableAngledHeadersTextAlign",
+      "docComment" : "ImVec2  TableAngledHeadersTextAlign",
       "qualType" : "ImGuiStyleVar_",
       "order" : 28,
       "evaluatedValue" : 28
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_SeparatorTextBorderSize",
-      "docComment" : "float     SeparatorTextBorderSize",
+      "name" : "ImGuiStyleVar_ButtonTextAlign",
+      "docComment" : "ImVec2    ButtonTextAlign",
       "qualType" : "ImGuiStyleVar_",
       "order" : 29,
       "evaluatedValue" : 29
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_SeparatorTextAlign",
-      "docComment" : "ImVec2    SeparatorTextAlign",
+      "name" : "ImGuiStyleVar_SelectableTextAlign",
+      "docComment" : "ImVec2    SelectableTextAlign",
       "qualType" : "ImGuiStyleVar_",
       "order" : 30,
       "evaluatedValue" : 30
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_SeparatorTextPadding",
-      "docComment" : "ImVec2    SeparatorTextPadding",
+      "name" : "ImGuiStyleVar_SeparatorTextBorderSize",
+      "docComment" : "float     SeparatorTextBorderSize",
       "qualType" : "ImGuiStyleVar_",
       "order" : 31,
       "evaluatedValue" : 31
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_DockingSeparatorSize",
-      "docComment" : "float     DockingSeparatorSize",
+      "name" : "ImGuiStyleVar_SeparatorTextAlign",
+      "docComment" : "ImVec2    SeparatorTextAlign",
       "qualType" : "ImGuiStyleVar_",
       "order" : 32,
       "evaluatedValue" : 32
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiStyleVar_COUNT",
+      "name" : "ImGuiStyleVar_SeparatorTextPadding",
+      "docComment" : "ImVec2    SeparatorTextPadding",
       "qualType" : "ImGuiStyleVar_",
       "order" : 33,
       "evaluatedValue" : 33
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiStyleVar_DockingSeparatorSize",
+      "docComment" : "float     DockingSeparatorSize",
+      "qualType" : "ImGuiStyleVar_",
+      "order" : 34,
+      "evaluatedValue" : 34
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiStyleVar_COUNT",
+      "qualType" : "ImGuiStyleVar_",
+      "order" : 35,
+      "evaluatedValue" : 35
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -11710,6 +11997,14 @@
       "order" : 4,
       "value" : "ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight | ImGuiButtonFlags_MouseButtonMiddle",
       "evaluatedValue" : 7
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiButtonFlags_EnableNav",
+      "docComment" : "InvisibleButton(): do not disable navigation/tabbing. Otherwise disabled by default.",
+      "qualType" : "ImGuiButtonFlags_",
+      "order" : 5,
+      "value" : "1 << 3",
+      "evaluatedValue" : 8
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -11812,34 +12107,42 @@
       "evaluatedValue" : 1024
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiColorEditFlags_AlphaBar",
-      "docComment" : "// ColorEdit, ColorPicker: show vertical alpha bar/gradient in picker.",
+      "name" : "ImGuiColorEditFlags_AlphaOpaque",
+      "docComment" : "// ColorEdit, ColorPicker, ColorButton: disable alpha in the preview,. Contrary to _NoAlpha it may still be edited when calling ColorEdit4()/ColorPicker4(). For ColorButton() this does the same as _NoAlpha.",
       "qualType" : "ImGuiColorEditFlags_",
       "order" : 11,
-      "value" : "1 << 16",
-      "evaluatedValue" : 65536
+      "value" : "1 << 11",
+      "evaluatedValue" : 2048
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiColorEditFlags_AlphaPreview",
-      "docComment" : "// ColorEdit, ColorPicker, ColorButton: display preview as a transparent color over a checkerboard, instead of opaque.",
+      "name" : "ImGuiColorEditFlags_AlphaNoBg",
+      "docComment" : "// ColorEdit, ColorPicker, ColorButton: disable rendering a checkerboard background behind transparent color.",
       "qualType" : "ImGuiColorEditFlags_",
       "order" : 12,
-      "value" : "1 << 17",
-      "evaluatedValue" : 131072
+      "value" : "1 << 12",
+      "evaluatedValue" : 4096
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiColorEditFlags_AlphaPreviewHalf",
-      "docComment" : "// ColorEdit, ColorPicker, ColorButton: display half opaque / half checkerboard, instead of opaque.",
+      "docComment" : "// ColorEdit, ColorPicker, ColorButton: display half opaque / half transparent preview.",
       "qualType" : "ImGuiColorEditFlags_",
       "order" : 13,
-      "value" : "1 << 18",
-      "evaluatedValue" : 262144
+      "value" : "1 << 13",
+      "evaluatedValue" : 8192
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiColorEditFlags_AlphaBar",
+      "docComment" : "// ColorEdit, ColorPicker: show vertical alpha bar/gradient in picker.",
+      "qualType" : "ImGuiColorEditFlags_",
+      "order" : 14,
+      "value" : "1 << 16",
+      "evaluatedValue" : 65536
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiColorEditFlags_HDR",
       "docComment" : "// (WIP) ColorEdit: Currently only disable 0.0f..1.0f limits in RGBA edition (note: you probably want to use ImGuiColorEditFlags_Float flag as well).",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 14,
+      "order" : 15,
       "value" : "1 << 19",
       "evaluatedValue" : 524288
     }, {
@@ -11847,7 +12150,7 @@
       "name" : "ImGuiColorEditFlags_DisplayRGB",
       "docComment" : "[Display]    // ColorEdit: override _display_ type among RGB/HSV/Hex. ColorPicker: select any combination using one or more of RGB/HSV/Hex.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 15,
+      "order" : 16,
       "value" : "1 << 20",
       "evaluatedValue" : 1048576
     }, {
@@ -11855,7 +12158,7 @@
       "name" : "ImGuiColorEditFlags_DisplayHSV",
       "docComment" : "[Display]    // \"",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 16,
+      "order" : 17,
       "value" : "1 << 21",
       "evaluatedValue" : 2097152
     }, {
@@ -11863,7 +12166,7 @@
       "name" : "ImGuiColorEditFlags_DisplayHex",
       "docComment" : "[Display]    // \"",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 17,
+      "order" : 18,
       "value" : "1 << 22",
       "evaluatedValue" : 4194304
     }, {
@@ -11871,7 +12174,7 @@
       "name" : "ImGuiColorEditFlags_Uint8",
       "docComment" : "[DataType]   // ColorEdit, ColorPicker, ColorButton: _display_ values formatted as 0..255.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 18,
+      "order" : 19,
       "value" : "1 << 23",
       "evaluatedValue" : 8388608
     }, {
@@ -11879,7 +12182,7 @@
       "name" : "ImGuiColorEditFlags_Float",
       "docComment" : "[DataType]   // ColorEdit, ColorPicker, ColorButton: _display_ values formatted as 0.0f..1.0f floats instead of 0..255 integers. No round-trip of value via integers.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 19,
+      "order" : 20,
       "value" : "1 << 24",
       "evaluatedValue" : 16777216
     }, {
@@ -11887,7 +12190,7 @@
       "name" : "ImGuiColorEditFlags_PickerHueBar",
       "docComment" : "[Picker]     // ColorPicker: bar for Hue, rectangle for Sat/Value.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 20,
+      "order" : 21,
       "value" : "1 << 25",
       "evaluatedValue" : 33554432
     }, {
@@ -11895,7 +12198,7 @@
       "name" : "ImGuiColorEditFlags_PickerHueWheel",
       "docComment" : "[Picker]     // ColorPicker: wheel for Hue, triangle for Sat/Value.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 21,
+      "order" : 22,
       "value" : "1 << 26",
       "evaluatedValue" : 67108864
     }, {
@@ -11903,7 +12206,7 @@
       "name" : "ImGuiColorEditFlags_InputRGB",
       "docComment" : "[Input]      // ColorEdit, ColorPicker: input and output data in RGB format.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 22,
+      "order" : 23,
       "value" : "1 << 27",
       "evaluatedValue" : 134217728
     }, {
@@ -11911,7 +12214,7 @@
       "name" : "ImGuiColorEditFlags_InputHSV",
       "docComment" : "[Input]      // ColorEdit, ColorPicker: input and output data in HSV format.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 23,
+      "order" : 24,
       "value" : "1 << 28",
       "evaluatedValue" : 268435456
     }, {
@@ -11919,15 +12222,23 @@
       "name" : "ImGuiColorEditFlags_DefaultOptions_",
       "docComment" : "Defaults Options. You can set application defaults using SetColorEditOptions(). The intent is that you probably don't want to override them in most of your calls. Let the user choose via the option menu and/or call SetColorEditOptions() once during startup.",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 24,
+      "order" : 25,
       "value" : "ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_PickerHueBar",
       "evaluatedValue" : 177209344
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiColorEditFlags_AlphaMask_",
+      "docComment" : "[Internal] Masks",
+      "qualType" : "ImGuiColorEditFlags_",
+      "order" : 26,
+      "value" : "ImGuiColorEditFlags_NoAlpha | ImGuiColorEditFlags_AlphaOpaque | ImGuiColorEditFlags_AlphaNoBg | ImGuiColorEditFlags_AlphaPreviewHalf",
+      "evaluatedValue" : 14338
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiColorEditFlags_DisplayMask_",
       "docComment" : "[Internal] Masks",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 25,
+      "order" : 27,
       "value" : "ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_DisplayHSV | ImGuiColorEditFlags_DisplayHex",
       "evaluatedValue" : 7340032
     }, {
@@ -11935,7 +12246,7 @@
       "name" : "ImGuiColorEditFlags_DataTypeMask_",
       "docComment" : "[Internal] Masks",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 26,
+      "order" : 28,
       "value" : "ImGuiColorEditFlags_Uint8 | ImGuiColorEditFlags_Float",
       "evaluatedValue" : 25165824
     }, {
@@ -11943,7 +12254,7 @@
       "name" : "ImGuiColorEditFlags_PickerMask_",
       "docComment" : "[Internal] Masks",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 27,
+      "order" : 29,
       "value" : "ImGuiColorEditFlags_PickerHueWheel | ImGuiColorEditFlags_PickerHueBar",
       "evaluatedValue" : 100663296
     }, {
@@ -11951,9 +12262,17 @@
       "name" : "ImGuiColorEditFlags_InputMask_",
       "docComment" : "[Internal] Masks",
       "qualType" : "ImGuiColorEditFlags_",
-      "order" : 28,
+      "order" : 30,
       "value" : "ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_InputHSV",
       "evaluatedValue" : 402653184
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiColorEditFlags_AlphaPreview",
+      "docComment" : "[Removed in 1.91.8] This is the default now. Will display a checkerboard unless ImGuiColorEditFlags_AlphaNoBg is set.",
+      "qualType" : "ImGuiColorEditFlags_",
+      "order" : 31,
+      "value" : "0",
+      "evaluatedValue" : 0
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -11970,7 +12289,7 @@
           "text" : " We use the same sets of flags for DragXXX() and SliderXXX() functions as the features are the same and it makes it easier to swap them."
         }, {
           "@type" : "AstTextComment",
-          "text" : " (Those are per-item flags. There are shared flags in ImGuiIO: io.ConfigDragClickToInputText)"
+          "text" : " (Those are per-item flags. There is shared behavior flag too: ImGuiIO: io.ConfigDragClickToInputText)"
         } ]
       } ]
     }, {
@@ -11982,18 +12301,10 @@
       "evaluatedValue" : 0
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiSliderFlags_AlwaysClamp",
-      "docComment" : "Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.",
-      "qualType" : "ImGuiSliderFlags_",
-      "order" : 1,
-      "value" : "1 << 4",
-      "evaluatedValue" : 16
-    }, {
-      "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiSliderFlags_Logarithmic",
       "docComment" : "Make the widget logarithmic (linear otherwise). Consider using ImGuiSliderFlags_NoRoundToFormat with this if using a format-string with small amount of digits.",
       "qualType" : "ImGuiSliderFlags_",
-      "order" : 2,
+      "order" : 1,
       "value" : "1 << 5",
       "evaluatedValue" : 32
     }, {
@@ -12001,7 +12312,7 @@
       "name" : "ImGuiSliderFlags_NoRoundToFormat",
       "docComment" : "Disable rounding underlying value to match precision of the display format string (e.g. %.3f values are rounded to those 3 digits).",
       "qualType" : "ImGuiSliderFlags_",
-      "order" : 3,
+      "order" : 2,
       "value" : "1 << 6",
       "evaluatedValue" : 64
     }, {
@@ -12009,23 +12320,54 @@
       "name" : "ImGuiSliderFlags_NoInput",
       "docComment" : "Disable CTRL+Click or Enter key allowing to input text directly into the widget.",
       "qualType" : "ImGuiSliderFlags_",
-      "order" : 4,
+      "order" : 3,
       "value" : "1 << 7",
       "evaluatedValue" : 128
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiSliderFlags_WrapAround",
-      "docComment" : "Enable wrapping around from max to min and from min to max (only supported by DragXXX() functions for now.",
+      "docComment" : "Enable wrapping around from max to min and from min to max. Only supported by DragXXX() functions for now.",
       "qualType" : "ImGuiSliderFlags_",
-      "order" : 5,
+      "order" : 4,
       "value" : "1 << 8",
       "evaluatedValue" : 256
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSliderFlags_ClampOnInput",
+      "docComment" : "Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.",
+      "qualType" : "ImGuiSliderFlags_",
+      "order" : 5,
+      "value" : "1 << 9",
+      "evaluatedValue" : 512
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSliderFlags_ClampZeroRange",
+      "docComment" : "Clamp even if min==max==0.0f. Otherwise due to legacy reason DragXXX functions don't clamp with those values. When your clamping limits are dynamic you almost always want to use it.",
+      "qualType" : "ImGuiSliderFlags_",
+      "order" : 6,
+      "value" : "1 << 10",
+      "evaluatedValue" : 1024
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSliderFlags_NoSpeedTweaks",
+      "docComment" : "Disable keyboard modifiers altering tweak speed. Useful if you want to alter tweak speed yourself based on your own logic.",
+      "qualType" : "ImGuiSliderFlags_",
+      "order" : 7,
+      "value" : "1 << 11",
+      "evaluatedValue" : 2048
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSliderFlags_AlwaysClamp",
+      "qualType" : "ImGuiSliderFlags_",
+      "order" : 8,
+      "value" : "ImGuiSliderFlags_ClampOnInput | ImGuiSliderFlags_ClampZeroRange",
+      "evaluatedValue" : 1536
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiSliderFlags_InvalidMask_",
       "docComment" : "[Internal] We treat using those bits as being potentially a 'float power' argument from the previous API that has got miscast to this enum, and will trigger an assert if needed.",
       "qualType" : "ImGuiSliderFlags_",
-      "order" : 6,
+      "order" : 9,
       "value" : "0x7000000F",
       "evaluatedValue" : 1879048207
     } ]
@@ -12153,17 +12495,31 @@
       "evaluatedValue" : 7
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiMouseCursor_NotAllowed",
-      "docComment" : "When hovering something with disallowed interaction. Usually a crossed circle.",
+      "name" : "ImGuiMouseCursor_Wait",
+      "docComment" : "When waiting for something to process/load.",
       "qualType" : "ImGuiMouseCursor_",
       "order" : 9,
       "evaluatedValue" : 8
     }, {
       "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiMouseCursor_COUNT",
+      "name" : "ImGuiMouseCursor_Progress",
+      "docComment" : "When waiting for something to process/load, but application is still interactive.",
       "qualType" : "ImGuiMouseCursor_",
       "order" : 10,
       "evaluatedValue" : 9
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMouseCursor_NotAllowed",
+      "docComment" : "When hovering something with disallowed interaction. Usually a crossed circle.",
+      "qualType" : "ImGuiMouseCursor_",
+      "order" : 11,
+      "evaluatedValue" : 10
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMouseCursor_COUNT",
+      "qualType" : "ImGuiMouseCursor_",
+      "order" : 12,
+      "evaluatedValue" : 11
     } ]
   }, {
     "@type" : "AstEnumDecl",
@@ -12765,7 +13121,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiTableColumnFlags_NoHeaderLabel",
-      "docComment" : "TableHeadersRow() will not submit horizontal label for this column. Convenient for some small columns. Name will still appear in context menu or in angled headers.",
+      "docComment" : "TableHeadersRow() will submit an empty label for this column. Convenient for some small columns. Name will still appear in context menu or in angled headers. You may append into this cell by calling TableSetColumnIndex() right after the TableHeadersRow() call.",
       "qualType" : "ImGuiTableColumnFlags_",
       "order" : 13,
       "value" : "1 << 12",
@@ -13137,6 +13493,11 @@
       "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "WindowBorderHoverPadding",
+      "qualType" : "float",
+      "desugaredQualType" : "float"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "WindowMinSize",
       "qualType" : "ImVec2",
       "desugaredQualType" : "ImVec2"
@@ -13242,6 +13603,11 @@
       "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "ImageBorderSize",
+      "qualType" : "float",
+      "desugaredQualType" : "float"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "TabRounding",
       "qualType" : "float",
       "desugaredQualType" : "float"
@@ -13252,12 +13618,22 @@
       "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "TabMinWidthForCloseButton",
+      "name" : "TabCloseButtonMinWidthSelected",
+      "qualType" : "float",
+      "desugaredQualType" : "float"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "TabCloseButtonMinWidthUnselected",
       "qualType" : "float",
       "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "TabBarBorderSize",
+      "qualType" : "float",
+      "desugaredQualType" : "float"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "TabBarOverlineSize",
       "qualType" : "float",
       "desugaredQualType" : "float"
     }, {
@@ -13348,8 +13724,8 @@
     }, {
       "@type" : "AstFieldDecl",
       "name" : "Colors",
-      "qualType" : "ImVec4[57]",
-      "desugaredQualType" : "ImVec4[57]"
+      "qualType" : "ImVec4[58]",
+      "desugaredQualType" : "ImVec4[58]"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "HoverStationaryDelay",
@@ -13492,6 +13868,41 @@
       "desugaredQualType" : "ImVec2"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "ConfigNavSwapGamepadButtons",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigNavMoveSetMousePos",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigNavCaptureKeyboard",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigNavEscapeClearFocusItem",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigNavEscapeClearFocusWindow",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigNavCursorVisibleAuto",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigNavCursorVisibleAlways",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "ConfigDockingNoSplit",
       "qualType" : "bool",
       "desugaredQualType" : "bool"
@@ -13572,6 +13983,16 @@
       "desugaredQualType" : "bool"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "ConfigWindowsCopyContentsWithCtrlC",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigScrollbarScrollByPage",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "ConfigMemoryCompactTimer",
       "qualType" : "float",
       "desugaredQualType" : "float"
@@ -13602,7 +14023,37 @@
       "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "ConfigErrorRecovery",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigErrorRecoveryEnableAssert",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigErrorRecoveryEnableDebugLog",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigErrorRecoveryEnableTooltip",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "ConfigDebugIsDebuggerPresent",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigDebugHighlightIdConflicts",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ConfigDebugHighlightIdConflictsShowItemPicker",
       "qualType" : "bool",
       "desugaredQualType" : "bool"
     }, {
@@ -13650,31 +14101,6 @@
       "name" : "BackendLanguageUserData",
       "qualType" : "void *",
       "desugaredQualType" : "void *"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "GetClipboardTextFn",
-      "qualType" : "const char *(*)(void *)",
-      "desugaredQualType" : "const char *(*)(void *)"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "SetClipboardTextFn",
-      "qualType" : "void (*)(void *, const char *)",
-      "desugaredQualType" : "void (*)(void *, const char *)"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "ClipboardUserData",
-      "qualType" : "void *",
-      "desugaredQualType" : "void *"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "SetPlatformImeDataFn",
-      "qualType" : "void (*)(ImGuiViewport *, ImGuiPlatformImeData *)",
-      "desugaredQualType" : "void (*)(ImGuiViewport *, ImGuiPlatformImeData *)"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "PlatformLocaleDecimalPoint",
-      "qualType" : "ImWchar",
-      "desugaredQualType" : "unsigned short"
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "AddKeyEvent",
@@ -14004,8 +14430,8 @@
     }, {
       "@type" : "AstFieldDecl",
       "name" : "KeysData",
-      "qualType" : "ImGuiKeyData[666]",
-      "desugaredQualType" : "ImGuiKeyData[666]"
+      "qualType" : "ImGuiKeyData[155]",
+      "desugaredQualType" : "ImGuiKeyData[155]"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "WantCaptureMouseUnlessPopupClose",
@@ -14051,6 +14477,11 @@
       "name" : "MouseReleased",
       "qualType" : "bool[5]",
       "desugaredQualType" : "bool[5]"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "MouseReleasedTime",
+      "qualType" : "double[5]",
+      "desugaredQualType" : "double[5]"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "MouseDownOwned",
@@ -14108,16 +14539,6 @@
       "desugaredQualType" : "bool"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "BackendUsingLegacyKeyArrays",
-      "qualType" : "ImS8",
-      "desugaredQualType" : "signed char"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "BackendUsingLegacyNavInputArray",
-      "qualType" : "bool",
-      "desugaredQualType" : "bool"
-    }, {
-      "@type" : "AstFieldDecl",
       "name" : "InputQueueSurrogate",
       "qualType" : "ImWchar16",
       "desugaredQualType" : "unsigned short"
@@ -14128,19 +14549,19 @@
       "desugaredQualType" : "ImVector<unsigned short>"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "KeyMap",
-      "qualType" : "int[666]",
-      "desugaredQualType" : "int[666]"
+      "name" : "GetClipboardTextFn",
+      "qualType" : "const char *(*)(void *)",
+      "desugaredQualType" : "const char *(*)(void *)"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "KeysDown",
-      "qualType" : "bool[666]",
-      "desugaredQualType" : "bool[666]"
+      "name" : "SetClipboardTextFn",
+      "qualType" : "void (*)(void *, const char *)",
+      "desugaredQualType" : "void (*)(void *, const char *)"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "NavInputs",
-      "qualType" : "float[16]",
-      "desugaredQualType" : "float[16]"
+      "name" : "ClipboardUserData",
+      "qualType" : "void *",
+      "desugaredQualType" : "void *"
     } ]
   }, {
     "@type" : "AstRecordDecl",
@@ -14160,7 +14581,7 @@
           "text" : " Callbacks (follow a flag name and see comments in ImGuiInputTextFlags_ declarations for more details)"
         }, {
           "@type" : "AstTextComment",
-          "text" : " - ImGuiInputTextFlags_CallbackEdit:        Callback on buffer edit (note that InputText() already returns true on edit, the callback is useful mainly to manipulate the underlying buffer while focus is active)"
+          "text" : " - ImGuiInputTextFlags_CallbackEdit:        Callback on buffer edit. Note that InputText() already returns true on edit + you can always use IsItemEdited(). The callback is useful to manipulate the underlying buffer while focus is active."
         }, {
           "@type" : "AstTextComment",
           "text" : " - ImGuiInputTextFlags_CallbackAlways:      Callback on each iteration"
@@ -14657,6 +15078,16 @@
       "resultType" : "void"
     }, {
       "@type" : "AstFunctionDecl",
+      "name" : "resize",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "size",
+        "qualType" : "int",
+        "desugaredQualType" : "int"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
       "name" : "reserve",
       "resultType" : "void",
       "decls" : [ {
@@ -15144,6 +15575,11 @@
       "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "StartSeekOffsetY",
+      "qualType" : "double",
+      "desugaredQualType" : "double"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "TempData",
       "qualType" : "void *",
       "desugaredQualType" : "void *"
@@ -15207,6 +15643,31 @@
         "name" : "item_end",
         "qualType" : "int",
         "desugaredQualType" : "int"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "SeekCursorForItem",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "item_index",
+        "qualType" : "int",
+        "desugaredQualType" : "int"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " Seek cursor toward given item. This is automatically called while stepping."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - The only reason to call this is: you can use ImGuiListClipper::Begin(INT_MAX) if you don't know item count ahead of time."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - In this case, after all steps are done, you'll want to call SeekCursorForItem(item_count)."
+          } ]
+        } ]
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -15328,6 +15789,499 @@
       } ]
     } ]
   }, {
+    "@type" : "AstEnumDecl",
+    "name" : "ImGuiMultiSelectFlags_",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Flags for BeginMultiSelect()"
+        } ]
+      } ]
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_None",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 0,
+      "value" : "0",
+      "evaluatedValue" : 0
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_SingleSelect",
+      "docComment" : "Disable selecting more than one item. This is available to allow single-selection code to share same code/logic if desired. It essentially disables the main purpose of BeginMultiSelect() tho!",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 1,
+      "value" : "1 << 0",
+      "evaluatedValue" : 1
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_NoSelectAll",
+      "docComment" : "Disable CTRL+A shortcut to select all.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 2,
+      "value" : "1 << 1",
+      "evaluatedValue" : 2
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_NoRangeSelect",
+      "docComment" : "Disable Shift+selection mouse/keyboard support (useful for unordered 2D selection). With BoxSelect is also ensure contiguous SetRange requests are not combined into one. This allows not handling interpolation in SetRange requests.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 3,
+      "value" : "1 << 2",
+      "evaluatedValue" : 4
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_NoAutoSelect",
+      "docComment" : "Disable selecting items when navigating (useful for e.g. supporting range-select in a list of checkboxes).",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 4,
+      "value" : "1 << 3",
+      "evaluatedValue" : 8
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_NoAutoClear",
+      "docComment" : "Disable clearing selection when navigating or selecting another one (generally used with ImGuiMultiSelectFlags_NoAutoSelect. useful for e.g. supporting range-select in a list of checkboxes).",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 5,
+      "value" : "1 << 4",
+      "evaluatedValue" : 16
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_NoAutoClearOnReselect",
+      "docComment" : "Disable clearing selection when clicking/selecting an already selected item.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 6,
+      "value" : "1 << 5",
+      "evaluatedValue" : 32
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_BoxSelect1d",
+      "docComment" : "Enable box-selection with same width and same x pos items (e.g. full row Selectable()). Box-selection works better with little bit of spacing between items hit-box in order to be able to aim at empty space.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 7,
+      "value" : "1 << 6",
+      "evaluatedValue" : 64
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_BoxSelect2d",
+      "docComment" : "Enable box-selection with varying width or varying x pos items support (e.g. different width labels, or 2D layout/grid). This is slower: alters clipping logic so that e.g. horizontal movements will update selection of normally clipped items.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 8,
+      "value" : "1 << 7",
+      "evaluatedValue" : 128
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_BoxSelectNoScroll",
+      "docComment" : "Disable scrolling when box-selecting near edges of scope.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 9,
+      "value" : "1 << 8",
+      "evaluatedValue" : 256
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_ClearOnEscape",
+      "docComment" : "Clear selection when pressing Escape while scope is focused.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 10,
+      "value" : "1 << 9",
+      "evaluatedValue" : 512
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_ClearOnClickVoid",
+      "docComment" : "Clear selection when clicking on empty location within scope.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 11,
+      "value" : "1 << 10",
+      "evaluatedValue" : 1024
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_ScopeWindow",
+      "docComment" : "Scope for _BoxSelect and _ClearOnClickVoid is whole window (Default). Use if BeginMultiSelect() covers a whole window or used a single time in same window.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 12,
+      "value" : "1 << 11",
+      "evaluatedValue" : 2048
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_ScopeRect",
+      "docComment" : "Scope for _BoxSelect and _ClearOnClickVoid is rectangle encompassing BeginMultiSelect()/EndMultiSelect(). Use if BeginMultiSelect() is called multiple times in same window.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 13,
+      "value" : "1 << 12",
+      "evaluatedValue" : 4096
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_SelectOnClick",
+      "docComment" : "Apply selection on mouse down when clicking on unselected item. (Default)",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 14,
+      "value" : "1 << 13",
+      "evaluatedValue" : 8192
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_SelectOnClickRelease",
+      "docComment" : "Apply selection on mouse release when clicking an unselected item. Allow dragging an unselected item without altering selection.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 15,
+      "value" : "1 << 14",
+      "evaluatedValue" : 16384
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiMultiSelectFlags_NavWrapX",
+      "docComment" : "[Temporary] Enable navigation wrapping on X axis. Provided as a convenience because we don't have a design for the general Nav API for this yet. When the more general feature be public we may obsolete this flag in favor of new one.",
+      "qualType" : "ImGuiMultiSelectFlags_",
+      "order" : 16,
+      "value" : "1 << 16",
+      "evaluatedValue" : 65536
+    } ]
+  }, {
+    "@type" : "AstRecordDecl",
+    "name" : "ImGuiMultiSelectIO",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Main IO structure returned by BeginMultiSelect()/EndMultiSelect()."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " This mainly contains a list of selection requests."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - Use 'Demo->Tools->Debug Log->Selection' to see requests as they happen."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - Some fields are only useful if your list is dynamic and allows deletion (getting post-deletion focus/state right is shown in the demo)"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - Below: who reads/writes each fields? 'r'=read, 'w'=write, 'ms'=multi-select code, 'app'=application/user code."
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Requests",
+      "qualType" : "ImVector<ImGuiSelectionRequest>",
+      "desugaredQualType" : "ImVector<ImGuiSelectionRequest>"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "RangeSrcItem",
+      "qualType" : "ImGuiSelectionUserData",
+      "desugaredQualType" : "long long"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "NavIdItem",
+      "qualType" : "ImGuiSelectionUserData",
+      "desugaredQualType" : "long long"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "NavIdSelected",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "RangeSrcReset",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "ItemsCount",
+      "qualType" : "int",
+      "desugaredQualType" : "int"
+    } ]
+  }, {
+    "@type" : "AstEnumDecl",
+    "name" : "ImGuiSelectionRequestType",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Selection request type"
+        } ]
+      } ]
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSelectionRequestType_None",
+      "qualType" : "ImGuiSelectionRequestType",
+      "order" : 0,
+      "value" : "0",
+      "evaluatedValue" : 0
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSelectionRequestType_SetAll",
+      "docComment" : "Request app to clear selection (if Selected==false) or select all items (if Selected==true). We cannot set RangeFirstItem/RangeLastItem as its contents is entirely up to user (not necessarily an index)",
+      "qualType" : "ImGuiSelectionRequestType",
+      "order" : 1,
+      "evaluatedValue" : 1
+    }, {
+      "@type" : "AstEnumConstantDecl",
+      "name" : "ImGuiSelectionRequestType_SetRange",
+      "docComment" : "Request app to select/unselect [RangeFirstItem..RangeLastItem] items (inclusive) based on value of Selected. Only EndMultiSelect() request this, app code can read after BeginMultiSelect() and it will always be false.",
+      "qualType" : "ImGuiSelectionRequestType",
+      "order" : 2,
+      "evaluatedValue" : 2
+    } ]
+  }, {
+    "@type" : "AstRecordDecl",
+    "name" : "ImGuiSelectionRequest",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Selection request item"
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Type",
+      "qualType" : "ImGuiSelectionRequestType",
+      "desugaredQualType" : "ImGuiSelectionRequestType"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Selected",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "RangeDirection",
+      "qualType" : "ImS8",
+      "desugaredQualType" : "signed char"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "RangeFirstItem",
+      "qualType" : "ImGuiSelectionUserData",
+      "desugaredQualType" : "long long"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "RangeLastItem",
+      "qualType" : "ImGuiSelectionUserData",
+      "desugaredQualType" : "long long"
+    } ]
+  }, {
+    "@type" : "AstRecordDecl",
+    "name" : "ImGuiSelectionBasicStorage",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Optional helper to store multi-selection state + apply multi-selection requests."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - Used by our demos and provided as a convenience to easily implement basic multi-selection."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - Iterate selection with 'void* it = NULL; ImGuiID id; while (selection.GetNextSelectedItem("
+        }, {
+          "@type" : "AstTextComment",
+          "text" : "&it"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : ", "
+        }, {
+          "@type" : "AstTextComment",
+          "text" : "&id"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : ")) { ... }'"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : "   Or you can check 'if (Contains(id)) { ... }' for each possible object if their number is not too high to iterate."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - USING THIS IS NOT MANDATORY. This is only a helper and not a required API."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " To store a multi-selection, in your application you could:"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - Use this helper as a convenience. We use our simple key->value ImGuiStorage as a std::set"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : "<ImGuiID"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : "> replacement."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - Use your own external storage: e.g. std::set"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : "<MyObjectId"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : ">, std::vector"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : "<MyObjectId"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : ">, interval trees, intrusively stored selection etc."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " In ImGuiSelectionBasicStorage we:"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - always use indices in the multi-selection API (passed to SetNextItemSelectionUserData(), retrieved in ImGuiMultiSelectIO)"
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - use the AdapterIndexToStorageId() indirection layer to abstract how persistent selection data is derived from an index."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - use decently optimized logic to allow queries and insertion of very large selection sets."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " - do not preserve selection order."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " Many combinations are possible depending on how you prefer to store your items and how you prefer to store your selection."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " Large applications are likely to eventually want to get rid of this indirection layer and do their own thing."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " See https://github.com/ocornut/imgui/wiki/Multi-Select for details and pseudo-code using this helper."
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Size",
+      "qualType" : "int",
+      "desugaredQualType" : "int"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "PreserveOrder",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "UserData",
+      "qualType" : "void *",
+      "desugaredQualType" : "void *"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "AdapterIndexToStorageId",
+      "qualType" : "ImGuiID (*)(ImGuiSelectionBasicStorage *, int)",
+      "desugaredQualType" : "ImGuiID (*)(ImGuiSelectionBasicStorage *, int)"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "ApplyRequests",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "ms_io",
+        "qualType" : "ImGuiMultiSelectIO *",
+        "desugaredQualType" : "ImGuiMultiSelectIO *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "Contains",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "id",
+        "qualType" : "ImGuiID",
+        "desugaredQualType" : "unsigned int"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "Clear",
+      "resultType" : "void"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "Swap",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "r",
+        "qualType" : "ImGuiSelectionBasicStorage &",
+        "desugaredQualType" : "ImGuiSelectionBasicStorage &"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "SetItemSelected",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "id",
+        "qualType" : "ImGuiID",
+        "desugaredQualType" : "unsigned int"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "selected",
+        "qualType" : "bool",
+        "desugaredQualType" : "bool"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetNextSelectedItem",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "opaque_it",
+        "qualType" : "void **",
+        "desugaredQualType" : "void **"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "out_id",
+        "qualType" : "ImGuiID *",
+        "desugaredQualType" : "ImGuiID *"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetStorageIdFromIndex",
+      "resultType" : "ImGuiID",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "idx",
+        "qualType" : "int",
+        "desugaredQualType" : "int"
+      } ]
+    } ]
+  }, {
+    "@type" : "AstRecordDecl",
+    "name" : "ImGuiSelectionExternalStorage",
+    "decls" : [ {
+      "@type" : "AstFullComment",
+      "decls" : [ {
+        "@type" : "AstParagraphComment",
+        "decls" : [ {
+          "@type" : "AstTextComment",
+          "text" : " Optional helper to apply multi-selection requests to existing randomly accessible storage."
+        }, {
+          "@type" : "AstTextComment",
+          "text" : " Convenient if you want to quickly wire multi-select API on e.g. an array of bool or items storing their own selection state."
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "UserData",
+      "qualType" : "void *",
+      "desugaredQualType" : "void *"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "AdapterSetItemSelected",
+      "qualType" : "void (*)(ImGuiSelectionExternalStorage *, int, bool)",
+      "desugaredQualType" : "void (*)(ImGuiSelectionExternalStorage *, int, bool)"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "ApplyRequests",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "ms_io",
+        "qualType" : "ImGuiMultiSelectIO *",
+        "desugaredQualType" : "ImGuiMultiSelectIO *"
+      } ]
+    } ]
+  }, {
     "@type" : "AstRecordDecl",
     "name" : "ImDrawCmd",
     "decls" : [ {
@@ -15372,7 +16326,7 @@
       "@type" : "AstFieldDecl",
       "name" : "TextureId",
       "qualType" : "ImTextureID",
-      "desugaredQualType" : "void *"
+      "desugaredQualType" : "unsigned long long"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "VtxOffset",
@@ -15398,6 +16352,16 @@
       "name" : "UserCallbackData",
       "qualType" : "void *",
       "desugaredQualType" : "void *"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "UserCallbackDataSize",
+      "qualType" : "int",
+      "desugaredQualType" : "int"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "UserCallbackDataOffset",
+      "qualType" : "int",
+      "desugaredQualType" : "int"
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "GetTexID",
@@ -15453,7 +16417,7 @@
       "@type" : "AstFieldDecl",
       "name" : "TextureId",
       "qualType" : "ImTextureID",
-      "desugaredQualType" : "void *"
+      "desugaredQualType" : "unsigned long long"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "VtxOffset",
@@ -15743,7 +16707,7 @@
           "text" : " In single viewport mode, top-left is == GetMainViewport()->Pos (generally 0,0), bottom-right is == GetMainViewport()->Pos+Size (generally io.DisplaySize)."
         }, {
           "@type" : "AstTextComment",
-          "text" : " You are totally free to apply whatever transformation matrix to want to the data (depending on the use of the transformation you may want to apply it to ClipRect as well!)"
+          "text" : " You are totally free to apply whatever transformation matrix you want to the data (depending on the use of the transformation you may want to apply it to ClipRect as well!)"
         }, {
           "@type" : "AstTextComment",
           "text" : " Important: Primitives are always added to the list and not culled (culling is done at higher-level by ImGui:: functions), if you use this API a lot consider coarse culling your drawn objects."
@@ -15806,7 +16770,7 @@
         "@type" : "AstParmVarDecl",
         "name" : "texture_id",
         "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
+        "desugaredQualType" : "unsigned long long"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -16317,8 +17281,8 @@
       "decls" : [ {
         "@type" : "AstParmVarDecl",
         "name" : "font",
-        "qualType" : "const ImFont *",
-        "desugaredQualType" : "const ImFont *"
+        "qualType" : "ImFont *",
+        "desugaredQualType" : "ImFont *"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "font_size",
@@ -16476,7 +17440,7 @@
             "text" : " - Only simple polygons are supported by filling functions (no self-intersections, no holes)."
           }, {
             "@type" : "AstTextComment",
-            "text" : " - Concave polygon fill is more expensive than convex one: it has O(N^2) complexity. Provided as a convenience fo user but not used by main library."
+            "text" : " - Concave polygon fill is more expensive than convex one: it has O(N^2) complexity. Provided as a convenience for the user but not used by the main library."
           } ]
         } ]
       } ]
@@ -16528,7 +17492,7 @@
         "@type" : "AstParmVarDecl",
         "name" : "user_texture_id",
         "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
+        "desugaredQualType" : "unsigned long long"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "p_min",
@@ -16584,7 +17548,7 @@
         "@type" : "AstParmVarDecl",
         "name" : "user_texture_id",
         "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
+        "desugaredQualType" : "unsigned long long"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "p1",
@@ -16644,7 +17608,7 @@
         "@type" : "AstParmVarDecl",
         "name" : "user_texture_id",
         "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
+        "desugaredQualType" : "unsigned long long"
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "p_min",
@@ -16941,23 +17905,63 @@
         "desugaredQualType" : "void (*)(const ImDrawList *, const ImDrawCmd *)"
       }, {
         "@type" : "AstParmVarDecl",
-        "name" : "callback_data",
+        "name" : "userdata",
         "qualType" : "void *",
         "desugaredQualType" : "void *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "userdata_size",
+        "qualType" : "size_t",
+        "desugaredQualType" : "unsigned long",
+        "defaultValue" : "0"
       }, {
         "@type" : "AstFullComment",
         "decls" : [ {
           "@type" : "AstParagraphComment",
           "decls" : [ {
             "@type" : "AstTextComment",
-            "text" : " Advanced"
+            "text" : " Advanced: Draw Callbacks"
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - May be used to alter render state (change sampler, blending, current shader). May be used to emit custom rendering commands (difficult to do correctly, but possible)."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Use special ImDrawCallback_ResetRenderState callback to instruct backend to reset its render state to the default."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - Your rendering loop must check for 'UserCallback' in ImDrawCmd and call the function instead of rendering triangles. All standard backends are honoring this."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - For some backends, the callback may access selected render-states exposed by the backend in a ImGui_ImplXXXX_RenderState structure pointed to by platform_io.Renderer_RenderState."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : " - IMPORTANT: please be mindful of the different level of indirection between using size==0 (copying argument) and using size>0 (copying pointed data into a buffer)."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   - If userdata_size == 0: we copy/store the 'userdata' argument as-is. It will be available unmodified in ImDrawCmd::UserCallbackData during render."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   - If userdata_size > 0,  we copy/store 'userdata_size' bytes pointed to by 'userdata'. We store them in a buffer stored inside the drawlist. ImDrawCmd::UserCallbackData will point inside that buffer so you have to retrieve data from there. Your callback may need to use ImDrawCmd::UserCallbackDataSize if you expect dynamically-sized data."
+          }, {
+            "@type" : "AstTextComment",
+            "text" : "   - Support for userdata_size > 0 was added in v1.91.4, October 2024. So earlier code always only allowed to copy/store a simple void*."
           } ]
         } ]
       } ]
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "AddDrawCmd",
-      "resultType" : "void"
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " Advanced: Miscellaneous"
+          } ]
+        } ]
+      } ]
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "CloneOutput",
@@ -17307,13 +18311,7 @@
         "@type" : "AstParagraphComment",
         "decls" : [ {
           "@type" : "AstTextComment",
-          "text" : "-----------------------------------------------------------------------------"
-        }, {
-          "@type" : "AstTextComment",
-          "text" : " [SECTION] Font API (ImFontConfig, ImFontGlyph, ImFontAtlasFlags, ImFontAtlas, ImFontGlyphRangesBuilder, ImFont)"
-        }, {
-          "@type" : "AstTextComment",
-          "text" : "-----------------------------------------------------------------------------"
+          "text" : " A font input/source (we may rename this to ImFontSource in the future)"
         } ]
       } ]
     }, {
@@ -17333,14 +18331,19 @@
       "desugaredQualType" : "bool"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "MergeMode",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "PixelSnapH",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "FontNo",
       "qualType" : "int",
       "desugaredQualType" : "int"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "SizePixels",
-      "qualType" : "float",
-      "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "OversampleH",
@@ -17353,14 +18356,9 @@
       "desugaredQualType" : "int"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "PixelSnapH",
-      "qualType" : "bool",
-      "desugaredQualType" : "bool"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "GlyphExtraSpacing",
-      "qualType" : "ImVec2",
-      "desugaredQualType" : "ImVec2"
+      "name" : "SizePixels",
+      "qualType" : "float",
+      "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "GlyphOffset",
@@ -17383,9 +18381,9 @@
       "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "MergeMode",
-      "qualType" : "bool",
-      "desugaredQualType" : "bool"
+      "name" : "GlyphExtraAdvanceX",
+      "qualType" : "float",
+      "desugaredQualType" : "float"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "FontBuilderFlags",
@@ -17598,16 +18596,6 @@
       } ]
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "Width",
-      "qualType" : "unsigned short",
-      "desugaredQualType" : "unsigned short"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "Height",
-      "qualType" : "unsigned short",
-      "desugaredQualType" : "unsigned short"
-    }, {
-      "@type" : "AstFieldDecl",
       "name" : "X",
       "qualType" : "unsigned short",
       "desugaredQualType" : "unsigned short"
@@ -17618,7 +18606,22 @@
       "desugaredQualType" : "unsigned short"
     }, {
       "@type" : "AstFieldDecl",
+      "name" : "Width",
+      "qualType" : "unsigned short",
+      "desugaredQualType" : "unsigned short"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Height",
+      "qualType" : "unsigned short",
+      "desugaredQualType" : "unsigned short"
+    }, {
+      "@type" : "AstFieldDecl",
       "name" : "GlyphID",
+      "qualType" : "unsigned int",
+      "desugaredQualType" : "unsigned int"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "GlyphColored",
       "qualType" : "unsigned int",
       "desugaredQualType" : "unsigned int"
     }, {
@@ -17890,11 +18893,11 @@
       "resultType" : "void"
     }, {
       "@type" : "AstFunctionDecl",
-      "name" : "ClearTexData",
+      "name" : "ClearFonts",
       "resultType" : "void"
     }, {
       "@type" : "AstFunctionDecl",
-      "name" : "ClearFonts",
+      "name" : "ClearTexData",
       "resultType" : "void"
     }, {
       "@type" : "AstFunctionDecl",
@@ -17990,7 +18993,7 @@
         "@type" : "AstParmVarDecl",
         "name" : "id",
         "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
+        "desugaredQualType" : "unsigned long long"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -18165,36 +19168,6 @@
         } ]
       } ]
     }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "GetMouseCursorTexData",
-      "resultType" : "bool",
-      "decls" : [ {
-        "@type" : "AstParmVarDecl",
-        "name" : "cursor",
-        "qualType" : "ImGuiMouseCursor",
-        "desugaredQualType" : "int"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "out_offset",
-        "qualType" : "ImVec2 *",
-        "desugaredQualType" : "ImVec2 *"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "out_size",
-        "qualType" : "ImVec2 *",
-        "desugaredQualType" : "ImVec2 *"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "out_uv_border",
-        "qualType" : "ImVec2 *",
-        "desugaredQualType" : "ImVec2 *"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "out_uv_fill",
-        "qualType" : "ImVec2 *",
-        "desugaredQualType" : "ImVec2 *"
-      } ]
-    }, {
       "@type" : "AstFieldDecl",
       "name" : "Flags",
       "qualType" : "ImFontAtlasFlags",
@@ -18203,7 +19176,7 @@
       "@type" : "AstFieldDecl",
       "name" : "TexID",
       "qualType" : "ImTextureID",
-      "desugaredQualType" : "void *"
+      "desugaredQualType" : "unsigned long long"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "TexDesiredWidth",
@@ -18216,14 +19189,14 @@
       "desugaredQualType" : "int"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "Locked",
-      "qualType" : "bool",
-      "desugaredQualType" : "bool"
-    }, {
-      "@type" : "AstFieldDecl",
       "name" : "UserData",
       "qualType" : "void *",
       "desugaredQualType" : "void *"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Locked",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "TexReady",
@@ -18276,14 +19249,14 @@
       "desugaredQualType" : "ImVector<ImFontAtlasCustomRect>"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "ConfigData",
+      "name" : "Sources",
       "qualType" : "ImVector<ImFontConfig>",
       "desugaredQualType" : "ImVector<ImFontConfig>"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "TexUvLines",
-      "qualType" : "ImVec4[64]",
-      "desugaredQualType" : "ImVec4[64]"
+      "qualType" : "ImVec4[33]",
+      "desugaredQualType" : "ImVec4[33]"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "FontBuilderIO",
@@ -18338,7 +19311,7 @@
     }, {
       "@type" : "AstFieldDecl",
       "name" : "IndexLookup",
-      "qualType" : "ImVector<ImWchar>",
+      "qualType" : "ImVector<ImU16>",
       "desugaredQualType" : "ImVector<unsigned short>"
     }, {
       "@type" : "AstFieldDecl",
@@ -18348,8 +19321,8 @@
     }, {
       "@type" : "AstFieldDecl",
       "name" : "FallbackGlyph",
-      "qualType" : "const ImFontGlyph *",
-      "desugaredQualType" : "const ImFontGlyph *"
+      "qualType" : "ImFontGlyph *",
+      "desugaredQualType" : "ImFontGlyph *"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "ContainerAtlas",
@@ -18357,19 +19330,19 @@
       "desugaredQualType" : "ImFontAtlas *"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "ConfigData",
-      "qualType" : "const ImFontConfig *",
-      "desugaredQualType" : "const ImFontConfig *"
+      "name" : "Sources",
+      "qualType" : "ImFontConfig *",
+      "desugaredQualType" : "ImFontConfig *"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "ConfigDataCount",
+      "name" : "SourcesCount",
       "qualType" : "short",
       "desugaredQualType" : "short"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "FallbackChar",
-      "qualType" : "ImWchar",
-      "desugaredQualType" : "unsigned short"
+      "name" : "EllipsisCharCount",
+      "qualType" : "short",
+      "desugaredQualType" : "short"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "EllipsisChar",
@@ -18377,9 +19350,9 @@
       "desugaredQualType" : "unsigned short"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "EllipsisCharCount",
-      "qualType" : "short",
-      "desugaredQualType" : "short"
+      "name" : "FallbackChar",
+      "qualType" : "ImWchar",
+      "desugaredQualType" : "unsigned short"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "EllipsisWidth",
@@ -18390,11 +19363,6 @@
       "name" : "EllipsisCharStep",
       "qualType" : "float",
       "desugaredQualType" : "float"
-    }, {
-      "@type" : "AstFieldDecl",
-      "name" : "DirtyLookupTables",
-      "qualType" : "bool",
-      "desugaredQualType" : "bool"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "Scale",
@@ -18417,13 +19385,18 @@
       "desugaredQualType" : "int"
     }, {
       "@type" : "AstFieldDecl",
-      "name" : "Used4kPagesMap",
-      "qualType" : "ImU8[2]",
-      "desugaredQualType" : "ImU8[2]"
+      "name" : "DirtyLookupTables",
+      "qualType" : "bool",
+      "desugaredQualType" : "bool"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Used8kPagesMap",
+      "qualType" : "ImU8[1]",
+      "desugaredQualType" : "ImU8[1]"
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "FindGlyph",
-      "resultType" : "const ImFontGlyph *",
+      "resultType" : "ImFontGlyph *",
       "decls" : [ {
         "@type" : "AstParmVarDecl",
         "name" : "c",
@@ -18433,7 +19406,7 @@
     }, {
       "@type" : "AstFunctionDecl",
       "name" : "FindGlyphNoFallback",
-      "resultType" : "const ImFontGlyph *",
+      "resultType" : "ImFontGlyph *",
       "decls" : [ {
         "@type" : "AstParmVarDecl",
         "name" : "c",
@@ -18499,6 +19472,9 @@
         "decls" : [ {
           "@type" : "AstParagraphComment",
           "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " [Internal] Don't use!"
+          }, {
             "@type" : "AstTextComment",
             "text" : " 'max_width' stops rendering after a certain width (could be turned into a 2d size). FLT_MAX to disable."
           }, {
@@ -18725,21 +19701,6 @@
       } ]
     }, {
       "@type" : "AstFunctionDecl",
-      "name" : "SetGlyphVisible",
-      "resultType" : "void",
-      "decls" : [ {
-        "@type" : "AstParmVarDecl",
-        "name" : "c",
-        "qualType" : "ImWchar",
-        "desugaredQualType" : "unsigned short"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "visible",
-        "qualType" : "bool",
-        "desugaredQualType" : "bool"
-      } ]
-    }, {
-      "@type" : "AstFunctionDecl",
       "name" : "IsGlyphRangeUnused",
       "resultType" : "bool",
       "decls" : [ {
@@ -18792,7 +19753,7 @@
     }, {
       "@type" : "AstEnumConstantDecl",
       "name" : "ImGuiViewportFlags_OwnedByApp",
-      "docComment" : "Platform Window: Was created/managed by the user application? (rather than our backend)",
+      "docComment" : "Platform Window: Is created/managed by the user application? (rather than our backend)",
       "qualType" : "ImGuiViewportFlags_",
       "order" : 3,
       "value" : "1 << 2",
@@ -19029,9 +19990,54 @@
         "@type" : "AstParagraphComment",
         "decls" : [ {
           "@type" : "AstTextComment",
-          "text" : " (Optional) Access via ImGui::GetPlatformIO()"
+          "text" : " Access via ImGui::GetPlatformIO()"
         } ]
       } ]
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_GetClipboardTextFn",
+      "qualType" : "const char *(*)(ImGuiContext *)",
+      "desugaredQualType" : "const char *(*)(ImGuiContext *)"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_SetClipboardTextFn",
+      "qualType" : "void (*)(ImGuiContext *, const char *)",
+      "desugaredQualType" : "void (*)(ImGuiContext *, const char *)"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_ClipboardUserData",
+      "qualType" : "void *",
+      "desugaredQualType" : "void *"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_OpenInShellFn",
+      "qualType" : "bool (*)(ImGuiContext *, const char *)",
+      "desugaredQualType" : "bool (*)(ImGuiContext *, const char *)"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_OpenInShellUserData",
+      "qualType" : "void *",
+      "desugaredQualType" : "void *"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_SetImeDataFn",
+      "qualType" : "void (*)(ImGuiContext *, ImGuiViewport *, ImGuiPlatformImeData *)",
+      "desugaredQualType" : "void (*)(ImGuiContext *, ImGuiViewport *, ImGuiPlatformImeData *)"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_ImeUserData",
+      "qualType" : "void *",
+      "desugaredQualType" : "void *"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_LocaleDecimalPoint",
+      "qualType" : "ImWchar",
+      "desugaredQualType" : "unsigned short"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Renderer_RenderState",
+      "qualType" : "void *",
+      "desugaredQualType" : "void *"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "Platform_CreateWindow",
@@ -19117,6 +20123,11 @@
       "name" : "Platform_OnChangedViewport",
       "qualType" : "void (*)(ImGuiViewport *)",
       "desugaredQualType" : "void (*)(ImGuiViewport *)"
+    }, {
+      "@type" : "AstFieldDecl",
+      "name" : "Platform_GetWindowWorkAreaInsets",
+      "qualType" : "ImVec4 (*)(ImGuiViewport *)",
+      "desugaredQualType" : "ImVec4 (*)(ImGuiViewport *)"
     }, {
       "@type" : "AstFieldDecl",
       "name" : "Platform_CreateVkSurface",
@@ -19213,7 +20224,7 @@
         "@type" : "AstParagraphComment",
         "decls" : [ {
           "@type" : "AstTextComment",
-          "text" : " (Optional) Support for IME (Input Method Editor) via the io.SetPlatformImeDataFn() function."
+          "text" : " (Optional) Support for IME (Input Method Editor) via the platform_io.Platform_SetImeDataFn() function."
         } ]
       } ]
     }, {
@@ -19236,6 +20247,99 @@
     "@type" : "AstNamespaceDecl",
     "name" : "ImGui",
     "decls" : [ {
+      "@type" : "AstFunctionDecl",
+      "name" : "Image",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "user_texture_id",
+        "qualType" : "ImTextureID",
+        "desugaredQualType" : "unsigned long long"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "image_size",
+        "qualType" : "const ImVec2 &",
+        "desugaredQualType" : "const ImVec2 &"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "uv0",
+        "qualType" : "const ImVec2 &",
+        "desugaredQualType" : "const ImVec2 &"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "uv1",
+        "qualType" : "const ImVec2 &",
+        "desugaredQualType" : "const ImVec2 &"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "tint_col",
+        "qualType" : "const ImVec4 &",
+        "desugaredQualType" : "const ImVec4 &"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "border_col",
+        "qualType" : "const ImVec4 &",
+        "desugaredQualType" : "const ImVec4 &"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " OBSOLETED in 1.91.9 (from February 2025)"
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PushButtonRepeat",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "repeat",
+        "qualType" : "bool",
+        "desugaredQualType" : "bool"
+      }, {
+        "@type" : "AstFullComment",
+        "decls" : [ {
+          "@type" : "AstParagraphComment",
+          "decls" : [ {
+            "@type" : "AstTextComment",
+            "text" : " OBSOLETED in 1.91.0 (from July 2024)"
+          } ]
+        } ]
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PopButtonRepeat",
+      "resultType" : "void"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PushTabStop",
+      "resultType" : "void",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "tab_stop",
+        "qualType" : "bool",
+        "desugaredQualType" : "bool"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "PopTabStop",
+      "resultType" : "void"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetContentRegionMax",
+      "resultType" : "ImVec2"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetWindowContentRegionMin",
+      "resultType" : "ImVec2"
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "GetWindowContentRegionMax",
+      "resultType" : "ImVec2"
+    }, {
       "@type" : "AstFunctionDecl",
       "name" : "BeginChildFrame",
       "resultType" : "bool",
@@ -19291,7 +20395,7 @@
             "text" : "&"
           }, {
             "@type" : "AstTextComment",
-            "text" : " size_arg, bool border, ImGuiWindowFlags window_flags){ return BeginChild(str_id, size_arg, border ? ImGuiChildFlags_Border : ImGuiChildFlags_None, window_flags); } // Unnecessary as true == ImGuiChildFlags_Border"
+            "text" : " size_arg, bool borders, ImGuiWindowFlags window_flags){ return BeginChild(str_id, size_arg, borders ? ImGuiChildFlags_Borders : ImGuiChildFlags_None, window_flags); } // Unnecessary as true == ImGuiChildFlags_Borders"
           }, {
             "@type" : "AstTextComment",
             "text" : "static inline bool BeginChild(ImGuiID id, const ImVec2"
@@ -19300,45 +20404,9 @@
             "text" : "&"
           }, {
             "@type" : "AstTextComment",
-            "text" : " size_arg, bool border, ImGuiWindowFlags window_flags)        { return BeginChild(id, size_arg, border ? ImGuiChildFlags_Border : ImGuiChildFlags_None, window_flags);     } // Unnecessary as true == ImGuiChildFlags_Border"
+            "text" : " size_arg, bool borders, ImGuiWindowFlags window_flags)        { return BeginChild(id, size_arg, borders ? ImGuiChildFlags_Borders : ImGuiChildFlags_None, window_flags);     } // Unnecessary as true == ImGuiChildFlags_Borders"
           } ]
         } ]
-      } ]
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "ListBox",
-      "resultType" : "bool",
-      "decls" : [ {
-        "@type" : "AstParmVarDecl",
-        "name" : "label",
-        "qualType" : "const char *",
-        "desugaredQualType" : "const char *"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "current_item",
-        "qualType" : "int *",
-        "desugaredQualType" : "int *"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "old_callback",
-        "qualType" : "bool (*)(void *, int, const char **)",
-        "desugaredQualType" : "bool (*)(void *, int, const char **)"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "user_data",
-        "qualType" : "void *",
-        "desugaredQualType" : "void *"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "items_count",
-        "qualType" : "int",
-        "desugaredQualType" : "int"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "height_in_items",
-        "qualType" : "int",
-        "desugaredQualType" : "int",
-        "defaultValue" : "-1"
       } ]
     }, {
       "@type" : "AstFunctionDecl",
@@ -19372,6 +20440,42 @@
       }, {
         "@type" : "AstParmVarDecl",
         "name" : "popup_max_height_in_items",
+        "qualType" : "int",
+        "desugaredQualType" : "int",
+        "defaultValue" : "-1"
+      } ]
+    }, {
+      "@type" : "AstFunctionDecl",
+      "name" : "ListBox",
+      "resultType" : "bool",
+      "decls" : [ {
+        "@type" : "AstParmVarDecl",
+        "name" : "label",
+        "qualType" : "const char *",
+        "desugaredQualType" : "const char *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "current_item",
+        "qualType" : "int *",
+        "desugaredQualType" : "int *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "old_callback",
+        "qualType" : "bool (*)(void *, int, const char **)",
+        "desugaredQualType" : "bool (*)(void *, int, const char **)"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "user_data",
+        "qualType" : "void *",
+        "desugaredQualType" : "void *"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "items_count",
+        "qualType" : "int",
+        "desugaredQualType" : "int"
+      }, {
+        "@type" : "AstParmVarDecl",
+        "name" : "height_in_items",
         "qualType" : "int",
         "desugaredQualType" : "int",
         "defaultValue" : "-1"
@@ -19413,118 +20517,6 @@
       "@type" : "AstFunctionDecl",
       "name" : "PopAllowKeyboardFocus",
       "resultType" : "void"
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "ImageButton",
-      "resultType" : "bool",
-      "decls" : [ {
-        "@type" : "AstParmVarDecl",
-        "name" : "user_texture_id",
-        "qualType" : "ImTextureID",
-        "desugaredQualType" : "void *"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "size",
-        "qualType" : "const ImVec2 &",
-        "desugaredQualType" : "const ImVec2 &"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "uv0",
-        "qualType" : "const ImVec2 &",
-        "desugaredQualType" : "const ImVec2 &",
-        "defaultValue" : "ImVec2(0, 0)"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "uv1",
-        "qualType" : "const ImVec2 &",
-        "desugaredQualType" : "const ImVec2 &",
-        "defaultValue" : "ImVec2(1, 1)"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "frame_padding",
-        "qualType" : "int",
-        "desugaredQualType" : "int",
-        "defaultValue" : "-1"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "bg_col",
-        "qualType" : "const ImVec4 &",
-        "desugaredQualType" : "const ImVec4 &",
-        "defaultValue" : "ImVec4(0, 0, 0, 0)"
-      }, {
-        "@type" : "AstParmVarDecl",
-        "name" : "tint_col",
-        "qualType" : "const ImVec4 &",
-        "desugaredQualType" : "const ImVec4 &",
-        "defaultValue" : "ImVec4(1, 1, 1, 1)"
-      }, {
-        "@type" : "AstFullComment",
-        "decls" : [ {
-          "@type" : "AstParagraphComment",
-          "decls" : [ {
-            "@type" : "AstTextComment",
-            "text" : " OBSOLETED in 1.89 (from August 2022)"
-          } ]
-        } ]
-      } ]
-    }, {
-      "@type" : "AstFunctionDecl",
-      "name" : "GetKeyIndex",
-      "resultType" : "ImGuiKey",
-      "decls" : [ {
-        "@type" : "AstParmVarDecl",
-        "name" : "key",
-        "qualType" : "ImGuiKey",
-        "desugaredQualType" : "ImGuiKey"
-      }, {
-        "@type" : "AstFullComment",
-        "decls" : [ {
-          "@type" : "AstParagraphComment",
-          "decls" : [ {
-            "@type" : "AstTextComment",
-            "text" : " OBSOLETED in 1.87 (from February 2022 but more formally obsoleted April 2024)"
-          } ]
-        } ]
-      } ]
-    } ]
-  }, {
-    "@type" : "AstEnumDecl",
-    "name" : "ImGuiModFlags_",
-    "decls" : [ {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiModFlags_None",
-      "qualType" : "ImGuiModFlags_",
-      "order" : 0,
-      "value" : "0",
-      "evaluatedValue" : 0
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiModFlags_Ctrl",
-      "qualType" : "ImGuiModFlags_",
-      "order" : 1,
-      "value" : "ImGuiMod_Ctrl",
-      "evaluatedValue" : 4096
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiModFlags_Shift",
-      "qualType" : "ImGuiModFlags_",
-      "order" : 2,
-      "value" : "ImGuiMod_Shift",
-      "evaluatedValue" : 8192
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiModFlags_Alt",
-      "qualType" : "ImGuiModFlags_",
-      "order" : 3,
-      "value" : "ImGuiMod_Alt",
-      "evaluatedValue" : 16384
-    }, {
-      "@type" : "AstEnumConstantDecl",
-      "name" : "ImGuiModFlags_Super",
-      "qualType" : "ImGuiModFlags_",
-      "order" : 4,
-      "value" : "ImGuiMod_Super",
-      "evaluatedValue" : 32768
     } ]
   } ]
 }

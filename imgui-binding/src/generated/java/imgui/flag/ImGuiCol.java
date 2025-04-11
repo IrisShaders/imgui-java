@@ -182,34 +182,39 @@ public final class ImGuiCol {
      */
     public static final int TableRowBgAlt = 50;
 
-    public static final int TextSelectedBg = 51;
+    /**
+     * Hyperlink color
+     */
+    public static final int TextLink = 51;
+
+    public static final int TextSelectedBg = 52;
 
     /**
      * Rectangle highlighting a drop target
      */
-    public static final int DragDropTarget = 52;
+    public static final int DragDropTarget = 53;
 
     /**
-     * Gamepad/keyboard: current highlighted item
+     * Color of keyboard/gamepad navigation cursor/rectangle, when visible
      */
-    public static final int NavHighlight = 53;
+    public static final int NavCursor = 54;
 
     /**
      * Highlight window when using CTRL+TAB
      */
-    public static final int NavWindowingHighlight = 54;
+    public static final int NavWindowingHighlight = 55;
 
     /**
      * Darken/colorize entire screen behind the CTRL+TAB window list, when active
      */
-    public static final int NavWindowingDimBg = 55;
+    public static final int NavWindowingDimBg = 56;
 
     /**
      * Darken/colorize entire screen behind a modal window, when one is active
      */
-    public static final int ModalWindowDimBg = 56;
+    public static final int ModalWindowDimBg = 57;
 
-    public static final int COUNT = 57;
+    public static final int COUNT = 58;
 
     /**
      * [renamed in 1.90.9]
@@ -231,4 +236,11 @@ public final class ImGuiCol {
      * <p>Definition: {@code ImGuiCol_TabDimmedSelected}
      */
     public static final int TabUnfocusedActive = 38;
+
+    /**
+     * [renamed in 1.91.4]
+     *
+     * <p>Definition: {@code ImGuiCol_NavCursor}
+     */
+    public static final int NavHighlight = 54;
 }

@@ -182,6 +182,30 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     */
 
     /**
+     * Hit-testing extent outside/inside resizing border. Also extend determination of hovered window.
+     * Generally meaningfully larger than WindowBorderSize to make it easy to reach borders.
+     */
+    public float getWindowBorderHoverPadding() {
+        return nGetWindowBorderHoverPadding();
+    }
+
+    /**
+     * Hit-testing extent outside/inside resizing border. Also extend determination of hovered window.
+     * Generally meaningfully larger than WindowBorderSize to make it easy to reach borders.
+     */
+    public void setWindowBorderHoverPadding(final float value) {
+        nSetWindowBorderHoverPadding(value);
+    }
+
+    private native float nGetWindowBorderHoverPadding(); /*
+        return THIS->WindowBorderHoverPadding;
+    */
+
+    private native void nSetWindowBorderHoverPadding(float value); /*
+        THIS->WindowBorderHoverPadding = value;
+    */
+
+    /**
      * Minimum window size. This is a global setting. If you want to constrain individual windows, use SetNextWindowSizeConstraints().
      */
     public ImVec2 getWindowMinSize() {
@@ -908,6 +932,28 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     */
 
     /**
+     * Thickness of border around Image() calls.
+     */
+    public float getImageBorderSize() {
+        return nGetImageBorderSize();
+    }
+
+    /**
+     * Thickness of border around Image() calls.
+     */
+    public void setImageBorderSize(final float value) {
+        nSetImageBorderSize(value);
+    }
+
+    private native float nGetImageBorderSize(); /*
+        return THIS->ImageBorderSize;
+    */
+
+    private native void nSetImageBorderSize(float value); /*
+        THIS->ImageBorderSize = value;
+    */
+
+    /**
      * Radius of upper corners of a tab. Set to 0.0f to have rectangular tabs.
      */
     public float getTabRounding() {
@@ -952,27 +998,47 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     */
 
     /**
-     * Minimum width for close button to appear on an unselected tab when hovered.
-     * Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
+     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width.
      */
-    public float getTabMinWidthForCloseButton() {
-        return nGetTabMinWidthForCloseButton();
+    public float getTabCloseButtonMinWidthSelected() {
+        return nGetTabCloseButtonMinWidthSelected();
     }
 
     /**
-     * Minimum width for close button to appear on an unselected tab when hovered.
-     * Set to 0.0f to always show when hovering, set to FLT_MAX to never show close button unless selected.
+     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width.
      */
-    public void setTabMinWidthForCloseButton(final float value) {
-        nSetTabMinWidthForCloseButton(value);
+    public void setTabCloseButtonMinWidthSelected(final float value) {
+        nSetTabCloseButtonMinWidthSelected(value);
     }
 
-    private native float nGetTabMinWidthForCloseButton(); /*
-        return THIS->TabMinWidthForCloseButton;
+    private native float nGetTabCloseButtonMinWidthSelected(); /*
+        return THIS->TabCloseButtonMinWidthSelected;
     */
 
-    private native void nSetTabMinWidthForCloseButton(float value); /*
-        THIS->TabMinWidthForCloseButton = value;
+    private native void nSetTabCloseButtonMinWidthSelected(float value); /*
+        THIS->TabCloseButtonMinWidthSelected = value;
+    */
+
+    /**
+     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width. FLT_MAX: never show close button when unselected.
+     */
+    public float getTabCloseButtonMinWidthUnselected() {
+        return nGetTabCloseButtonMinWidthUnselected();
+    }
+
+    /**
+     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width. FLT_MAX: never show close button when unselected.
+     */
+    public void setTabCloseButtonMinWidthUnselected(final float value) {
+        nSetTabCloseButtonMinWidthUnselected(value);
+    }
+
+    private native float nGetTabCloseButtonMinWidthUnselected(); /*
+        return THIS->TabCloseButtonMinWidthUnselected;
+    */
+
+    private native void nSetTabCloseButtonMinWidthUnselected(float value); /*
+        THIS->TabCloseButtonMinWidthUnselected = value;
     */
 
     /**
@@ -995,6 +1061,28 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
 
     private native void nSetTabBarBorderSize(float value); /*
         THIS->TabBarBorderSize = value;
+    */
+
+    /**
+     * Thickness of tab-bar overline, which highlights the selected tab-bar.
+     */
+    public float getTabBarOverlineSize() {
+        return nGetTabBarOverlineSize();
+    }
+
+    /**
+     * Thickness of tab-bar overline, which highlights the selected tab-bar.
+     */
+    public void setTabBarOverlineSize(final float value) {
+        nSetTabBarOverlineSize(value);
+    }
+
+    private native float nGetTabBarOverlineSize(); /*
+        return THIS->TabBarOverlineSize;
+    */
+
+    private native void nSetTabBarOverlineSize(float value); /*
+        THIS->TabBarOverlineSize = value;
     */
 
     /**

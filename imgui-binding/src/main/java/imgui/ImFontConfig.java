@@ -93,11 +93,6 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
     @BindingField
     public boolean PixelSnapH;
 
-    /**
-     * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
-     */
-    @BindingField
-    public ImVec2 GlyphExtraSpacing;
 
     /**
      * Offset all glyphs from this font input.
@@ -139,6 +134,12 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
      */
     @BindingField
     public float GlyphMaxAdvanceX;
+
+    /**
+     * Extra spacing (in pixels) between glyphs. Please contact us if you are using this.
+     */
+    @BindingField
+    public float GlyphExtraAdvanceX;
 
     /**
      * Merge into previous ImFont, so you can combine multiple inputs font into one ImFont (e.g. ASCII font + icons + Japanese glyphs).

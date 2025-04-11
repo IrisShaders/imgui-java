@@ -56,14 +56,14 @@ public final class ImGuiTreeNodeFlags {
     public static final int DefaultOpen = 32;
 
     /**
-     * Need double-click to open node
+     * Open on double-click instead of simple click (default for multi-select unless any _OpenOnXXX behavior is set explicitly). Both behaviors may be combined.
      *
      * <p>Definition: {@code 1 << 6}
      */
     public static final int OpenOnDoubleClick = 64;
 
     /**
-     * Only open when clicking on the arrow part. If ImGuiTreeNodeFlags_OpenOnDoubleClick is also set, single-click arrow or double-click all box to open.
+     * Open when clicking on the arrow part (default for multi-select unless any _OpenOnXXX behavior is set explicitly). Both behaviors may be combined.
      *
      * <p>Definition: {@code 1 << 7}
      */
@@ -109,26 +109,31 @@ public final class ImGuiTreeNodeFlags {
      *
      * <p>Definition: {@code 1 << 13}
      */
-    public static final int SpanTextWidth = 8192;
+    public static final int SpanLabelWidth = 8192;
 
     /**
-     * Frame will span all columns of its container table (text will still fit in current column)
+     * Frame will span all columns of its container table (label will still fit in current column)
      *
      * <p>Definition: {@code 1 << 14}
      */
     public static final int SpanAllColumns = 16384;
 
     /**
-     * (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
+     * Label will span all columns of its container table
      *
      * <p>Definition: {@code 1 << 15}
      */
-    public static final int NavLeftJumpsBackHere = 32768;
+    public static final int LabelSpanAllColumns = 32768;
 
     /**
-     * ImGuiTreeNodeFlags_NoScrollOnOpen     = 1 {@code <<} 16,  // FIXME: TODO: Disable automatic scroll on TreePop() if node got just open and contents is not visible
+     * (WIP) Nav: left direction may move to this TreeNode() from any of its child (items submitted between TreeNode and TreePop)
      *
-     * <p>Definition: {@code ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_NoAutoOpenOnLog}
+     * <p>Definition: {@code 1 << 17}
+     */
+    public static final int NavLeftJumpsBackHere = 131072;
+
+    /**
+     * Definition: {@code ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_NoAutoOpenOnLog}
      */
     public static final int CollapsingHeader = 26;
 
@@ -138,4 +143,11 @@ public final class ImGuiTreeNodeFlags {
      * <p>Definition: {@code ImGuiTreeNodeFlags_AllowOverlap}
      */
     public static final int AllowItemOverlap = 4;
+
+    /**
+     * Renamed in 1.90.7
+     *
+     * <p>Definition: {@code ImGuiTreeNodeFlags_SpanLabelWidth}
+     */
+    public static final int SpanTextWidth = 8192;
 }

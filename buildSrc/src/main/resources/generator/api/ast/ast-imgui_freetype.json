@@ -1,9 +1,9 @@
 {
   "info" : {
     "source" : "include/imgui/misc/freetype/imgui_freetype.h",
-    "hash" : "b08898b2e1013c180b4ee5b2846938bf",
+    "hash" : "caf61137ec7d16f9b860a4a8c50201cd",
     "url" : "https://github.com/ocornut/imgui",
-    "revision" : "3369cbd2776d7567ac198b1a3017a4fa2d547cc3"
+    "revision" : "4806a1924ff6181180bf5e4b8b79ab4394118875"
   },
   "decls" : [ {
     "@type" : "AstRecordDecl",

@@ -28,7 +28,7 @@ public final class ImGuiBackendFlags {
     public static final int HasMouseCursors = 2;
 
     /**
-     * Backend Platform supports io.WantSetMousePos requests to reposition the OS mouse position (only used if ImGuiConfigFlags_NavEnableSetMousePos is set).
+     * Backend Platform supports io.WantSetMousePos requests to reposition the OS mouse position (only used if io.ConfigNavMoveSetMousePos is set).
      *
      * <p>Definition: {@code 1 << 2}
      */

@@ -11,13 +11,6 @@ public final class ImGuiSliderFlags {
     public static final int None = 0;
 
     /**
-     * Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.
-     *
-     * <p>Definition: {@code 1 << 4}
-     */
-    public static final int AlwaysClamp = 16;
-
-    /**
      * Make the widget logarithmic (linear otherwise). Consider using ImGuiSliderFlags_NoRoundToFormat with this if using a format-string with small amount of digits.
      *
      * <p>Definition: {@code 1 << 5}
@@ -39,11 +32,37 @@ public final class ImGuiSliderFlags {
     public static final int NoInput = 128;
 
     /**
-     * Enable wrapping around from max to min and from min to max (only supported by DragXXX() functions for now.
+     * Enable wrapping around from max to min and from min to max. Only supported by DragXXX() functions for now.
      *
      * <p>Definition: {@code 1 << 8}
      */
     public static final int WrapAround = 256;
+
+    /**
+     * Clamp value to min/max bounds when input manually with CTRL+Click. By default CTRL+Click allows going out of bounds.
+     *
+     * <p>Definition: {@code 1 << 9}
+     */
+    public static final int ClampOnInput = 512;
+
+    /**
+     * Clamp even if min==max==0.0f. Otherwise due to legacy reason DragXXX functions don't clamp with those values. When your clamping limits are dynamic you almost always want to use it.
+     *
+     * <p>Definition: {@code 1 << 10}
+     */
+    public static final int ClampZeroRange = 1024;
+
+    /**
+     * Disable keyboard modifiers altering tweak speed. Useful if you want to alter tweak speed yourself based on your own logic.
+     *
+     * <p>Definition: {@code 1 << 11}
+     */
+    public static final int NoSpeedTweaks = 2048;
+
+    /**
+     * Definition: {@code ImGuiSliderFlags_ClampOnInput | ImGuiSliderFlags_ClampZeroRange}
+     */
+    public static final int AlwaysClamp = 1536;
 
     /**
      * [Internal] We treat using those bits as being potentially a 'float power' argument from the previous API that has got miscast to this enum, and will trigger an assert if needed.

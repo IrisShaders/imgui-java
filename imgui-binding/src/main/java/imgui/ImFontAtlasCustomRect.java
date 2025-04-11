@@ -57,6 +57,12 @@ public final class ImFontAtlasCustomRect extends ImGuiStructDestroyable {
     public short Height;
 
     /**
+     *  For custom font glyphs only: glyph is colored, removed tinting
+     */
+    @BindingField
+    public int GlyphColored;
+
+    /**
      *  Packed position in Atlas
      */
     @BindingField(accessors = BindingField.Accessor.GETTER)

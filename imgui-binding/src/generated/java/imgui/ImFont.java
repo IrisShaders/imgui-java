@@ -108,24 +108,24 @@ public final class ImFont extends ImGuiStructDestroyable {
      * Number of ImFontConfig involved in creating this font.
      * Bigger than 1 when merging multiple font sources into one ImFont.
      */
-    public short getConfigDataCount() {
-        return nGetConfigDataCount();
+    public short getSourcesCount() {
+        return nGetSourcesCount();
     }
 
     /**
      * Number of ImFontConfig involved in creating this font.
      * Bigger than 1 when merging multiple font sources into one ImFont.
      */
-    public void setConfigDataCount(final short value) {
-        nSetConfigDataCount(value);
+    public void setSourcesCount(final short value) {
+        nSetSourcesCount(value);
     }
 
-    private native short nGetConfigDataCount(); /*
-        return THIS->ConfigDataCount;
+    private native short nGetSourcesCount(); /*
+        return THIS->SourcesCount;
     */
 
-    private native void nSetConfigDataCount(short value); /*
-        THIS->ConfigDataCount = value;
+    private native void nSetSourcesCount(short value); /*
+        THIS->SourcesCount = value;
     */
 
     /**
@@ -148,6 +148,28 @@ public final class ImFont extends ImGuiStructDestroyable {
 
     private native void nSetEllipsisChar(short value); /*
         THIS->EllipsisChar = value;
+    */
+
+    /**
+     * Character used if a glyph isn't found (U+FFFD, '?')
+     */
+    public short getFallbackChar() {
+        return nGetFallbackChar();
+    }
+
+    /**
+     * Character used if a glyph isn't found (U+FFFD, '?')
+     */
+    public void setFallbackChar(final short value) {
+        nSetFallbackChar(value);
+    }
+
+    private native short nGetFallbackChar(); /*
+        return THIS->FallbackChar;
+    */
+
+    private native void nSetFallbackChar(short value); /*
+        THIS->FallbackChar = value;
     */
 
     public short getEllipsisCharCount() {

@@ -134,6 +134,14 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
         return THIS->StartPosY;
     */
 
+    public float getStartSeekOffsetY() {
+        return nGetStartSeekOffsetY();
+    }
+
+    private native float nGetStartSeekOffsetY(); /*
+        return THIS->StartSeekOffsetY;
+    */
+
     public void begin(final int itemsCount) {
         nBegin(itemsCount);
     }
@@ -197,6 +205,19 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
 
     private native void nIncludeItemsByIndex(int itemBegin, int itemEnd); /*
         THIS->IncludeItemsByIndex(itemBegin, itemEnd);
+    */
+
+    /**
+     * Seek cursor toward given item. This is automatically called while stepping.
+     * - The only reason to call this is: you can use ImGuiListClipper::Begin(INT_MAX) if you don't know item count ahead of time.
+     * - In this case, after all steps are done, you'll want to call SeekCursorForItem(item_count).
+     */
+    public void seekCursorForItem(final int itemIndex) {
+        nSeekCursorForItem(itemIndex);
+    }
+
+    private native void nSeekCursorForItem(int itemIndex); /*
+        THIS->SeekCursorForItem(itemIndex);
     */
 
     /**

@@ -904,36 +904,6 @@ public final class ImGui extends imgui.ImGui {
         return ImGui::IsItemToggledSelection();
     */
 
-    public static ImVec2 getContentRegionMaxAbs() {
-        final ImVec2 dst = new ImVec2();
-        nGetContentRegionMaxAbs(dst);
-        return dst;
-    }
-
-    public static float getContentRegionMaxAbsX() {
-        return nGetContentRegionMaxAbsX();
-    }
-
-    public static float getContentRegionMaxAbsY() {
-        return nGetContentRegionMaxAbsY();
-    }
-
-    public static void getContentRegionMaxAbs(final ImVec2 dst) {
-        nGetContentRegionMaxAbs(dst);
-    }
-
-    private static native void nGetContentRegionMaxAbs(ImVec2 dst); /*
-        Jni::ImVec2Cpy(env, ImGui::GetContentRegionMaxAbs(), dst);
-    */
-
-    private static native float nGetContentRegionMaxAbsX(); /*
-        return ImGui::GetContentRegionMaxAbs().x;
-    */
-
-    private static native float nGetContentRegionMaxAbsY(); /*
-        return ImGui::GetContentRegionMaxAbs().y;
-    */
-
     // TODO: ShrinkWidths
 
     // Parameter stacks

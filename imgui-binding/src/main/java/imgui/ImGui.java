@@ -644,8 +644,29 @@ public class ImGui {
     @BindingMethod
     public static native void PushStyleVar(int imGuiStyleVar, ImVec2 val);
 
+    /**
+     * modify X component of a style ImVec2 variable.
+     */
+    @BindingMethod
+    public static native void PushStyleVarX(int imGuiStyleVar, float val);
+
+    /**
+     * modify Y component of a style ImVec2 variable.
+     */
+    @BindingMethod
+    public static native void PushStyleVarY(int imGuiStyleVar, float val);
+
     @BindingMethod
     public static native void PopStyleVar(@OptArg int count);
+
+    /**
+     * modify specified shared item flag, e.g. PushItemFlag(ImGuiItemFlags_NoTabStop, true)
+     */
+    @BindingMethod
+    public static native void PushItemFlag(int option, boolean enabled);
+
+    @BindingMethod
+    public static native void PopItemFlag();
 
     /**
      * Tab stop enable. Allow focusing using TAB/Shift-TAB, enabled by default but you can disable it for certain widgets
@@ -949,6 +970,9 @@ public class ImGui {
     @BindingMethod
     public static native int GetID(@ArgValue(callPrefix = "(void*)") long ptrId);
 
+    @BindingMethod
+    public static native int GetID(int id);
+
     // Widgets: Text
 
     /**
@@ -1081,11 +1105,20 @@ public class ImGui {
     @BindingMethod
     public static native void Bullet();
 
+
+    /**
+     * hyperlink text button, automatically open file/url when clicked
+     */
+
+
     // Widgets: Images
     // - Read about ImTextureID here: https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples
 
     @BindingMethod
-    public static native void Image(@ArgValue(callPrefix = "(ImTextureID)(uintptr_t)") long userTextureId, ImVec2 size, @OptArg ImVec2 uv0, @OptArg ImVec2 uv1, @OptArg ImVec4 tintCol, @OptArg ImVec4 borderCol);
+    public static native void Image(@ArgValue(callPrefix = "(ImTextureID)(uintptr_t)") long userTextureId, ImVec2 size, @OptArg ImVec2 uv0, @OptArg ImVec2 uv1);
+
+    @BindingMethod
+    public static native void ImageWithBg(@ArgValue(callPrefix = "(ImTextureID)(uintptr_t)") long userTextureId, ImVec2 size, @OptArg ImVec2 uv0, @OptArg ImVec2 uv1, @OptArg ImVec4 bgCol, @OptArg ImVec4 tintCol);
 
     @BindingMethod
     public static native boolean ImageButton(String strId, @ArgValue(callPrefix = "(ImTextureID)(uintptr_t)") long userTextureId, ImVec2 size, @OptArg ImVec2 uv0, @OptArg ImVec2 uv1, @OptArg ImVec4 bgCol, @OptArg ImVec4 tintCol);
@@ -1672,6 +1705,12 @@ public class ImGui {
      */
     @BindingMethod
     public static native void SetNextItemOpen(boolean isOpen, @OptArg int cond);
+
+    /**
+     * set id to use for open/close storage (default to same as item id).
+     */
+    @BindingMethod
+    public static native void SetNextItemStorageID(@ArgValue(callPrefix = "(ImGuiID)") int id);
 
     // Widgets: Selectables
     // - A selectable highlights when hovered, and can display another color when selected.
@@ -2453,6 +2492,12 @@ public class ImGui {
     @BindingMethod
     public static native void SetKeyboardFocusHere(@OptArg int offset);
 
+    /**
+     * alter visibility of keyboard/gamepad cursor. by default: show when using an arrow key, hide when clicking with mouse.
+     */
+    @BindingMethod
+    public static native void SetNavCursorVisible(boolean visible);
+
     // Overlapping mode
 
     /**
@@ -2696,6 +2741,19 @@ public class ImGui {
     @BindingMethod
     public static native void SetNextItemShortcut(@ArgValue(staticCast = "ImGuiKeyChord") int key_chord, @OptArg int flags);
 
+    // Inputs Utilities: Key/Input Ownership [BETA]
+    // - One common use case would be to allow your items to disable standard inputs behaviors such
+    //   as Tab or Alt key handling, Mouse Wheel scrolling, etc.
+    //   e.g. Button(...); SetItemKeyOwner(ImGuiKey_MouseWheelY); to make hovering/activating a button disable wheel for scrolling.
+    // - Reminder ImGuiKey enum include access to mouse buttons and gamepad, so key ownership can apply to them.
+    // - Many related features are still in imgui_internal.h. For instance, most IsKeyXXX()/IsMouseXXX() functions have an owner-id-aware version.
+
+/*
+    public native void nSetItemKeyOwner(int key); /*
+        ImGui::SetItemKeyOwner((ImGuiKey) key);
+    */
+
+
     // Inputs Utilities: Keyboard/Mouse/Gamepad
     // - the ImGuiKey enum contains all possible keyboard, mouse and gamepad inputs (e.g. ImGuiKey_A, ImGuiKey_MouseLeft, ImGuiKey_GamepadDpadUp...).
     // - before v1.87, we used ImGuiKey to carry native/user indices as defined by each backends. About use of those legacy ImGuiKey values:
@@ -2776,6 +2834,12 @@ public class ImGui {
      */
     @BindingMethod
     public static native boolean IsMouseDoubleClicked(int button);
+
+    /**
+     * delayed mouse release (use very sparingly!). Generally used with 'delay >= io.MouseDoubleClickTime' + combined with a 'io.MouseClickedLastCount==1' test. This is a very rarely used UI idiom, but some apps use this: e.g. MS Explorer single click on an icon to rename.
+     */
+    @BindingMethod
+    public static native boolean IsMouseReleasedWithDelay(int button, float delay);
 
     /**
      * Return the number of successive mouse-clicks at the time where a click happen (otherwise 0).

@@ -104,6 +104,49 @@ public final class ImGuiIO extends ImGuiStruct {
     @BindingField
     public ImVec2 DisplayFramebufferScale;
 
+    /**
+     * Swap Activate<>Cancel (A<>B) buttons, matching typical "Nintendo/Japanese style" gamepad layout.
+     */
+    @BindingField
+    public boolean ConfigNavSwapGamepadButtons;
+
+    /**
+     * Directional/tabbing navigation teleports the mouse cursor. May be useful on TV/console systems where moving a virtual mouse is difficult.
+     * Will update io.MousePos and set io.WantSetMousePos=true.
+     */
+    @BindingField
+    public boolean ConfigNavMoveSetMousePos;
+
+    /**
+     * Sets io.WantCaptureKeyboard when io.NavActive is set.
+     */
+    @BindingField
+    public boolean ConfigNavCaptureKeyboard;
+
+    /**
+     * Pressing Escape can clear focused item + navigation id/highlight. Set to false if you want to always keep highlight on.
+     */
+    @BindingField
+    public boolean ConfigNavEscapeClearFocusItem;
+
+    /**
+     * Pressing Escape can clear focused window as well (super set of io.ConfigNavEscapeClearFocusItem).
+     */
+    @BindingField
+    public boolean ConfigNavEscapeClearFocusWindow;
+
+    /**
+     * Using directional navigation key makes the cursor visible. Mouse click hides the cursor.
+     */
+    @BindingField
+    public boolean ConfigNavCursorVisibleAuto;
+
+    /**
+     * Navigation cursor is always visible.
+     */
+    @BindingField
+    public boolean ConfigNavCursorVisibleAlways;
+
     // Docking options (when ImGuiConfigFlags_DockingEnable is set)
 
     /**
@@ -209,6 +252,27 @@ public final class ImGuiIO extends ImGuiStruct {
     public boolean ConfigWindowsMoveFromTitleBarOnly;
 
     /**
+     * [EXPERIMENTAL] CTRL+C copy the contents of focused window into the clipboard.
+     * <p>
+     * Experimental because:
+     * <p>
+     * (1) has known issues with nested Begin/End pairs
+     * <p>
+     * (2) text output quality varies
+     * <p>
+     * (3) text output is in submission order rather than spatial order.
+     */
+    @BindingField
+    public boolean ConfigWindowsCopyContentsWithCtrlC;
+
+    /**
+     * Enable scrolling page by page when clicking outside the scrollbar grab.
+     * When disabled, always scroll to clicked location. When enabled, Shift+Click scrolls to clicked location.
+     */
+    @BindingField
+    public boolean ConfigScrollbarScrollByPage;
+
+    /**
      * [Timer (in seconds) to free transient windows/tables memory buffers when unused. Set to -1.0f to disable.
      */
     @BindingField
@@ -251,6 +315,62 @@ public final class ImGuiIO extends ImGuiStruct {
     //------------------------------------------------------------------
     // Debug options
     //------------------------------------------------------------------
+
+    // Options to configure Error Handling and how we handle recoverable errors [EXPERIMENTAL]
+    // - Error recovery is provided as a way to facilitate:
+    //    - Recovery after a programming error (native code or scripting language - the later tends to facilitate iterating on code while running).
+    //    - Recovery after running an exception handler or any error processing which may skip code after an error has been detected.
+    // - Error recovery is not perfect nor guaranteed! It is a feature to ease development.
+    //   You not are not supposed to rely on it in the course of a normal application run.
+    // - Functions that support error recovery are using IM_ASSERT_USER_ERROR() instead of IM_ASSERT().
+    // - By design, we do NOT allow error recovery to be 100% silent. One of the three options needs to be checked!
+    // - Always ensure that on programmers seats you have at minimum Asserts or Tooltips enabled when making direct imgui API calls!
+    //   Otherwise it would severely hinder your ability to catch and correct mistakes!
+    // Read https://github.com/ocornut/imgui/wiki/Error-Handling for details.
+    // - Programmer seats: keep asserts (default), or disable asserts and keep error tooltips (new and nice!)
+    // - Non-programmer seats: maybe disable asserts, but make sure errors are resurfaced (tooltips, visible log entries, use callback etc.)
+    // - Recovery after error/exception: record stack sizes with ErrorRecoveryStoreState(), disable assert, set log callback (to e.g. trigger high-level breakpoint), recover with ErrorRecoveryTryToRecoverState(), restore settings.
+    /**
+     * Enable error recovery support. Some errors won't be detected and lead to direct crashes if recovery is disabled.
+     */
+    @BindingField
+    public boolean ConfigErrorRecovery;
+
+    /**
+     * Enable asserts on recoverable error. By default call IM_ASSERT() when returning from a failing IM_ASSERT_USER_ERROR()
+     */
+    @BindingField
+    public boolean ConfigErrorRecoveryEnableAssert;
+
+    /**
+     * Enable debug log output on recoverable errors.
+     */
+    @BindingField
+    public boolean ConfigErrorRecoveryEnableDebugLog;
+
+    /**
+     * Enable tooltip on recoverable errors. The tooltip include a way to enable asserts if they were disabled.
+     */
+    @BindingField
+    public boolean ConfigErrorRecoveryEnableTooltip;
+
+
+    // Tools to detect code submitting items with conflicting/duplicate IDs
+    // - Code should use PushID()/PopID() in loops, or append "##xx" to same-label identifiers.
+    // - Empty label e.g. Button("") == same ID as parent widget/node. Use Button("##xx") instead!
+    // - See FAQ https://github.com/ocornut/imgui/blob/master/docs/FAQ.md#q-about-the-id-stack-system
+
+    /**
+     * Highlight and show an error message popup when multiple items have conflicting identifiers.
+     */
+    @BindingField
+    public boolean ConfigDebugHighlightIdConflicts;
+
+    /**
+     * Show "Item Picker" button in aforementioned popup.
+     */
+    @BindingField
+    public boolean ConfigDebugHighlightIdConflictsShowItemPicker;
 
     /**
      * Tools to test correct Begin/End and BeginChild/EndChild behaviors.
@@ -298,47 +418,6 @@ public final class ImGuiIO extends ImGuiStruct {
 
     @BindingField
     public String BackendRendererName;
-
-    // Optional: Access OS clipboard
-    // (default to use native Win32 clipIsMouseDraggingboard on Windows, otherwise uses a private clipboard. Override to access OS clipboard on other architectures)
-
-    /*JNI
-        jobject _setClipboardTextCallback = NULL;
-        jobject _getClipboardTextCallback = NULL;
-
-        void setClipboardTextStub(void* userData, const char* text) {
-            Jni::CallImStrConsumer(Jni::GetEnv(), _setClipboardTextCallback, text);
-        }
-
-        const char* getClipboardTextStub(void* user_data) {
-            JNIEnv* env = Jni::GetEnv();
-            jstring jstr = Jni::CallImStrSupplier(env, _getClipboardTextCallback);
-            return env->GetStringUTFChars(jstr, 0);
-        }
-     */
-
-    public native void setSetClipboardTextFn(ImStrConsumer setClipboardTextCallback); /*
-        if (_setClipboardTextCallback != NULL) {
-            env->DeleteGlobalRef(_setClipboardTextCallback);
-        }
-        _setClipboardTextCallback = env->NewGlobalRef(setClipboardTextCallback);
-        THIS->SetClipboardTextFn = setClipboardTextStub;
-    */
-
-    public native void setGetClipboardTextFn(ImStrSupplier getClipboardTextCallback); /*
-        if (_getClipboardTextCallback != NULL) {
-            env->DeleteGlobalRef(_getClipboardTextCallback);
-        }
-        _getClipboardTextCallback = env->NewGlobalRef(getClipboardTextCallback);
-        THIS->GetClipboardTextFn = getClipboardTextStub;
-    */
-
-    /**
-     * Optional: Platform locale
-     * [Experimental] Configure decimal point e.g. '.' or ',' useful for some languages (e.g. German), generally pulled from {@code *localeconv()->decimal_point}
-     */
-    @BindingField
-    public short PlatformLocaleDecimalPoint;
 
     //------------------------------------------------------------------
     // Input - Call before calling NewFrame()
@@ -532,29 +611,6 @@ public final class ImGuiIO extends ImGuiStruct {
     @BindingField
     public ImVec2 MouseDelta;
 
-    /**
-     * Map of indices into the KeysDown[512] entries array which represent your "native" keyboard state.
-     */
-    @BindingField
-    @TypeArray(type = "int", size = "ImGuiKey_COUNT")
-    @Deprecated
-    public int[] KeyMap;
-
-    /**
-     * Keyboard keys that are pressed (ideally left in the "native" order your engine has access to keyboard keys, so you can use your own defines/enums for keys).
-     * This used to be [512] sized. It is now ImGuiKey_COUNT to allow legacy io.KeysDown[GetKeyIndex(...)] to work without an overflow.
-     */
-    @BindingField
-    @TypeArray(type = "boolean", size = "ImGuiKey_COUNT")
-    @Deprecated
-    public boolean[] KeysDown;
-
-    /**
-     * Gamepad inputs. Cleared back to zero by EndFrame(). Keyboard keys will be auto-mapped and be written here by NewFrame().
-     */
-    @BindingField
-    @TypeArray(type = "float", size = "512")
-    public float[] NavInputs;
 
     //------------------------------------------------------------------
     // [Internal] Dear ImGui will maintain those fields. Forward compatibility not guaranteed!
@@ -637,7 +693,7 @@ public final class ImGuiIO extends ImGuiStruct {
      * Key state for all known keys. Use IsKeyXXX() functions to access this.
      */
     @BindingField
-    @TypeArray(type = "ImGuiKeyData", size = "ImGuiKey_KeysData_SIZE")
+    @TypeArray(type = "ImGuiKeyData", size = "ImGuiKey_NamedKey_COUNT")
     public ImGuiKeyData[] KeysData;
 
     /**
@@ -700,6 +756,13 @@ public final class ImGuiIO extends ImGuiStruct {
     @BindingField
     @TypeArray(type = "boolean", size = "5")
     public boolean[] MouseReleased;
+
+    /**
+     * Time of last released (rarely used! but useful to handle delayed single-click when trying to disambiguate them from double-click).
+     */
+    @BindingField
+    @TypeArray(type = "double", size = "5")
+    public double[] MouseReleasedTime;
 
     /**
      * Track if button was clicked inside a dear imgui window or over void blocked by a popup. We don't request mouse capture from the application if click started outside ImGui bounds.
@@ -773,18 +836,6 @@ public final class ImGuiIO extends ImGuiStruct {
      */
     @BindingField(accessors = BindingField.Accessor.GETTER)
     public boolean AppAcceptingEvents;
-
-    /**
-     * -1: unknown, 0: using AddKeyEvent(), 1: using legacy io.KeysDown[]
-     */
-    @BindingField
-    public short BackendUsingLegacyKeyArrays;
-
-    /**
-     * 0: using AddKeyAnalogEvent(), 1: writing to legacy io.NavInputs[] directly
-     */
-    @BindingField
-    public boolean BackendUsingLegacyNavInputArray;
 
     /**
      * For AddInputCharacterUTF16

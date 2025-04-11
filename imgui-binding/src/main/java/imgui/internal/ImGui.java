@@ -264,9 +264,6 @@ public final class ImGui extends imgui.ImGui {
     @BindingMethod
     public static native boolean IsItemToggledSelection();
 
-    @BindingMethod
-    public static native ImVec2 GetContentRegionMaxAbs();
-
     // TODO: ShrinkWidths
 
     // Parameter stacks

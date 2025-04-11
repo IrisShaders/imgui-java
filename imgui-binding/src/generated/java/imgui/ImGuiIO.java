@@ -414,6 +414,162 @@ public final class ImGuiIO extends ImGuiStruct {
         THIS->DisplayFramebufferScale = value;
     */
 
+    /**
+     * Swap Activate<>Cancel (A<>B) buttons, matching typical "Nintendo/Japanese style" gamepad layout.
+     */
+    public boolean getConfigNavSwapGamepadButtons() {
+        return nGetConfigNavSwapGamepadButtons();
+    }
+
+    /**
+     * Swap Activate<>Cancel (A<>B) buttons, matching typical "Nintendo/Japanese style" gamepad layout.
+     */
+    public void setConfigNavSwapGamepadButtons(final boolean value) {
+        nSetConfigNavSwapGamepadButtons(value);
+    }
+
+    private native boolean nGetConfigNavSwapGamepadButtons(); /*
+        return THIS->ConfigNavSwapGamepadButtons;
+    */
+
+    private native void nSetConfigNavSwapGamepadButtons(boolean value); /*
+        THIS->ConfigNavSwapGamepadButtons = value;
+    */
+
+    /**
+     * Directional/tabbing navigation teleports the mouse cursor. May be useful on TV/console systems where moving a virtual mouse is difficult.
+     * Will update io.MousePos and set io.WantSetMousePos=true.
+     */
+    public boolean getConfigNavMoveSetMousePos() {
+        return nGetConfigNavMoveSetMousePos();
+    }
+
+    /**
+     * Directional/tabbing navigation teleports the mouse cursor. May be useful on TV/console systems where moving a virtual mouse is difficult.
+     * Will update io.MousePos and set io.WantSetMousePos=true.
+     */
+    public void setConfigNavMoveSetMousePos(final boolean value) {
+        nSetConfigNavMoveSetMousePos(value);
+    }
+
+    private native boolean nGetConfigNavMoveSetMousePos(); /*
+        return THIS->ConfigNavMoveSetMousePos;
+    */
+
+    private native void nSetConfigNavMoveSetMousePos(boolean value); /*
+        THIS->ConfigNavMoveSetMousePos = value;
+    */
+
+    /**
+     * Sets io.WantCaptureKeyboard when io.NavActive is set.
+     */
+    public boolean getConfigNavCaptureKeyboard() {
+        return nGetConfigNavCaptureKeyboard();
+    }
+
+    /**
+     * Sets io.WantCaptureKeyboard when io.NavActive is set.
+     */
+    public void setConfigNavCaptureKeyboard(final boolean value) {
+        nSetConfigNavCaptureKeyboard(value);
+    }
+
+    private native boolean nGetConfigNavCaptureKeyboard(); /*
+        return THIS->ConfigNavCaptureKeyboard;
+    */
+
+    private native void nSetConfigNavCaptureKeyboard(boolean value); /*
+        THIS->ConfigNavCaptureKeyboard = value;
+    */
+
+    /**
+     * Pressing Escape can clear focused item + navigation id/highlight. Set to false if you want to always keep highlight on.
+     */
+    public boolean getConfigNavEscapeClearFocusItem() {
+        return nGetConfigNavEscapeClearFocusItem();
+    }
+
+    /**
+     * Pressing Escape can clear focused item + navigation id/highlight. Set to false if you want to always keep highlight on.
+     */
+    public void setConfigNavEscapeClearFocusItem(final boolean value) {
+        nSetConfigNavEscapeClearFocusItem(value);
+    }
+
+    private native boolean nGetConfigNavEscapeClearFocusItem(); /*
+        return THIS->ConfigNavEscapeClearFocusItem;
+    */
+
+    private native void nSetConfigNavEscapeClearFocusItem(boolean value); /*
+        THIS->ConfigNavEscapeClearFocusItem = value;
+    */
+
+    /**
+     * Pressing Escape can clear focused window as well (super set of io.ConfigNavEscapeClearFocusItem).
+     */
+    public boolean getConfigNavEscapeClearFocusWindow() {
+        return nGetConfigNavEscapeClearFocusWindow();
+    }
+
+    /**
+     * Pressing Escape can clear focused window as well (super set of io.ConfigNavEscapeClearFocusItem).
+     */
+    public void setConfigNavEscapeClearFocusWindow(final boolean value) {
+        nSetConfigNavEscapeClearFocusWindow(value);
+    }
+
+    private native boolean nGetConfigNavEscapeClearFocusWindow(); /*
+        return THIS->ConfigNavEscapeClearFocusWindow;
+    */
+
+    private native void nSetConfigNavEscapeClearFocusWindow(boolean value); /*
+        THIS->ConfigNavEscapeClearFocusWindow = value;
+    */
+
+    /**
+     * Using directional navigation key makes the cursor visible. Mouse click hides the cursor.
+     */
+    public boolean getConfigNavCursorVisibleAuto() {
+        return nGetConfigNavCursorVisibleAuto();
+    }
+
+    /**
+     * Using directional navigation key makes the cursor visible. Mouse click hides the cursor.
+     */
+    public void setConfigNavCursorVisibleAuto(final boolean value) {
+        nSetConfigNavCursorVisibleAuto(value);
+    }
+
+    private native boolean nGetConfigNavCursorVisibleAuto(); /*
+        return THIS->ConfigNavCursorVisibleAuto;
+    */
+
+    private native void nSetConfigNavCursorVisibleAuto(boolean value); /*
+        THIS->ConfigNavCursorVisibleAuto = value;
+    */
+
+    /**
+     * Navigation cursor is always visible.
+     */
+    public boolean getConfigNavCursorVisibleAlways() {
+        return nGetConfigNavCursorVisibleAlways();
+    }
+
+    /**
+     * Navigation cursor is always visible.
+     */
+    public void setConfigNavCursorVisibleAlways(final boolean value) {
+        nSetConfigNavCursorVisibleAlways(value);
+    }
+
+    private native boolean nGetConfigNavCursorVisibleAlways(); /*
+        return THIS->ConfigNavCursorVisibleAlways;
+    */
+
+    private native void nSetConfigNavCursorVisibleAlways(boolean value); /*
+        THIS->ConfigNavCursorVisibleAlways = value;
+    */
+
     // Docking options (when ImGuiConfigFlags_DockingEnable is set)
 
     /**
@@ -777,6 +933,68 @@ public final class ImGuiIO extends ImGuiStruct {
     */
 
     /**
+     * [EXPERIMENTAL] CTRL+C copy the contents of focused window into the clipboard.
+     * <p>
+     * Experimental because:
+     * <p>
+     * (1) has known issues with nested Begin/End pairs
+     * <p>
+     * (2) text output quality varies
+     * <p>
+     * (3) text output is in submission order rather than spatial order.
+     */
+    public boolean getConfigWindowsCopyContentsWithCtrlC() {
+        return nGetConfigWindowsCopyContentsWithCtrlC();
+    }
+
+    /**
+     * [EXPERIMENTAL] CTRL+C copy the contents of focused window into the clipboard.
+     * <p>
+     * Experimental because:
+     * <p>
+     * (1) has known issues with nested Begin/End pairs
+     * <p>
+     * (2) text output quality varies
+     * <p>
+     * (3) text output is in submission order rather than spatial order.
+     */
+    public void setConfigWindowsCopyContentsWithCtrlC(final boolean value) {
+        nSetConfigWindowsCopyContentsWithCtrlC(value);
+    }
+
+    private native boolean nGetConfigWindowsCopyContentsWithCtrlC(); /*
+        return THIS->ConfigWindowsCopyContentsWithCtrlC;
+    */
+
+    private native void nSetConfigWindowsCopyContentsWithCtrlC(boolean value); /*
+        THIS->ConfigWindowsCopyContentsWithCtrlC = value;
+    */
+
+    /**
+     * Enable scrolling page by page when clicking outside the scrollbar grab.
+     * When disabled, always scroll to clicked location. When enabled, Shift+Click scrolls to clicked location.
+     */
+    public boolean getConfigScrollbarScrollByPage() {
+        return nGetConfigScrollbarScrollByPage();
+    }
+
+    /**
+     * Enable scrolling page by page when clicking outside the scrollbar grab.
+     * When disabled, always scroll to clicked location. When enabled, Shift+Click scrolls to clicked location.
+     */
+    public void setConfigScrollbarScrollByPage(final boolean value) {
+        nSetConfigScrollbarScrollByPage(value);
+    }
+
+    private native boolean nGetConfigScrollbarScrollByPage(); /*
+        return THIS->ConfigScrollbarScrollByPage;
+    */
+
+    private native void nSetConfigScrollbarScrollByPage(boolean value); /*
+        THIS->ConfigScrollbarScrollByPage = value;
+    */
+
+    /**
      * [Timer (in seconds) to free transient windows/tables memory buffers when unused. Set to -1.0f to disable.
      */
     public boolean getConfigMemoryCompactTimer() {
@@ -915,6 +1133,158 @@ public final class ImGuiIO extends ImGuiStruct {
     //------------------------------------------------------------------
     // Debug options
     //------------------------------------------------------------------
+
+    // Options to configure Error Handling and how we handle recoverable errors [EXPERIMENTAL]
+    // - Error recovery is provided as a way to facilitate:
+    //    - Recovery after a programming error (native code or scripting language - the later tends to facilitate iterating on code while running).
+    //    - Recovery after running an exception handler or any error processing which may skip code after an error has been detected.
+    // - Error recovery is not perfect nor guaranteed! It is a feature to ease development.
+    //   You not are not supposed to rely on it in the course of a normal application run.
+    // - Functions that support error recovery are using IM_ASSERT_USER_ERROR() instead of IM_ASSERT().
+    // - By design, we do NOT allow error recovery to be 100% silent. One of the three options needs to be checked!
+    // - Always ensure that on programmers seats you have at minimum Asserts or Tooltips enabled when making direct imgui API calls!
+    //   Otherwise it would severely hinder your ability to catch and correct mistakes!
+    // Read https://github.com/ocornut/imgui/wiki/Error-Handling for details.
+    // - Programmer seats: keep asserts (default), or disable asserts and keep error tooltips (new and nice!)
+    // - Non-programmer seats: maybe disable asserts, but make sure errors are resurfaced (tooltips, visible log entries, use callback etc.)
+    // - Recovery after error/exception: record stack sizes with ErrorRecoveryStoreState(), disable assert, set log callback (to e.g. trigger high-level breakpoint), recover with ErrorRecoveryTryToRecoverState(), restore settings.
+    /**
+     * Enable error recovery support. Some errors won't be detected and lead to direct crashes if recovery is disabled.
+     */
+    public boolean getConfigErrorRecovery() {
+        return nGetConfigErrorRecovery();
+    }
+
+    /**
+     * Enable error recovery support. Some errors won't be detected and lead to direct crashes if recovery is disabled.
+     */
+    public void setConfigErrorRecovery(final boolean value) {
+        nSetConfigErrorRecovery(value);
+    }
+
+    private native boolean nGetConfigErrorRecovery(); /*
+        return THIS->ConfigErrorRecovery;
+    */
+
+    private native void nSetConfigErrorRecovery(boolean value); /*
+        THIS->ConfigErrorRecovery = value;
+    */
+
+    /**
+     * Enable asserts on recoverable error. By default call IM_ASSERT() when returning from a failing IM_ASSERT_USER_ERROR()
+     */
+    public boolean getConfigErrorRecoveryEnableAssert() {
+        return nGetConfigErrorRecoveryEnableAssert();
+    }
+
+    /**
+     * Enable asserts on recoverable error. By default call IM_ASSERT() when returning from a failing IM_ASSERT_USER_ERROR()
+     */
+    public void setConfigErrorRecoveryEnableAssert(final boolean value) {
+        nSetConfigErrorRecoveryEnableAssert(value);
+    }
+
+    private native boolean nGetConfigErrorRecoveryEnableAssert(); /*
+        return THIS->ConfigErrorRecoveryEnableAssert;
+    */
+
+    private native void nSetConfigErrorRecoveryEnableAssert(boolean value); /*
+        THIS->ConfigErrorRecoveryEnableAssert = value;
+    */
+
+    /**
+     * Enable debug log output on recoverable errors.
+     */
+    public boolean getConfigErrorRecoveryEnableDebugLog() {
+        return nGetConfigErrorRecoveryEnableDebugLog();
+    }
+
+    /**
+     * Enable debug log output on recoverable errors.
+     */
+    public void setConfigErrorRecoveryEnableDebugLog(final boolean value) {
+        nSetConfigErrorRecoveryEnableDebugLog(value);
+    }
+
+    private native boolean nGetConfigErrorRecoveryEnableDebugLog(); /*
+        return THIS->ConfigErrorRecoveryEnableDebugLog;
+    */
+
+    private native void nSetConfigErrorRecoveryEnableDebugLog(boolean value); /*
+        THIS->ConfigErrorRecoveryEnableDebugLog = value;
+    */
+
+    /**
+     * Enable tooltip on recoverable errors. The tooltip include a way to enable asserts if they were disabled.
+     */
+    public boolean getConfigErrorRecoveryEnableTooltip() {
+        return nGetConfigErrorRecoveryEnableTooltip();
+    }
+
+    /**
+     * Enable tooltip on recoverable errors. The tooltip include a way to enable asserts if they were disabled.
+     */
+    public void setConfigErrorRecoveryEnableTooltip(final boolean value) {
+        nSetConfigErrorRecoveryEnableTooltip(value);
+    }
+
+    private native boolean nGetConfigErrorRecoveryEnableTooltip(); /*
+        return THIS->ConfigErrorRecoveryEnableTooltip;
+    */
+
+    private native void nSetConfigErrorRecoveryEnableTooltip(boolean value); /*
+        THIS->ConfigErrorRecoveryEnableTooltip = value;
+    */
+
+
+    // Tools to detect code submitting items with conflicting/duplicate IDs
+    // - Code should use PushID()/PopID() in loops, or append "##xx" to same-label identifiers.
+    // - Empty label e.g. Button("") == same ID as parent widget/node. Use Button("##xx") instead!
+    // - See FAQ https://github.com/ocornut/imgui/blob/master/docs/FAQ.md#q-about-the-id-stack-system
+
+    /**
+     * Highlight and show an error message popup when multiple items have conflicting identifiers.
+     */
+    public boolean getConfigDebugHighlightIdConflicts() {
+        return nGetConfigDebugHighlightIdConflicts();
+    }
+
+    /**
+     * Highlight and show an error message popup when multiple items have conflicting identifiers.
+     */
+    public void setConfigDebugHighlightIdConflicts(final boolean value) {
+        nSetConfigDebugHighlightIdConflicts(value);
+    }
+
+    private native boolean nGetConfigDebugHighlightIdConflicts(); /*
+        return THIS->ConfigDebugHighlightIdConflicts;
+    */
+
+    private native void nSetConfigDebugHighlightIdConflicts(boolean value); /*
+        THIS->ConfigDebugHighlightIdConflicts = value;
+    */
+
+    /**
+     * Show "Item Picker" button in aforementioned popup.
+     */
+    public boolean getConfigDebugHighlightIdConflictsShowItemPicker() {
+        return nGetConfigDebugHighlightIdConflictsShowItemPicker();
+    }
+
+    /**
+     * Show "Item Picker" button in aforementioned popup.
+     */
+    public void setConfigDebugHighlightIdConflictsShowItemPicker(final boolean value) {
+        nSetConfigDebugHighlightIdConflictsShowItemPicker(value);
+    }
+
+    private native boolean nGetConfigDebugHighlightIdConflictsShowItemPicker(); /*
+        return THIS->ConfigDebugHighlightIdConflictsShowItemPicker;
+    */
+
+    private native void nSetConfigDebugHighlightIdConflictsShowItemPicker(boolean value); /*
+        THIS->ConfigDebugHighlightIdConflictsShowItemPicker = value;
+    */
 
     /**
      * Tools to test correct Begin/End and BeginChild/EndChild behaviors.
@@ -1068,64 +1438,6 @@ public final class ImGuiIO extends ImGuiStruct {
         auto value = obj_value == NULL ? NULL : (char*)env->GetStringUTFChars(obj_value, JNI_FALSE);
         SET_STRING_FIELD(THIS->BackendRendererName, value);
         if (value != NULL) env->ReleaseStringUTFChars(obj_value, value);
-    */
-
-    // Optional: Access OS clipboard
-    // (default to use native Win32 clipIsMouseDraggingboard on Windows, otherwise uses a private clipboard. Override to access OS clipboard on other architectures)
-
-    /*JNI
-        jobject _setClipboardTextCallback = NULL;
-        jobject _getClipboardTextCallback = NULL;
-
-        void setClipboardTextStub(void* userData, const char* text) {
-            Jni::CallImStrConsumer(Jni::GetEnv(), _setClipboardTextCallback, text);
-        }
-
-        const char* getClipboardTextStub(void* user_data) {
-            JNIEnv* env = Jni::GetEnv();
-            jstring jstr = Jni::CallImStrSupplier(env, _getClipboardTextCallback);
-            return env->GetStringUTFChars(jstr, 0);
-        }
-     */
-
-    public native void setSetClipboardTextFn(ImStrConsumer setClipboardTextCallback); /*
-        if (_setClipboardTextCallback != NULL) {
-            env->DeleteGlobalRef(_setClipboardTextCallback);
-        }
-        _setClipboardTextCallback = env->NewGlobalRef(setClipboardTextCallback);
-        THIS->SetClipboardTextFn = setClipboardTextStub;
-    */
-
-    public native void setGetClipboardTextFn(ImStrSupplier getClipboardTextCallback); /*
-        if (_getClipboardTextCallback != NULL) {
-            env->DeleteGlobalRef(_getClipboardTextCallback);
-        }
-        _getClipboardTextCallback = env->NewGlobalRef(getClipboardTextCallback);
-        THIS->GetClipboardTextFn = getClipboardTextStub;
-    */
-
-    /**
-     * Optional: Platform locale
-     * [Experimental] Configure decimal point e.g. '.' or ',' useful for some languages (e.g. German), generally pulled from {@code *localeconv()->decimal_point}
-     */
-    public short getPlatformLocaleDecimalPoint() {
-        return nGetPlatformLocaleDecimalPoint();
-    }
-
-    /**
-     * Optional: Platform locale
-     * [Experimental] Configure decimal point e.g. '.' or ',' useful for some languages (e.g. German), generally pulled from {@code *localeconv()->decimal_point}
-     */
-    public void setPlatformLocaleDecimalPoint(final short value) {
-        nSetPlatformLocaleDecimalPoint(value);
-    }
-
-    private native short nGetPlatformLocaleDecimalPoint(); /*
-        return THIS->PlatformLocaleDecimalPoint;
-    */
-
-    private native void nSetPlatformLocaleDecimalPoint(short value); /*
-        THIS->PlatformLocaleDecimalPoint = value;
     */
 
     //------------------------------------------------------------------
@@ -1669,175 +1981,6 @@ public final class ImGuiIO extends ImGuiStruct {
         THIS->MouseDelta = value;
     */
 
-    /**
-     * Map of indices into the KeysDown[512] entries array which represent your "native" keyboard state.
-     */
-    @Deprecated
-    public int[] getKeyMap() {
-        return nGetKeyMap();
-    }
-
-    /**
-     * Map of indices into the KeysDown[512] entries array which represent your "native" keyboard state.
-     */
-    @Deprecated
-    public int getKeyMap(final int idx) {
-        return nGetKeyMap(idx);
-    }
-
-    /**
-     * Map of indices into the KeysDown[512] entries array which represent your "native" keyboard state.
-     */
-    @Deprecated
-    public void setKeyMap(final int[] value) {
-        nSetKeyMap(value);
-    }
-
-    /**
-     * Map of indices into the KeysDown[512] entries array which represent your "native" keyboard state.
-     */
-    @Deprecated
-    public void setKeyMap(final int idx, final int value) {
-        nSetKeyMap(idx, value);
-    }
-
-    @Deprecated
-    private native int[] nGetKeyMap(); /*
-        jint jBuf[ImGuiKey_COUNT];
-        for (int i = 0; i < ImGuiKey_COUNT; i++)
-            jBuf[i] = THIS->KeyMap[i];
-        jintArray result = env->NewIntArray(ImGuiKey_COUNT);
-        env->SetIntArrayRegion(result, 0, ImGuiKey_COUNT, jBuf);
-        return result;
-    */
-
-    @Deprecated
-    private native int nGetKeyMap(int idx); /*
-        return THIS->KeyMap[idx];
-    */
-
-    @Deprecated
-    private native void nSetKeyMap(int[] value); /*
-        for (int i = 0; i < ImGuiKey_COUNT; i++)
-            THIS->KeyMap[i] = value[i];
-    */
-
-    @Deprecated
-    private native void nSetKeyMap(int idx, int value); /*
-        THIS->KeyMap[idx] = value;
-    */
-
-    /**
-     * Keyboard keys that are pressed (ideally left in the "native" order your engine has access to keyboard keys, so you can use your own defines/enums for keys).
-     * This used to be [512] sized. It is now ImGuiKey_COUNT to allow legacy io.KeysDown[GetKeyIndex(...)] to work without an overflow.
-     */
-    @Deprecated
-    public boolean[] getKeysDown() {
-        return nGetKeysDown();
-    }
-
-    /**
-     * Keyboard keys that are pressed (ideally left in the "native" order your engine has access to keyboard keys, so you can use your own defines/enums for keys).
-     * This used to be [512] sized. It is now ImGuiKey_COUNT to allow legacy io.KeysDown[GetKeyIndex(...)] to work without an overflow.
-     */
-    @Deprecated
-    public boolean getKeysDown(final int idx) {
-        return nGetKeysDown(idx);
-    }
-
-    /**
-     * Keyboard keys that are pressed (ideally left in the "native" order your engine has access to keyboard keys, so you can use your own defines/enums for keys).
-     * This used to be [512] sized. It is now ImGuiKey_COUNT to allow legacy io.KeysDown[GetKeyIndex(...)] to work without an overflow.
-     */
-    @Deprecated
-    public void setKeysDown(final boolean[] value) {
-        nSetKeysDown(value);
-    }
-
-    /**
-     * Keyboard keys that are pressed (ideally left in the "native" order your engine has access to keyboard keys, so you can use your own defines/enums for keys).
-     * This used to be [512] sized. It is now ImGuiKey_COUNT to allow legacy io.KeysDown[GetKeyIndex(...)] to work without an overflow.
-     */
-    @Deprecated
-    public void setKeysDown(final int idx, final boolean value) {
-        nSetKeysDown(idx, value);
-    }
-
-    @Deprecated
-    private native boolean[] nGetKeysDown(); /*
-        jboolean jBuf[ImGuiKey_COUNT];
-        for (int i = 0; i < ImGuiKey_COUNT; i++)
-            jBuf[i] = THIS->KeysDown[i];
-        jbooleanArray result = env->NewBooleanArray(ImGuiKey_COUNT);
-        env->SetBooleanArrayRegion(result, 0, ImGuiKey_COUNT, jBuf);
-        return result;
-    */
-
-    @Deprecated
-    private native boolean nGetKeysDown(int idx); /*
-        return THIS->KeysDown[idx];
-    */
-
-    @Deprecated
-    private native void nSetKeysDown(boolean[] value); /*
-        for (int i = 0; i < ImGuiKey_COUNT; i++)
-            THIS->KeysDown[i] = value[i];
-    */
-
-    @Deprecated
-    private native void nSetKeysDown(int idx, boolean value); /*
-        THIS->KeysDown[idx] = value;
-    */
-
-    /**
-     * Gamepad inputs. Cleared back to zero by EndFrame(). Keyboard keys will be auto-mapped and be written here by NewFrame().
-     */
-    public float[] getNavInputs() {
-        return nGetNavInputs();
-    }
-
-    /**
-     * Gamepad inputs. Cleared back to zero by EndFrame(). Keyboard keys will be auto-mapped and be written here by NewFrame().
-     */
-    public float getNavInputs(final int idx) {
-        return nGetNavInputs(idx);
-    }
-
-    /**
-     * Gamepad inputs. Cleared back to zero by EndFrame(). Keyboard keys will be auto-mapped and be written here by NewFrame().
-     */
-    public void setNavInputs(final float[] value) {
-        nSetNavInputs(value);
-    }
-
-    /**
-     * Gamepad inputs. Cleared back to zero by EndFrame(). Keyboard keys will be auto-mapped and be written here by NewFrame().
-     */
-    public void setNavInputs(final int idx, final float value) {
-        nSetNavInputs(idx, value);
-    }
-
-    private native float[] nGetNavInputs(); /*
-        jfloat jBuf[512];
-        for (int i = 0; i < 512; i++)
-            jBuf[i] = THIS->NavInputs[i];
-        jfloatArray result = env->NewFloatArray(512);
-        env->SetFloatArrayRegion(result, 0, 512, jBuf);
-        return result;
-    */
-
-    private native float nGetNavInputs(int idx); /*
-        return THIS->NavInputs[idx];
-    */
-
-    private native void nSetNavInputs(float[] value); /*
-        for (int i = 0; i < 512; i++)
-            THIS->NavInputs[i] = value[i];
-    */
-
-    private native void nSetNavInputs(int idx, float value); /*
-        THIS->NavInputs[idx] = value;
-    */
 
     //------------------------------------------------------------------
     // [Internal] Dear ImGui will maintain those fields. Forward compatibility not guaranteed!
@@ -2180,11 +2323,11 @@ public final class ImGuiIO extends ImGuiStruct {
     }
 
     private native ImGuiKeyData[] nGetKeysData(); /*
-        return Jni::NewImGuiKeyDataArray(env, THIS->KeysData, ImGuiKey_KeysData_SIZE);
+        return Jni::NewImGuiKeyDataArray(env, THIS->KeysData, ImGuiKey_NamedKey_COUNT);
     */
 
     private native void nSetKeysData(ImGuiKeyData[] value); /*
-        Jni::ImGuiKeyDataArrayCpy(env, value, THIS->KeysData, ImGuiKey_KeysData_SIZE);
+        Jni::ImGuiKeyDataArrayCpy(env, value, THIS->KeysData, ImGuiKey_NamedKey_COUNT);
     */
 
     /**
@@ -2593,6 +2736,56 @@ public final class ImGuiIO extends ImGuiStruct {
     */
 
     /**
+     * Time of last released (rarely used! but useful to handle delayed single-click when trying to disambiguate them from double-click).
+     */
+    public double[] getMouseReleasedTime() {
+        return nGetMouseReleasedTime();
+    }
+
+    /**
+     * Time of last released (rarely used! but useful to handle delayed single-click when trying to disambiguate them from double-click).
+     */
+    public double getMouseReleasedTime(final int idx) {
+        return nGetMouseReleasedTime(idx);
+    }
+
+    /**
+     * Time of last released (rarely used! but useful to handle delayed single-click when trying to disambiguate them from double-click).
+     */
+    public void setMouseReleasedTime(final double[] value) {
+        nSetMouseReleasedTime(value);
+    }
+
+    /**
+     * Time of last released (rarely used! but useful to handle delayed single-click when trying to disambiguate them from double-click).
+     */
+    public void setMouseReleasedTime(final int idx, final double value) {
+        nSetMouseReleasedTime(idx, value);
+    }
+
+    private native double[] nGetMouseReleasedTime(); /*
+        jdouble jBuf[5];
+        for (int i = 0; i < 5; i++)
+            jBuf[i] = THIS->MouseReleasedTime[i];
+        jdoubleArray result = env->NewDoubleArray(5);
+        env->SetDoubleArrayRegion(result, 0, 5, jBuf);
+        return result;
+    */
+
+    private native double nGetMouseReleasedTime(int idx); /*
+        return THIS->MouseReleasedTime[idx];
+    */
+
+    private native void nSetMouseReleasedTime(double[] value); /*
+        for (int i = 0; i < 5; i++)
+            THIS->MouseReleasedTime[i] = value[i];
+    */
+
+    private native void nSetMouseReleasedTime(int idx, double value); /*
+        THIS->MouseReleasedTime[idx] = value;
+    */
+
+    /**
      * Track if button was clicked inside a dear imgui window or over void blocked by a popup. We don't request mouse capture from the application if click started outside ImGui bounds.
      */
     public boolean[] getMouseDownOwned() {
@@ -2952,50 +3145,6 @@ public final class ImGuiIO extends ImGuiStruct {
 
     private native boolean nGetAppAcceptingEvents(); /*
         return THIS->AppAcceptingEvents;
-    */
-
-    /**
-     * -1: unknown, 0: using AddKeyEvent(), 1: using legacy io.KeysDown[]
-     */
-    public short getBackendUsingLegacyKeyArrays() {
-        return nGetBackendUsingLegacyKeyArrays();
-    }
-
-    /**
-     * -1: unknown, 0: using AddKeyEvent(), 1: using legacy io.KeysDown[]
-     */
-    public void setBackendUsingLegacyKeyArrays(final short value) {
-        nSetBackendUsingLegacyKeyArrays(value);
-    }
-
-    private native short nGetBackendUsingLegacyKeyArrays(); /*
-        return THIS->BackendUsingLegacyKeyArrays;
-    */
-
-    private native void nSetBackendUsingLegacyKeyArrays(short value); /*
-        THIS->BackendUsingLegacyKeyArrays = value;
-    */
-
-    /**
-     * 0: using AddKeyAnalogEvent(), 1: writing to legacy io.NavInputs[] directly
-     */
-    public boolean getBackendUsingLegacyNavInputArray() {
-        return nGetBackendUsingLegacyNavInputArray();
-    }
-
-    /**
-     * 0: using AddKeyAnalogEvent(), 1: writing to legacy io.NavInputs[] directly
-     */
-    public void setBackendUsingLegacyNavInputArray(final boolean value) {
-        nSetBackendUsingLegacyNavInputArray(value);
-    }
-
-    private native boolean nGetBackendUsingLegacyNavInputArray(); /*
-        return THIS->BackendUsingLegacyNavInputArray;
-    */
-
-    private native void nSetBackendUsingLegacyNavInputArray(boolean value); /*
-        THIS->BackendUsingLegacyNavInputArray = value;
     */
 
     /**
