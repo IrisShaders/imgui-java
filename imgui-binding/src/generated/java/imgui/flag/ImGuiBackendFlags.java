@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Backend capabilities flags stored in io.BackendFlags. Set by imgui_impl_xxx or custom backend.
  */
-
 public final class ImGuiBackendFlags {
     private ImGuiBackendFlags() {
     }

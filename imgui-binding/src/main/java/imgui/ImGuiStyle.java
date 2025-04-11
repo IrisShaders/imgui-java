@@ -213,6 +213,18 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
     public float TabMinWidthForCloseButton;
 
     /**
+     * Thickness of tab-bar separator, which takes on the tab active color to denote focus.
+     */
+    @BindingField
+    public float TabBarBorderSize;
+
+    /**
+     * Angle of angled headers (supported values range from -50.0f degrees to +50.0f degrees).
+     */
+    @BindingField
+    public float TableAngledHeadersAngle;
+
+    /**
      * Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
      */
     @BindingField

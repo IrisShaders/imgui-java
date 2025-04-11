@@ -1,12 +1,9 @@
 package imgui.extension.imnodes.flag;
 
 
-
-
 /**
  * This enum controls the way attribute pins look.
  */
-
 public final class ImNodesPinShape {
     private ImNodesPinShape() {
     }

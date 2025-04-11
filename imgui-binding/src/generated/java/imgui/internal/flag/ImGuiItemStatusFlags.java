@@ -1,9 +1,6 @@
 package imgui.internal.flag;
 
 
-
-
-
 public class ImGuiItemStatusFlags {
     private ImGuiItemStatusFlags() {
     }

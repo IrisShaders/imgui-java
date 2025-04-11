@@ -1,9 +1,6 @@
 package imgui.extension.implot.flag;
 
 
-
-
-
 public final class ImPlotStairsFlags {
     private ImPlotStairsFlags() {
     }

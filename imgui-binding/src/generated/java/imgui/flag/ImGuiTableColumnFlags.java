@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Flags for {@link imgui.ImGui#tableSetupColumn(String, int)}
  */
-
 public final class ImGuiTableColumnFlags {
     private ImGuiTableColumnFlags() {
     }

@@ -2,17 +2,10 @@ package imgui;
 
 import imgui.binding.ImGuiStructDestroyable;
 
-
-
-
-
-
-
 /**
  * Font runtime data and rendering
  * ImFontAtlas automatically loads a default embedded font for you when you call GetTexDataAsAlpha8() or GetTexDataAsRGBA32().
  */
-
 public final class ImFont extends ImGuiStructDestroyable {
     public ImFont() {
         super();
@@ -38,7 +31,7 @@ public final class ImFont extends ImGuiStructDestroyable {
 
     // TODO IndexAdvanceX
 
-     /**
+    /**
      * = FallbackGlyph.AdvanceX
      */
     public float getFallbackAdvanceX() {
@@ -60,7 +53,7 @@ public final class ImFont extends ImGuiStructDestroyable {
         THIS->FallbackAdvanceX = value;
     */
 
-     /**
+    /**
      * Height of characters/line, set during loading (don't change after loading)
      */
     public float getFontSize() {
@@ -84,7 +77,7 @@ public final class ImFont extends ImGuiStructDestroyable {
 
     // TODO IndexLookup, Glyphs
 
-     private static final ImFontGlyph _GETFALLBACKGLYPH_1 = new ImFontGlyph(0);
+    private static final ImFontGlyph _GETFALLBACKGLYPH_1 = new ImFontGlyph(0);
 
     /**
      * = FindGlyph(FontFallbackChar)
@@ -111,7 +104,7 @@ public final class ImFont extends ImGuiStructDestroyable {
 
     // TODO ContainerAtlas, ConfigData
 
-     /**
+    /**
      * Number of ImFontConfig involved in creating this font.
      * Bigger than 1 when merging multiple font sources into one ImFont.
      */
@@ -135,7 +128,7 @@ public final class ImFont extends ImGuiStructDestroyable {
         THIS->ConfigDataCount = value;
     */
 
-     /**
+    /**
      * Character used for ellipsis rendering.
      */
     public short getEllipsisChar() {
@@ -221,7 +214,7 @@ public final class ImFont extends ImGuiStructDestroyable {
         THIS->DirtyLookupTables = value;
     */
 
-     /**
+    /**
      * Base font scale, multiplied by the per-window font scale which you can adjust with SetWindowFontScale()
      */
     public float getScale() {
@@ -243,7 +236,7 @@ public final class ImFont extends ImGuiStructDestroyable {
         THIS->Scale = value;
     */
 
-     /**
+    /**
      * Ascent: distance from top to bottom of e.g. 'A' [0..FontSize]
      */
     public float getAscent() {
@@ -281,7 +274,7 @@ public final class ImFont extends ImGuiStructDestroyable {
         THIS->Descent = value;
     */
 
-     /**
+    /**
      * Total surface in pixels to get an idea of the font rasterization/texture cost (not exact, we approximate the cost of padding between glyphs)
      */
     public int getMetricsTotalSurface() {
@@ -345,7 +338,7 @@ public final class ImFont extends ImGuiStructDestroyable {
         return env->NewStringUTF(THIS->GetDebugName());
     */
 
-     /**
+    /**
      * 'max_width' stops rendering after a certain width (could be turned into a 2d size). FLT_MAX to disable.
      * 'wrap_width' enable automatic word-wrapping across multiple lines to fit into given width. 0.0f to disable.
      */

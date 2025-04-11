@@ -2,13 +2,10 @@ package imgui;
 
 import imgui.binding.ImGuiStructDestroyable;
 
-
-
 /**
  * Hold rendering data for one glyph.
  * (Note: some language parsers may fail to convert the 31+1 bitfield members, in this case maybe drop store a single u32 or we can rework this)
  */
-
 public final class ImFontGlyph extends ImGuiStructDestroyable {
     public ImFontGlyph() {
         super();
@@ -32,7 +29,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         return (uintptr_t)(new ImFontGlyph());
     */
 
-     /**
+    /**
      * Flag to indicate glyph is colored and should generally ignore tinting (make it usable with no shift on little-endian as this is used in loops).
      */
     public int getColored() {
@@ -54,7 +51,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->Colored = value;
     */
 
-     /**
+    /**
      * Flag to indicate glyph has no visible pixels (e.g. space). Allow early out when rendering.
      */
     public int getVisible() {
@@ -76,7 +73,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->Visible = value;
     */
 
-     /**
+    /**
      * 0x0000..0xFFFF
      */
     public int getCodepoint() {
@@ -98,7 +95,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->Codepoint = value;
     */
 
-     /**
+    /**
      * Distance to next character (= data from font + ImFontConfig::GlyphExtraSpacing.x baked in)
      */
     public float getAdvanceX() {
@@ -120,7 +117,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->AdvanceX = value;
     */
 
-     /**
+    /**
      * Glyph corners
      */
     public float getX0() {
@@ -142,7 +139,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->X0 = value;
     */
 
-     /**
+    /**
      * Glyph corners
      */
     public float getY0() {
@@ -164,7 +161,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->Y0 = value;
     */
 
-     /**
+    /**
      * Glyph corners
      */
     public float getX1() {
@@ -186,7 +183,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->X1 = value;
     */
 
-     /**
+    /**
      * Glyph corners
      */
     public float getY1() {
@@ -208,7 +205,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->Y1 = value;
     */
 
-     /**
+    /**
      * Texture coordinates
      */
     public float getU0() {
@@ -230,7 +227,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->U0 = value;
     */
 
-     /**
+    /**
      * Texture coordinates
      */
     public float getV0() {
@@ -252,7 +249,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->V0 = value;
     */
 
-     /**
+    /**
      * Texture coordinates
      */
     public float getU1() {
@@ -274,7 +271,7 @@ public final class ImFontGlyph extends ImGuiStructDestroyable {
         THIS->U1 = value;
     */
 
-     /**
+    /**
      * Texture coordinates
      */
     public float getV1() {

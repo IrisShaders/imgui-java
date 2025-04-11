@@ -1,9 +1,6 @@
 package imgui.extension.imnodes.flag;
 
 
-
-
-
 public final class ImNodesCol {
     private ImNodesCol() {
     }

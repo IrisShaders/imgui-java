@@ -1,12 +1,9 @@
 package imgui.internal.flag;
 
 
-
-
 /**
  * Store the source authority (dock node vs window) of a field
  */
-
 public final class ImGuiDataAuthority {
     private ImGuiDataAuthority() {
     }

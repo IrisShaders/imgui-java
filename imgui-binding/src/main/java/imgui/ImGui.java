@@ -337,10 +337,10 @@ public class ImGui {
     //    returned true. Begin and BeginChild are the only odd ones out. Will be fixed in a future update.]
 
     @BindingMethod
-    public static native boolean BeginChild(String strId, @OptArg(callValue = "ImVec2(0,0)") ImVec2 size, @OptArg(callValue = "false") boolean border, @OptArg int imGuiWindowFlags);
+    public static native boolean BeginChild(String strId, @OptArg(callValue = "ImVec2(0,0)") ImVec2 size, @OptArg int imGuiChildFlags, @OptArg int imGuiWindowFlags);
 
     @BindingMethod
-    public static native boolean BeginChild(int imGuiID, @OptArg(callValue = "ImVec2(0,0)") ImVec2 size, @OptArg(callValue = "false") boolean border, @OptArg int imGuiWindowFlags);
+    public static native boolean BeginChild(int imGuiID, @OptArg(callValue = "ImVec2(0,0)") ImVec2 size, @OptArg int imGuiChildFlags, @OptArg int imGuiWindowFlags);
 
     @BindingMethod
     public static native void EndChild();
@@ -2018,6 +2018,12 @@ public class ImGui {
     public static native void TableHeadersRow();
 
     /**
+     * submit a row with angled headers for every column with the ImGuiTableColumnFlags_AngledHeader flag. MUST BE FIRST ROW.
+     */
+    @BindingMethod
+    public static native void TableAngledHeadersRow();
+
+    /**
      * Submit one header cell manually (rarely used)
      */
     @BindingMethod
@@ -2650,18 +2656,6 @@ public class ImGui {
     @BindingMethod
     public static native ImGuiStorage GetStateStorage();
 
-    /**
-     * Helper to create a child window / scrolling region that looks like a normal widget frame
-     */
-    @BindingMethod
-    public static native boolean BeginChildFrame(int id, ImVec2 size, @OptArg int imGuiWindowFlags);
-
-    /**
-     * Always call EndChildFrame() regardless of BeginChildFrame() return values (which indicates a collapsed/clipped window)
-     */
-    @BindingMethod
-    public static native void EndChildFrame();
-
     // Text Utilities
 
     @BindingMethod
@@ -2715,6 +2709,12 @@ public class ImGui {
      */
     @BindingMethod
     public static native boolean IsKeyPressed(@ArgValue(staticCast = "ImGuiKey") int key, @OptArg boolean repeat);
+
+    /**
+     * was key chord (mods + key) pressed, e.g. you can pass 'ImGuiMod_Ctrl | ImGuiKey_S' as a key-chord. This doesn't do any routing or focus check, please consider using Shortcut() function instead.
+     */
+    @BindingMethod
+    public static native boolean IsKeyChordPressed(@ArgValue(staticCast = "ImGuiKeyChord") int key);
 
     /**
      * Was key released (went from Down to !Down)

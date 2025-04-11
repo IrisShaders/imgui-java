@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Flags stored in ImGuiViewport::Flags, giving indications to the platform backends.
  */
-
 public final class ImGuiViewportFlags {
     private ImGuiViewportFlags() {
     }

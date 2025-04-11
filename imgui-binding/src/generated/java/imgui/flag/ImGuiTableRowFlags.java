@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Flags for {@link imgui.ImGui#tableNextRow(int)}
  */
-
 public final class ImGuiTableRowFlags {
     private ImGuiTableRowFlags() {
     }

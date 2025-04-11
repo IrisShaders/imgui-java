@@ -2,12 +2,7 @@ package imgui.extension.imguizmo;
 
 import imgui.ImDrawList;
 import imgui.ImVec2;
-
-
-
-
 import imgui.internal.ImGuiContext;
-
 
 public final class ImGuizmo {
     private ImGuizmo() {
@@ -17,7 +12,7 @@ public final class ImGuizmo {
         #include "_imguizmo.h"
      */
 
-     /**
+    /**
      * Call inside your own window and before Manipulate() in order to draw gizmo to that window.
      * Or pass a specific ImDrawList to draw to (e.g. ImGui::GetForegroundDrawList()).
      */
@@ -41,7 +36,7 @@ public final class ImGuizmo {
         ImGuizmo::SetDrawlist(reinterpret_cast<ImDrawList*>(drawList));
     */
 
-     /**
+    /**
      * Call BeginFrame right after ImGui_XXXX_NewFrame();
      */
     public static void beginFrame() {
@@ -52,7 +47,7 @@ public final class ImGuizmo {
         ImGuizmo::BeginFrame();
     */
 
-     /**
+    /**
      * This is necessary because when imguizmo is compiled into a dll, and imgui into another
      * Globals are not shared between them.
      * More details at https://stackoverflow.com/questions/19373061/what-happens-to-global-and-static-variables-in-a-shared-library-when-it-is-dynam
@@ -66,7 +61,7 @@ public final class ImGuizmo {
         ImGuizmo::SetImGuiContext(reinterpret_cast<ImGuiContext*>(ctx));
     */
 
-     /**
+    /**
      * Return true if mouse cursor is over any gizmo control (axis, plan or screen component)
      */
     public static boolean isOver() {
@@ -77,7 +72,7 @@ public final class ImGuizmo {
         return ImGuizmo::IsOver();
     */
 
-     /**
+    /**
      * Return true if mouse IsOver or if the gizmo is in moving state
      */
     public static boolean isUsing() {
@@ -88,7 +83,7 @@ public final class ImGuizmo {
         return ImGuizmo::IsUsing();
     */
 
-     /**
+    /**
      * Enable/disable the gizmo. Stay in the state until next call to Enable.
      * Gizmo is rendered with gray half transparent color when disabled
      */
@@ -100,7 +95,7 @@ public final class ImGuizmo {
         ImGuizmo::Enable(enable);
     */
 
-     /**
+    /**
      * Helper function for manually editing Translation/Rotation/Scale with an input float.
      * Translation, Rotation and Scale float points to 3 floats each.
      * Angles are in degrees (more suitable for human editing).
@@ -131,7 +126,7 @@ public final class ImGuizmo {
         if (scale != NULL) env->ReleasePrimitiveArrayCritical(obj_scale, scale, JNI_FALSE);
     */
 
-     /**
+    /**
      * Helper function for manually editing Translation/Rotation/Scale with an input float.
      * Translation, Rotation and Scale float points to 3 floats each.
      * Angles are in degrees (more suitable for human editing).
@@ -162,7 +157,7 @@ public final class ImGuizmo {
         if (matrix != NULL) env->ReleasePrimitiveArrayCritical(obj_matrix, matrix, JNI_FALSE);
     */
 
-     /**
+    /**
      * This will set the rect position.
      *
      * @param x
@@ -182,7 +177,7 @@ public final class ImGuizmo {
         ImGuizmo::SetRect(x, y, width, height);
     */
 
-     /**
+    /**
      * Making sure if we're set to ortho or not.
      */
     public static void setOrthographic(final boolean isOrthographic) {
@@ -193,7 +188,7 @@ public final class ImGuizmo {
         ImGuizmo::SetOrthographic(isOrthographic);
     */
 
-     /**
+    /**
      * Drawing an arbitrary cube in the world.
      *
      * @param view
@@ -217,7 +212,7 @@ public final class ImGuizmo {
         if (matrices != NULL) env->ReleasePrimitiveArrayCritical(obj_matrices, matrices, JNI_FALSE);
     */
 
-     /**
+    /**
      * Drawing an arbitrary cube in the world.
      *
      * @param view
@@ -264,7 +259,7 @@ public final class ImGuizmo {
         drawCubes(view, projection, cubeMatrices);
     }
 
-     /**
+    /**
      * Drawing a grid to the world (should only be used for debugging purposes).
      *
      * @param view
@@ -290,7 +285,7 @@ public final class ImGuizmo {
         if (matrix != NULL) env->ReleasePrimitiveArrayCritical(obj_matrix, matrix, JNI_FALSE);
     */
 
-     /**
+    /**
      * Manipulating the given model matrix with delta matrix
      *
      * @param view
@@ -470,7 +465,7 @@ public final class ImGuizmo {
         if (boundsSnap != NULL) env->ReleasePrimitiveArrayCritical(obj_boundsSnap, boundsSnap, JNI_FALSE);
     */
 
-     /**
+    /**
      * Manipulating the view
      *
      * @param view
@@ -502,7 +497,7 @@ public final class ImGuizmo {
         if (view != NULL) env->ReleasePrimitiveArrayCritical(obj_view, view, JNI_FALSE);
     */
 
-     /**
+    /**
      * This will update the current id
      */
     public static void setID(final int id) {
@@ -513,7 +508,7 @@ public final class ImGuizmo {
         ImGuizmo::SetID(id);
     */
 
-     /**
+    /**
      * Return true if the cursor is over the operation's gizmo
      */
     public static boolean isOver(final int operation) {
@@ -532,7 +527,7 @@ public final class ImGuizmo {
         ImGuizmo::SetGizmoSizeClipSpace(value);
     */
 
-     /**
+    /**
      * Allow axis to flip.
      * When true (default), the guizmo axis flip for better visibility.
      * When false, they always stay along the positive world/local axis.

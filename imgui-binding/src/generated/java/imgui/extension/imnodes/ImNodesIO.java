@@ -2,9 +2,6 @@ package imgui.extension.imnodes;
 
 import imgui.binding.ImGuiStruct;
 
-
-
-
 public final class ImNodesIO extends ImGuiStruct {
     public ImNodesIO(final long ptr) {
         super(ptr);
@@ -15,7 +12,7 @@ public final class ImNodesIO extends ImGuiStruct {
         #define THIS ((ImNodesIO*)STRUCT_PTR)
      */
 
-     /**
+    /**
      * Holding alt mouse button pans the node area, by default middle mouse button will be used
      * Set based on ImGuiMouseButton values
      */
@@ -39,7 +36,7 @@ public final class ImNodesIO extends ImGuiStruct {
         THIS->AltMouseButton = value;
     */
 
-     /**
+    /**
      * Panning speed when dragging an element and mouse is outside the main editor view.
      */
     public float getAutoPanningSpeed() {

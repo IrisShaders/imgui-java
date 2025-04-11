@@ -2,9 +2,6 @@ package imgui;
 
 import imgui.binding.ImGuiStructDestroyable;
 
-
-
-
 public final class ImFontConfig extends ImGuiStructDestroyable {
     public ImFontConfig() {
         super();
@@ -47,7 +44,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->FontData = &fontData[0];
     */
 
-     /**
+    /**
      * TTF/OTF data size
      */
     public int getFontDataSize() {
@@ -69,7 +66,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->FontDataSize = value;
     */
 
-     /**
+    /**
      * TTF/OTF data ownership taken by the container ImFontAtlas (will delete memory itself).
      */
     public boolean getFontDataOwnedByAtlas() {
@@ -91,7 +88,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->FontDataOwnedByAtlas = value;
     */
 
-     /**
+    /**
      * Index of font within TTF/OTF file
      */
     public int getFontNo() {
@@ -113,7 +110,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->FontNo = value;
     */
 
-     /**
+    /**
      * Size in pixels for rasterizer (more or less maps to the resulting font height).
      */
     public float getSizePixels() {
@@ -135,7 +132,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->SizePixels = value;
     */
 
-     /**
+    /**
      * Rasterize at higher quality for sub-pixel positioning.
      * Note the difference between 2 and 3 is minimal so you can reduce this to 2 to save memory.
      * Read https://github.com/nothings/stb/blob/master/tests/oversample/README.md for details.
@@ -161,7 +158,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->OversampleH = value;
     */
 
-     /**
+    /**
      * Rasterize at higher quality for sub-pixel positioning.
      * This is not really useful as we don't use sub-pixel positions on the Y axis.
      */
@@ -185,7 +182,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->OversampleV = value;
     */
 
-     /**
+    /**
      * Align every glyph to pixel boundary. Useful e.g. if you are merging a non-pixel aligned font with the default font.
      * If enabled, you can set OversampleH/V to 1.
      */
@@ -209,7 +206,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->PixelSnapH = value;
     */
 
-     /**
+    /**
      * Extra spacing (in pixels) between glyphs. Only X axis is supported for now.
      */
     public ImVec2 getGlyphExtraSpacing() {
@@ -270,7 +267,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->GlyphExtraSpacing = value;
     */
 
-     /**
+    /**
      * Offset all glyphs from this font input.
      */
     public ImVec2 getGlyphOffset() {
@@ -354,7 +351,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->GlyphRanges = glyphRanges != NULL ? (ImWchar*)&glyphRanges[0] : NULL;
     */
 
-     /**
+    /**
      * Minimum AdvanceX for glyphs, set Min to align font icons, set both Min/Max to enforce mono-space font
      */
     public float getGlyphMinAdvanceX() {
@@ -376,7 +373,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->GlyphMinAdvanceX = value;
     */
 
-     /**
+    /**
      * Maximum AdvanceX for glyphs
      */
     public float getGlyphMaxAdvanceX() {
@@ -398,7 +395,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->GlyphMaxAdvanceX = value;
     */
 
-     /**
+    /**
      * Merge into previous ImFont, so you can combine multiple inputs font into one ImFont (e.g. ASCII font + icons + Japanese glyphs).
      * You may want to use GlyphOffset.y when merge font of different heights.
      */
@@ -422,7 +419,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->MergeMode = value;
     */
 
-     /**
+    /**
      * Settings for custom font builder. THIS IS BUILDER IMPLEMENTATION DEPENDENT. Leave as zero if unsure.
      */
     public int getFontBuilderFlags() {
@@ -465,7 +462,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->FontBuilderFlags = value;
     */
 
-     /**
+    /**
      * Brighten ({@code >}1.0f) or darken ({@code <}1.0f) font output. Brightening small fonts may be a good workaround to make them more readable.
      */
     public float getRasterizerMultiply() {
@@ -487,7 +484,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->RasterizerMultiply = value;
     */
 
-     /**
+    /**
      * DPI scale for rasterization, not altering other font metrics: make it easy to swap between e.g. a 100% and a 400% fonts for a zooming display, or handle Retina screen. IMPORTANT: If you change this it is expected that you increase/decrease font scale roughly to the inverse of this, otherwise quality may look lowered.
      */
     public float getRasterizerDensity() {
@@ -509,7 +506,7 @@ public final class ImFontConfig extends ImGuiStructDestroyable {
         THIS->RasterizerDensity = value;
     */
 
-     /**
+    /**
      * Explicitly specify unicode codepoint of ellipsis character. When fonts are being merged first specified ellipsis will be used.
      */
     public short getEllipsisChar() {

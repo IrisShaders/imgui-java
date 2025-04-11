@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Flags for ImGui::Begin()
  */
-
 public final class ImGuiWindowFlags {
     private ImGuiWindowFlags() {
     }

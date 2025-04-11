@@ -2,13 +2,9 @@ package imgui;
 
 import imgui.binding.ImGuiStruct;
 
-
-
-
 /**
  * Sorting specification for one column of a table.
  */
-
 public final class ImGuiTableColumnSortSpecs extends ImGuiStruct {
 
     public ImGuiTableColumnSortSpecs(final long ptr) {
@@ -20,7 +16,7 @@ public final class ImGuiTableColumnSortSpecs extends ImGuiStruct {
         #define THIS ((ImGuiTableColumnSortSpecs*)STRUCT_PTR)
      */
 
-     /**
+    /**
      * User id of the column (if specified by a TableSetupColumn() call)
      */
     public int getColumnUserID() {
@@ -31,7 +27,7 @@ public final class ImGuiTableColumnSortSpecs extends ImGuiStruct {
         return THIS->ColumnUserID;
     */
 
-     /**
+    /**
      * Index of the column
      */
     public int getColumnIndex() {
@@ -42,7 +38,7 @@ public final class ImGuiTableColumnSortSpecs extends ImGuiStruct {
         return THIS->ColumnIndex;
     */
 
-     /**
+    /**
      * Index within parent ImGuiTableSortSpecs (always stored in order starting from 0, tables sorted on a single criteria will always have a 0 here)
      */
     public int getSortOrder() {
@@ -53,7 +49,7 @@ public final class ImGuiTableColumnSortSpecs extends ImGuiStruct {
         return THIS->SortOrder;
     */
 
-     /**
+    /**
      * ImGuiSortDirection_Ascending or ImGuiSortDirection_Descending (you can use this or SortSign, whichever is more convenient for your sort function)
      */
     public int getSortDirection() {

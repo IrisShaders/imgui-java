@@ -1,9 +1,6 @@
 package imgui.extension.implot.flag;
 
 
-
-
-
 public final class ImPlotAxis {
     private ImPlotAxis() {
     }

@@ -106,6 +106,12 @@ public final class ImDrawList extends ImGuiStruct {
     public native void AddNgonFilled(ImVec2 center, float radius, int col, int num_segments);
 
     @BindingMethod
+    public native void AddEllipse(ImVec2 center, float radius_x, float radius_y, int col, @OptArg float rot, @OptArg int num_segments, @OptArg float thickness);
+
+    @BindingMethod
+    public native void AddEllipseFilled(ImVec2 center, float radius_x, float radius_y, int col, @OptArg float rot, @OptArg int num_segments, @OptArg float thickness);
+
+    @BindingMethod
     public native void AddText(ImVec2 pos, int col, String textBegin, @OptArg String textEnd);
 
     @BindingMethod
@@ -172,6 +178,12 @@ public final class ImDrawList extends ImGuiStruct {
      */
     @BindingMethod
     public native void PathArcToFast(ImVec2 center, float radius, int aMinOf12, int aMaxOf12);
+
+    /**
+     * Ellipse
+     */
+    @BindingMethod
+    public native void PathEllipticalArcTo(ImVec2 center, float radius_x, float radius_y, float rot, float a_min, float a_max, @OptArg int num_segments);
 
     /**
      * Cubic Bezier (4 control points)

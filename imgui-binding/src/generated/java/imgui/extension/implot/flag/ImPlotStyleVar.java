@@ -1,9 +1,6 @@
 package imgui.extension.implot.flag;
 
 
-
-
-
 public final class ImPlotStyleVar {
     private ImPlotStyleVar() {
     }

@@ -2,11 +2,6 @@ package imgui;
 
 import imgui.binding.ImGuiStruct;
 
-
-
-
-
-
 /**
  * Draw command list
  * This is the low-level list of polygons that ImGui:: functions are filling. At the end of the frame,
@@ -18,7 +13,6 @@ import imgui.binding.ImGuiStruct;
  * but you are totally free to apply whatever transformation matrix to want to the data (if you apply such transformation you'll want to apply it to ClipRect as well)
  * Important: Primitives are always added to the list and not culled (culling is done at higher-level by ImGui:: functions), if you use this API a lot consider coarse culling your drawn objects.
  */
-
 public final class ImDrawList extends ImGuiStruct {
     public ImDrawList(final long ptr) {
         super(ptr);
@@ -29,7 +23,7 @@ public final class ImDrawList extends ImGuiStruct {
         #define THIS ((ImDrawList*)STRUCT_PTR)
      */
 
-     /**
+    /**
      * Flags, you may poke into these to adjust anti-aliasing settings per-primitive.
      */
     public int getFlags() {
@@ -72,7 +66,7 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->Flags = value;
     */
 
-     /**
+    /**
      * Render-level scissoring.
      * This is passed down to your render function but not used for CPU-side coarse clipping.
      * Prefer using higher-level ImGui::PushClipRect() to affect logic (hit-testing and widget culling)
@@ -612,6 +606,110 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->AddNgonFilled(center, radius, col, num_segments);
     */
 
+    public void addEllipse(final ImVec2 center, final float radius_x, final float radius_y, final int col) {
+        nAddEllipse(center.x, center.y, radius_x, radius_y, col);
+    }
+
+    public void addEllipse(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col) {
+        nAddEllipse(centerX, centerY, radius_x, radius_y, col);
+    }
+
+    public void addEllipse(final ImVec2 center, final float radius_x, final float radius_y, final int col, final float rot) {
+        nAddEllipse(center.x, center.y, radius_x, radius_y, col, rot);
+    }
+
+    public void addEllipse(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col, final float rot) {
+        nAddEllipse(centerX, centerY, radius_x, radius_y, col, rot);
+    }
+
+    public void addEllipse(final ImVec2 center, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments) {
+        nAddEllipse(center.x, center.y, radius_x, radius_y, col, rot, num_segments);
+    }
+
+    public void addEllipse(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments) {
+        nAddEllipse(centerX, centerY, radius_x, radius_y, col, rot, num_segments);
+    }
+
+    public void addEllipse(final ImVec2 center, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments, final float thickness) {
+        nAddEllipse(center.x, center.y, radius_x, radius_y, col, rot, num_segments, thickness);
+    }
+
+    public void addEllipse(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments, final float thickness) {
+        nAddEllipse(centerX, centerY, radius_x, radius_y, col, rot, num_segments, thickness);
+    }
+
+    private native void nAddEllipse(float centerX, float centerY, float radius_x, float radius_y, int col); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipse(center, radius_x, radius_y, col);
+    */
+
+    private native void nAddEllipse(float centerX, float centerY, float radius_x, float radius_y, int col, float rot); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipse(center, radius_x, radius_y, col, rot);
+    */
+
+    private native void nAddEllipse(float centerX, float centerY, float radius_x, float radius_y, int col, float rot, int num_segments); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipse(center, radius_x, radius_y, col, rot, num_segments);
+    */
+
+    private native void nAddEllipse(float centerX, float centerY, float radius_x, float radius_y, int col, float rot, int num_segments, float thickness); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipse(center, radius_x, radius_y, col, rot, num_segments, thickness);
+    */
+
+    public void addEllipseFilled(final ImVec2 center, final float radius_x, final float radius_y, final int col) {
+        nAddEllipseFilled(center.x, center.y, radius_x, radius_y, col);
+    }
+
+    public void addEllipseFilled(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col) {
+        nAddEllipseFilled(centerX, centerY, radius_x, radius_y, col);
+    }
+
+    public void addEllipseFilled(final ImVec2 center, final float radius_x, final float radius_y, final int col, final float rot) {
+        nAddEllipseFilled(center.x, center.y, radius_x, radius_y, col, rot);
+    }
+
+    public void addEllipseFilled(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col, final float rot) {
+        nAddEllipseFilled(centerX, centerY, radius_x, radius_y, col, rot);
+    }
+
+    public void addEllipseFilled(final ImVec2 center, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments) {
+        nAddEllipseFilled(center.x, center.y, radius_x, radius_y, col, rot, num_segments);
+    }
+
+    public void addEllipseFilled(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments) {
+        nAddEllipseFilled(centerX, centerY, radius_x, radius_y, col, rot, num_segments);
+    }
+
+    public void addEllipseFilled(final ImVec2 center, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments, final float thickness) {
+        nAddEllipseFilled(center.x, center.y, radius_x, radius_y, col, rot, num_segments, thickness);
+    }
+
+    public void addEllipseFilled(final float centerX, final float centerY, final float radius_x, final float radius_y, final int col, final float rot, final int num_segments, final float thickness) {
+        nAddEllipseFilled(centerX, centerY, radius_x, radius_y, col, rot, num_segments, thickness);
+    }
+
+    private native void nAddEllipseFilled(float centerX, float centerY, float radius_x, float radius_y, int col); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipseFilled(center, radius_x, radius_y, col);
+    */
+
+    private native void nAddEllipseFilled(float centerX, float centerY, float radius_x, float radius_y, int col, float rot); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipseFilled(center, radius_x, radius_y, col, rot);
+    */
+
+    private native void nAddEllipseFilled(float centerX, float centerY, float radius_x, float radius_y, int col, float rot, int num_segments); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipseFilled(center, radius_x, radius_y, col, rot, num_segments);
+    */
+
+    private native void nAddEllipseFilled(float centerX, float centerY, float radius_x, float radius_y, int col, float rot, int num_segments, float thickness); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->AddEllipseFilled(center, radius_x, radius_y, col, rot, num_segments, thickness);
+    */
+
     public void addText(final ImVec2 pos, final int col, final String textBegin) {
         nAddText(pos.x, pos.y, col, textBegin);
     }
@@ -793,7 +891,7 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->AddConvexPolyFilled(points, numPoints, col);
     */
 
-     /**
+    /**
      * Cubic Bezier (4 control points)
      */
     public void addBezierCubic(final ImVec2 p1, final ImVec2 p2, final ImVec2 p3, final ImVec2 p4, final int col, final float thickness) {
@@ -837,7 +935,7 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->AddBezierCubic(p1, p2, p3, p4, col, thickness, numSegments);
     */
 
-     /**
+    /**
      * Quadratic Bezier (3 control points)
      */
     public void addBezierQuadratic(final ImVec2 p1, final ImVec2 p2, final ImVec2 p3, final int col, final float thickness) {
@@ -1124,7 +1222,7 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->PathLineToMergeDuplicate(pos);
     */
 
-     /**
+    /**
      * Note: Anti-aliased filling requires points to be in clockwise order.
      */
     public void pathFillConvex(final int col) {
@@ -1193,7 +1291,7 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->PathArcTo(center, radius, aMin, aMax, numSegments);
     */
 
-     /**
+    /**
      * Use precomputed angles for a 12 steps circle
      */
     public void pathArcToFast(final ImVec2 center, final float radius, final int aMinOf12, final int aMaxOf12) {
@@ -1212,7 +1310,45 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->PathArcToFast(center, radius, aMinOf12, aMaxOf12);
     */
 
-     /**
+    /**
+     * Ellipse
+     */
+    public void pathEllipticalArcTo(final ImVec2 center, final float radius_x, final float radius_y, final float rot, final float a_min, final float a_max) {
+        nPathEllipticalArcTo(center.x, center.y, radius_x, radius_y, rot, a_min, a_max);
+    }
+
+    /**
+     * Ellipse
+     */
+    public void pathEllipticalArcTo(final float centerX, final float centerY, final float radius_x, final float radius_y, final float rot, final float a_min, final float a_max) {
+        nPathEllipticalArcTo(centerX, centerY, radius_x, radius_y, rot, a_min, a_max);
+    }
+
+    /**
+     * Ellipse
+     */
+    public void pathEllipticalArcTo(final ImVec2 center, final float radius_x, final float radius_y, final float rot, final float a_min, final float a_max, final int num_segments) {
+        nPathEllipticalArcTo(center.x, center.y, radius_x, radius_y, rot, a_min, a_max, num_segments);
+    }
+
+    /**
+     * Ellipse
+     */
+    public void pathEllipticalArcTo(final float centerX, final float centerY, final float radius_x, final float radius_y, final float rot, final float a_min, final float a_max, final int num_segments) {
+        nPathEllipticalArcTo(centerX, centerY, radius_x, radius_y, rot, a_min, a_max, num_segments);
+    }
+
+    private native void nPathEllipticalArcTo(float centerX, float centerY, float radius_x, float radius_y, float rot, float a_min, float a_max); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->PathEllipticalArcTo(center, radius_x, radius_y, rot, a_min, a_max);
+    */
+
+    private native void nPathEllipticalArcTo(float centerX, float centerY, float radius_x, float radius_y, float rot, float a_min, float a_max, int num_segments); /*MANUAL
+        ImVec2 center = ImVec2(centerX, centerY);
+        THIS->PathEllipticalArcTo(center, radius_x, radius_y, rot, a_min, a_max, num_segments);
+    */
+
+    /**
      * Cubic Bezier (4 control points)
      */
     public void pathBezierCubicCurveTo(final ImVec2 p2, final ImVec2 p3, final ImVec2 p4) {
@@ -1254,7 +1390,7 @@ public final class ImDrawList extends ImGuiStruct {
         THIS->PathBezierCubicCurveTo(p2, p3, p4, numSegments);
     */
 
-     /**
+    /**
      * Quadratic Bezier (3 control points)
      */
     public void pathBezierQuadraticCurveTo(final ImVec2 p2, final ImVec2 p3) {

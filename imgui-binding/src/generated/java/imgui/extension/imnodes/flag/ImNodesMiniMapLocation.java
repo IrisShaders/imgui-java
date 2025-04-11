@@ -1,12 +1,9 @@
 package imgui.extension.imnodes.flag;
 
 
-
-
 /**
  * This enum controls the minimap's location.
  */
-
 public final class ImNodesMiniMapLocation {
     private ImNodesMiniMapLocation() {
     }

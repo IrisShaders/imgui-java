@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Enumeration for PushStyleColor() / PopStyleColor()
  */
-
 public final class ImGuiCol {
     private ImGuiCol() {
     }

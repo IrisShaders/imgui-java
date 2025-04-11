@@ -1,11 +1,6 @@
 package imgui;
 
 import imgui.binding.ImGuiStructDestroyable;
-
-
-
-
-
 import imgui.callback.ImListClipperCallback;
 import imgui.internal.ImGuiContext;
 
@@ -35,7 +30,6 @@ import java.util.function.Consumer;
  * - User code submit visible elements.
  * - The clipper also handles various subtleties related to keyboard/gamepad navigation, wrapping etc.
  */
-
 public final class ImGuiListClipper extends ImGuiStructDestroyable {
     public ImGuiListClipper() {
         super();
@@ -59,7 +53,7 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
         return (uintptr_t)(new ImGuiListClipper());
     */
 
-     private static final ImGuiContext _GETCTX_1 = new ImGuiContext(0);
+    private static final ImGuiContext _GETCTX_1 = new ImGuiContext(0);
 
     /**
      * Parent UI context
@@ -156,7 +150,7 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
         THIS->Begin(itemsCount, itemsHeight);
     */
 
-     /**
+    /**
      * Automatically called on the last call of Step() that returns false.
      */
     public void end() {
@@ -167,7 +161,7 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
         THIS->End();
     */
 
-     /**
+    /**
      * Call until it returns false. The DisplayStart/DisplayEnd fields will be set and you can process/draw those items.
      */
     public boolean step() {
@@ -178,7 +172,7 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
         return THIS->Step();
     */
 
-     /**
+    /**
      * Call IncludeItemByIndex() or IncludeItemsByIndex() *BEFORE* first call to Step() if you need a range of items to not be clipped, regardless of their visibility.
      * (Due to alignment / padding of certain items it is possible that an extra item may be included on either end of the display range).
      */
@@ -190,7 +184,7 @@ public final class ImGuiListClipper extends ImGuiStructDestroyable {
         THIS->IncludeItemByIndex(itemIndex);
     */
 
-     /**
+    /**
      * Call IncludeItemByIndex() or IncludeItemsByIndex() *BEFORE* first call to Step() if you need a range of items to not be clipped, regardless of their visibility.
      * (Due to alignment / padding of certain items it is possible that an extra item may be included on either end of the display range).
      *

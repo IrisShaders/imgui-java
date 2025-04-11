@@ -2,13 +2,10 @@ package imgui;
 
 import imgui.binding.ImGuiStructDestroyable;
 
-
-
 /**
  * [Internal] Storage used by IsKeyDown(), IsKeyPressed() etc functions.
  * If prior to 1.87 you used io.KeysDownDuration[] (which was marked as internal), you should use GetKeyData(key).DownDuration and not io.KeysData[key].DownDuration.
  */
-
 public final class ImGuiKeyData extends ImGuiStructDestroyable {
     public ImGuiKeyData() {
         super();
@@ -32,7 +29,7 @@ public final class ImGuiKeyData extends ImGuiStructDestroyable {
         return (uintptr_t)(new ImGuiKeyData());
     */
 
-     /**
+    /**
      * True for if key is down
      */
     public boolean getDown() {
@@ -54,7 +51,7 @@ public final class ImGuiKeyData extends ImGuiStructDestroyable {
         THIS->Down = value;
     */
 
-     /**
+    /**
      * Duration the key has been down ({@code <}0.0f: not pressed, 0.0f: just pressed, {@code >}0.0f: time held)
      */
     public float getDownDuration() {
@@ -76,7 +73,7 @@ public final class ImGuiKeyData extends ImGuiStructDestroyable {
         THIS->DownDuration = value;
     */
 
-     /**
+    /**
      * Last frame duration the key has been down
      */
     public float getDownDurationPrev() {
@@ -98,7 +95,7 @@ public final class ImGuiKeyData extends ImGuiStructDestroyable {
         THIS->DownDurationPrev = value;
     */
 
-     /**
+    /**
      * 0.0f..1.0f for gamepad values
      */
     public float getAnalogValue() {

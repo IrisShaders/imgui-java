@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Flags for ImGui::BeginTabItem()
  */
-
 public final class ImGuiTabItemFlags {
     private ImGuiTabItemFlags() {
     }

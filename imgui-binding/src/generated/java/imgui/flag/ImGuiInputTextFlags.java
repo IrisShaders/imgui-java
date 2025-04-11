@@ -1,12 +1,9 @@
 package imgui.flag;
 
 
-
-
 /**
  * Flags for ImGui::InputText()
  */
-
 public final class ImGuiInputTextFlags {
     private ImGuiInputTextFlags() {
     }
