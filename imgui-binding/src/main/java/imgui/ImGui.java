@@ -3,6 +3,7 @@ package imgui;
 import imgui.assertion.ImAssertCallback;
 import imgui.binding.annotation.*;
 import imgui.callback.ImGuiInputTextCallback;
+import imgui.flag.ImGuiMultiSelectFlags;
 import imgui.internal.ImGuiContext;
 import imgui.type.*;
 
@@ -1717,6 +1718,27 @@ public class ImGui {
 
     @BindingMethod
     public static native boolean Selectable(String label, ImBoolean pSelected, @OptArg(callValue = "0") int imGuiSelectableFlags, @OptArg ImVec2 size);
+
+    // Multi-selection system for Selectable(), Checkbox(), TreeNode() functions [BETA]
+    // - This enables standard multi-selection/range-selection idioms (CTRL+Mouse/Keyboard, SHIFT+Mouse/Keyboard, etc.) in a way that also allow a clipper to be used.
+    // - ImGuiSelectionUserData is often used to store your item index within the current view (but may store something else).
+    // - Read comments near ImGuiMultiSelectIO for instructions/details and see 'Demo->Widgets->Selection State & Multi-Select' for demo.
+    // - TreeNode() is technically supported but... using this correctly is more complicated. You need some sort of linear/random access to your tree,
+    //   which is suited to advanced trees setups already implementing filters and clipper. We will work simplifying the current demo.
+    // - 'selection_size' and 'items_count' parameters are optional and used by a few features. If they are costly for you to compute, you may avoid them.
+    @BindingMethod
+    @ReturnValue(isStatic = true)
+    public static native ImGuiMultiSelectIO BeginMultiSelect(int flags, @OptArg int selection_size, @OptArg int items_count);
+
+    @BindingMethod
+    @ReturnValue(isStatic = true)
+    public static native ImGuiMultiSelectIO EndMultiSelect();
+
+    @BindingMethod
+    public static native void SetNextItemSelectionUserData(@ArgValue(staticCast = "ImGuiSelectionUserData") long selection_user_data);
+
+    @BindingMethod
+    public static native boolean IsItemToggledSelection();
 
     // Widgets: List Boxes
     // - This is essentially a thin wrapper to using BeginChild/EndChild with some stylistic changes.

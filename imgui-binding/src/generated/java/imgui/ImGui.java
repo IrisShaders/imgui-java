@@ -2,6 +2,7 @@ package imgui;
 
 import imgui.assertion.ImAssertCallback;
 import imgui.callback.ImGuiInputTextCallback;
+import imgui.flag.ImGuiMultiSelectFlags;
 import imgui.internal.ImGuiContext;
 import imgui.type.*;
 
@@ -3167,16 +3168,6 @@ public class ImGui {
         ImGui::Bullet();
     */
 
-  /*  /**
-     * hyperlink text button, return true when clicked
-     */
- /*   public static boolean textLink(String label) {
-        return nTextLink(label);
-    }
-
-    private static native boolean nTextLink(String label); /*
-        return ImGui::TextLink(label);
-    */
 
       // Widgets: Images
     // - Read about ImTextureID here: https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples
@@ -9593,6 +9584,69 @@ public class ImGui {
         if (label != NULL) env->ReleaseStringUTFChars(obj_label, label);
         if (pSelected != NULL) env->ReleasePrimitiveArrayCritical(obj_pSelected, pSelected, JNI_FALSE);
         return _result;
+    */
+
+    // Multi-selection system for Selectable(), Checkbox(), TreeNode() functions [BETA]
+    // - This enables standard multi-selection/range-selection idioms (CTRL+Mouse/Keyboard, SHIFT+Mouse/Keyboard, etc.) in a way that also allow a clipper to be used.
+    // - ImGuiSelectionUserData is often used to store your item index within the current view (but may store something else).
+    // - Read comments near ImGuiMultiSelectIO for instructions/details and see 'Demo->Widgets->Selection State & Multi-Select' for demo.
+    // - TreeNode() is technically supported but... using this correctly is more complicated. You need some sort of linear/random access to your tree,
+    //   which is suited to advanced trees setups already implementing filters and clipper. We will work simplifying the current demo.
+    // - 'selection_size' and 'items_count' parameters are optional and used by a few features. If they are costly for you to compute, you may avoid them.
+    private static final ImGuiMultiSelectIO _BEGINMULTISELECT_1612597379 = new ImGuiMultiSelectIO(0);
+
+    public static ImGuiMultiSelectIO beginMultiSelect(final int flags) {
+        _BEGINMULTISELECT_1612597379.ptr = nBeginMultiSelect(flags);
+        return _BEGINMULTISELECT_1612597379;
+    }
+
+    public static ImGuiMultiSelectIO beginMultiSelect(final int flags, final int selection_size) {
+        _BEGINMULTISELECT_1612597379.ptr = nBeginMultiSelect(flags, selection_size);
+        return _BEGINMULTISELECT_1612597379;
+    }
+
+    public static ImGuiMultiSelectIO beginMultiSelect(final int flags, final int selection_size, final int items_count) {
+        _BEGINMULTISELECT_1612597379.ptr = nBeginMultiSelect(flags, selection_size, items_count);
+        return _BEGINMULTISELECT_1612597379;
+    }
+
+    private static native long nBeginMultiSelect(int flags); /*
+        return (uintptr_t)ImGui::BeginMultiSelect(flags);
+    */
+
+    private static native long nBeginMultiSelect(int flags, int selection_size); /*
+        return (uintptr_t)ImGui::BeginMultiSelect(flags, selection_size);
+    */
+
+    private static native long nBeginMultiSelect(int flags, int selection_size, int items_count); /*
+        return (uintptr_t)ImGui::BeginMultiSelect(flags, selection_size, items_count);
+    */
+
+    private static final ImGuiMultiSelectIO _ENDMULTISELECT_1 = new ImGuiMultiSelectIO(0);
+
+    public static ImGuiMultiSelectIO endMultiSelect() {
+        _ENDMULTISELECT_1.ptr = nEndMultiSelect();
+        return _ENDMULTISELECT_1;
+    }
+
+    private static native long nEndMultiSelect(); /*
+        return (uintptr_t)ImGui::EndMultiSelect();
+    */
+
+    public static void setNextItemSelectionUserData(final long selection_user_data) {
+        nSetNextItemSelectionUserData(selection_user_data);
+    }
+
+    private static native void nSetNextItemSelectionUserData(long selection_user_data); /*
+        ImGui::SetNextItemSelectionUserData(static_cast<ImGuiSelectionUserData>(selection_user_data));
+    */
+
+    public static boolean isItemToggledSelection() {
+        return nIsItemToggledSelection();
+    }
+
+    private static native boolean nIsItemToggledSelection(); /*
+        return ImGui::IsItemToggledSelection();
     */
 
     // Widgets: List Boxes
