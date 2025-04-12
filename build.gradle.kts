@@ -1,3 +1,4 @@
+import tool.generator.BuildLibrariesTask
 import tool.generator.ast.task.GenerateAst
 
 import java.text.SimpleDateFormat
@@ -51,6 +52,8 @@ tasks.register("buildAll") {
     }
 }
 
+tasks.register<BuildLibrariesTask>("buildLibraries")
+
 tasks.register<GenerateAst>("generateAst") {
     headerFiles = listOf(
             file("include/imgui/imgui.h"),
@@ -65,4 +68,44 @@ tasks.register<GenerateAst>("generateAst") {
             file("include/imgui_toggle/imgui_toggle.h"),
             file("include/ImGuiColorTextEdit/TextEditor.h"),
     )
+}
+
+tasks.register("publishAll") {
+    group = "publishing"
+
+    for (name in listOf("imgui-app", "imgui-lwjgl3", "imgui-binding")) {
+        dependsOn(":$name:publishImguiPublicationToDevOSRepository")
+    }
+
+    dependsOn("publishWindowsNatives", "publishMacNatives", "publishLinuxNatives")
+}
+
+tasks.register("publishWindowsNatives") {
+    group = "publishing"
+
+    doFirst {
+        project.setProperty("deployType", "windows")
+    }
+
+    finalizedBy(":imgui-binding-natives:publishImguiPublicationToDevOSRepository")
+}
+
+tasks.register("publishMacNatives") {
+    group = "publishing"
+
+    doFirst {
+        project.setProperty("deployType", "macos")
+    }
+
+    finalizedBy(":imgui-binding-natives:publishImguiPublicationToDevOSRepository")
+}
+
+tasks.register("publishLinuxNatives") {
+    group = "publishing"
+
+    doFirst {
+        project.setProperty("deployType", "linux")
+    }
+
+    finalizedBy(":imgui-binding-natives:publishImguiPublicationToDevOSRepository")
 }

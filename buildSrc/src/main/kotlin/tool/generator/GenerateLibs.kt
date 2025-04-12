@@ -39,12 +39,11 @@ open class GenerateLibs : DefaultTask() {
     private val forMac = buildEnvs?.contains("macos") == true
     private val forMacArm64 = buildEnvs?.contains("macosarm64") == true
 
-    private val isLocal = System.getProperties().containsKey("local")
     private val withFreeType = System.getProperty("freetype", "false") == "true"
 
     private val sourceDir = project.file("src/generated/java")
     private val classpath = project.file("build/classes/java/main")
-    private val rootDir = (if (isLocal) project.layout.buildDirectory.get().asFile.absolutePath else "/tmp/imgui")
+    private val rootDir = project.layout.buildDirectory.get().asFile.resolve("imgui").absolutePath
     private val jniDir = "$rootDir/jni"
     private val tmpDir = "$rootDir/tmp"
     private val libsDirName = "libsNative"
@@ -53,7 +52,6 @@ open class GenerateLibs : DefaultTask() {
     fun generate() {
         println("Generating Native Libraries...")
         println("Build targets: $buildEnvs")
-        println("Local: $isLocal")
         println("FreeType: $withFreeType")
         println("Location: $rootDir")
         println("=====================================")

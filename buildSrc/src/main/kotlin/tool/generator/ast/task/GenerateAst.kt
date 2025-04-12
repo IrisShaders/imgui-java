@@ -44,9 +44,6 @@ open class GenerateAst : DefaultTask() {
 
         dstDir.mkdirs()
 
-        val scriptPath = "$dstDir/_gen_ast.sh"
-        File(scriptPath).setExecutable(true)
-
         logger.info("Processing headers...")
 
         headerFiles.forEach { header ->
@@ -76,7 +73,7 @@ open class GenerateAst : DefaultTask() {
             // Call clang++ with the script.
             // During the process of making an ast-dump there could be errors/warnings.
             // Thus making a call like that can help to ignore them.
-            callClangAstBump(scriptPath, header, astBumpJson)
+            callClangAstBump(header, astBumpJson)
 
             logger.info("  | Processing an ast-dump result: $astBumpJson...")
 
@@ -405,22 +402,36 @@ open class GenerateAst : DefaultTask() {
         return String.format("%032x", bigInt)
     }
 
-    private fun callClangAstBump(scriptPath: String, srcHeader: File, dstJson: File) {
+    private fun callClangAstBump(srcHeader: File, dstJson: File) {
         fun buildCommand(): List<String> {
             val command = mutableListOf(
-                scriptPath,
-                srcHeader.absolutePath,
-                dstJson.absolutePath,
+                "clang++",
+                // Dump the AST in JSON format
+                "-Xclang", "-ast-dump=json",
+                // Only checks the syntax, does not compile
+                "-fsyntax-only",
+                // Includes comments in the AST
+                "-fparse-all-comments",
+                // Merges identical constants
+                "-fmerge-all-constants",
             )
+
+            // Handle macro definitions
             if (defines.isNotEmpty()) {
                 command += defines.map { "-D$it" }
             }
+
+            // Add the C++ source file to process
+            command += srcHeader.absolutePath
+
             return command
         }
 
         dstJson.delete()
         val pb = ProcessBuilder()
         pb.command(buildCommand())
+        // Redirect to the output file
+        pb.redirectOutput(dstJson)
         pb.start().waitFor()
     }
 
