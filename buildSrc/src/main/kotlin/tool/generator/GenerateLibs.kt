@@ -62,11 +62,11 @@ open class GenerateLibs : DefaultTask() {
             throw IllegalStateException("No build targets")
         }
 
-        File(jniDir).delete()
-        File(tmpDir).delete()
+        File(jniDir).deleteRecursively()
+        File(tmpDir).deleteRecursively()
         val libsDirPath = "$rootDir/$libsDirName"
         val libsDir = File("$rootDir/$libsDirName")
-        libsDir.delete()
+        libsDir.deleteRecursively()
 
         // Generate h/cpp files for JNI
         NativeCodeGenerator().generate(sourceDir.absolutePath, classpath.absolutePath, jniDir)
