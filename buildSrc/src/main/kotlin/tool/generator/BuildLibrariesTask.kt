@@ -112,6 +112,7 @@ open class BuildLibrariesTask : DefaultTask() {
         }
 
         libDir = libDir.resolve("freetype-$VERSION")
+        libDir.resolve("configure").setExecutable(true)
 
         logger.info("FreeType unzipped to $LIBDIR")
 
@@ -177,7 +178,7 @@ open class BuildLibrariesTask : DefaultTask() {
         runCommands(workDir, "make", "clean")
 
         logger.info("Configuring FreeType with CFLAGS='$cFlags' and PREFIX='$prefix'")
-        if (runCommands(workDir, "./configure", "CFLAGS=$cFlags", COMMON_FLAGS, prefix) != 0) {
+        if (runCommands(workDir, "./configure", "CFLAGS=$cFlags", *COMMON_FLAGS.split(" ").toTypedArray(), *prefix.split(" ").toTypedArray()) != 0) {
             throw RuntimeException("Failed to configure FreeType")
         }
 
