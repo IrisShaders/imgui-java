@@ -32,7 +32,7 @@ tasks.compileJava {
 }
 
 sourceSets {
-    getByName("main").java.srcDir("src/generated/java")
+    getByName("main").java.setSrcDirs(listOf("src/generated/java"))
     create("raw").java.srcDir("src/main/java")
 }
 
