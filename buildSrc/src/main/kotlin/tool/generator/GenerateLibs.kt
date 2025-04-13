@@ -148,6 +148,10 @@ open class GenerateLibs : DefaultTask() {
             val libsDir = File("$rootDir/$libsDirName/win64")
             libsDir.deleteRecursively()
             val win64 = BuildTarget.newDefaultTarget(Os.Windows, Architecture.Bitness._64, arch)
+            win64.cFlags += "-Os"
+            win64.cppFlags += "-Os"
+            win64.linkerFlags += "-Os"
+            win64.linkerFlags += "-s"
             addFreeTypeIfEnabled(win64, "windows")
             buildTargets += win64
         }
@@ -160,6 +164,7 @@ open class GenerateLibs : DefaultTask() {
             linux64.cFlags += "-Os"
             linux64.cppFlags += "-Os"
             linux64.linkerFlags += "-Os"
+            linux64.linkerFlags += "-s"
             addFreeTypeIfEnabled(linux64, "linux")
             buildTargets += linux64
         }
