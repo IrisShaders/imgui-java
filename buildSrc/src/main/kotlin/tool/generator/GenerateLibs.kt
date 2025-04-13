@@ -64,8 +64,7 @@ open class GenerateLibs : DefaultTask() {
         File(jniDir).deleteRecursively()
         File(tmpDir).deleteRecursively()
         val libsDirPath = "$rootDir/$libsDirName"
-        val libsDir = File("$rootDir/$libsDirName")
-        libsDir.deleteRecursively()
+
 
         // Generate h/cpp files for JNI
         NativeCodeGenerator().generate(sourceDir.absolutePath, classpath.absolutePath, jniDir)
@@ -117,18 +116,22 @@ open class GenerateLibs : DefaultTask() {
         val arch = if (buildArm) Architecture.ARM else Architecture.x86
         if (forWindows) {
             os = Os.Windows
+            val libsDir = File("$rootDir/$libsDirName/win64")
+            libsDir.deleteRecursively()
             val win64 = BuildTarget.newDefaultTarget(Os.Windows, Architecture.Bitness._64, arch)
-            addFreeTypeIfEnabled(win64)
+            addFreeTypeIfEnabled(win64, "windows")
             buildTargets += win64
         }
 
         if (forLinux) {
             os = Os.Linux
+            val libsDir = File("$rootDir/$libsDirName/linux64")
+            libsDir.deleteRecursively()
             val linux64 = BuildTarget.newDefaultTarget(Os.Linux, Architecture.Bitness._64, arch)
             linux64.cFlags += "-Os"
             linux64.cppFlags += "-Os"
             linux64.linkerFlags += "-Os"
-            addFreeTypeIfEnabled(linux64)
+            addFreeTypeIfEnabled(linux64, "linux")
             buildTargets += linux64
         }
 
@@ -171,11 +174,11 @@ open class GenerateLibs : DefaultTask() {
         macTarget.cppFlags += "-std=c++14"
         // macTarget.cppFlags = macTarget.cppFlags.replace("10.7", minMacOsVersion)
         // macTarget.linkerFlags = macTarget.linkerFlags.replace("10.7", minMacOsVersion)
-        addFreeTypeIfEnabled(macTarget)
+        addFreeTypeIfEnabled(macTarget, "macos")
         return macTarget
     }
 
-    fun addFreeTypeIfEnabled(target: BuildTarget) {
+    fun addFreeTypeIfEnabled(target: BuildTarget, os : String) {
         if (!withFreeType) {
             return
         }
@@ -188,7 +191,8 @@ open class GenerateLibs : DefaultTask() {
 
         target.headerDirs += "$freetypeVendorDir/include"
         target.headerDirs += "${jniDir}/misc/freetype"
-        target.linkerFlags += "-L${project.rootProject.file("$freetypeVendorDir/lib")}"
+        println("Going to link with $freetypeVendorDir/lib/$os")
+        target.linkerFlags += "-L${project.rootProject.file("$freetypeVendorDir/lib/$os")}"
         target.libraries += "-lfreetype"
     }
 

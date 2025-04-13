@@ -85,7 +85,7 @@ open class BuildLibrariesTask : DefaultTask() {
         var libDir = rootDir.resolve(LIBDIR)
         logger.info("Cleaning and creating library directory, then extracting FreeType source...")
 
-        libDir.deleteRecursively()
+        libDir.resolve(platform).deleteRecursively()
         libDir.mkdirs()
 
         // Extract FreeType source
@@ -159,7 +159,7 @@ open class BuildLibrariesTask : DefaultTask() {
 
         when (vendorType) {
             "windows" -> {
-                buildFreetype(libDir, "", "--host=x86_64-w64-mingw32 --prefix=/usr/x86_64-w64-mingw32", libDir.resolve("lib/libfreetype.a"))
+                buildFreetype(libDir, "", "--host=x86_64-w64-mingw32 --prefix=/usr/x86_64-w64-mingw32", libDir.resolve("lib/windows/libfreetype.a"))
             }
 
             "macos" -> {
@@ -176,7 +176,7 @@ open class BuildLibrariesTask : DefaultTask() {
             }
 
             "linux" -> {
-                buildFreetype(libDir, "-fPIC", "", libDir.resolve("lib/libfreetype.a"))
+                buildFreetype(libDir, "-fPIC", "", libDir.resolve("lib/linux/libfreetype.a"))
             }
 
             else -> {
@@ -186,6 +186,7 @@ open class BuildLibrariesTask : DefaultTask() {
     }
 
     private fun buildFreetype(workDir: File, cFlags: String, prefix: String, outputDir: File) {
+        Files.createDirectories(outputDir.toPath())
         logger.info("Cleaning previous builds...")
         runCommands(workDir, "make", "clean")
 
@@ -201,7 +202,7 @@ open class BuildLibrariesTask : DefaultTask() {
 
         logger.info("Building FreeType...")
 
-        if (runCommands(workDir, "make").apply { if (this != 0) logger.info("Exited with code $this") } != 0) {
+        if (runCommands(workDir, "make", "-j6").apply { if (this != 0) logger.info("Exited with code $this") } != 0) {
             throw RuntimeException("Failed to build FreeType!")
         }
 
