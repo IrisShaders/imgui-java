@@ -4,6 +4,8 @@ import org.apache.maven.shared.utils.Os
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.attribute.PosixFilePermissions
 
 open class BuildLibrariesTask : DefaultTask() {
     companion object {
@@ -22,24 +24,25 @@ open class BuildLibrariesTask : DefaultTask() {
 
     @TaskAction
     fun build() {
-        // vendor_freetype.sh
-        prepareVendorFreetype()
-
-        // build.sh
-        logger.info("Creating destination directory for ImGui libraries...")
-        val buildDir = project.layout.buildDirectory.get().asFile
-        val imGuiLibDir = buildDir.resolve("tmp/imgui/dst")
-        val generatedDir = project.rootDir.resolve("imgui-binding/build/imgui/libsNative")
-
-        if (!imGuiLibDir.exists())
-            imGuiLibDir.mkdirs()
-
-        logger.info("Directory $imGuiLibDir created successfully")
-
-        val isWindows = Os.OS_FAMILY == Os.FAMILY_WINDOWS
         val platforms = this.getPlatforms()
 
         for (platform in platforms) {
+            // vendor_freetype.sh
+            prepareVendorFreetype(platform)
+
+            // build.sh
+            logger.info("Creating destination directory for ImGui libraries...")
+            val buildDir = project.layout.buildDirectory.get().asFile
+            val imGuiLibDir = buildDir.resolve("tmp/imgui/dst")
+            val generatedDir = project.rootDir.resolve("imgui-binding/build/imgui/libsNative")
+
+            if (!imGuiLibDir.exists())
+                imGuiLibDir.mkdirs()
+
+            logger.info("Directory $imGuiLibDir created successfully")
+
+            val isWindows = Os.OS_FAMILY == Os.FAMILY_WINDOWS
+
             logger.info("Running Gradle task for platform $platform...")
             if (runCommands(project.rootDir, if (isWindows) "gradlew" else "./gradlew", "imgui-binding:generateLibs", "-Denvs=$platform", "-Dfreetype=true") != 0) {
                 throw RuntimeException("Gradle task for platform $platform failed!")
@@ -70,13 +73,13 @@ open class BuildLibrariesTask : DefaultTask() {
                 logger.info("Copying the generated library file to the destination directory...")
 
                 for (file in platformGenFiles) {
-                    file.copyTo(imGuiLibDir.resolve(file.name))
+                    file.copyTo(imGuiLibDir.resolve(file.name), true)
                 }
             }
         }
     }
 
-    fun prepareVendorFreetype() {
+    fun prepareVendorFreetype(platform: String) {
         val rootDir = project.rootDir
 
         var libDir = rootDir.resolve(LIBDIR)
@@ -105,6 +108,8 @@ open class BuildLibrariesTask : DefaultTask() {
                             input.transferTo(out)
                         }
                     }
+
+                    Files.setPosixFilePermissions(file.toPath(), PosixFilePermissions.fromString("rwxr-xr-x"))
                 }
             }
         } catch (e: Throwable) {
@@ -122,9 +127,7 @@ open class BuildLibrariesTask : DefaultTask() {
         libDir.resolve("lib").mkdirs()
         libDir.resolve("tmp").mkdirs()
 
-        for (platform in getPlatforms()) {
-            prepareBuildFreetype(rootDir, libDir, platform)
-        }
+        prepareBuildFreetype(rootDir, libDir, platform)
     }
 
     private fun getPlatforms(): List<String> {
@@ -144,6 +147,15 @@ open class BuildLibrariesTask : DefaultTask() {
 
     private fun prepareBuildFreetype(rootDir: File, libDir: File, vendorType: String) {
         logger.info("Preparing build for vendor type $vendorType")
+
+        val unixDef = libDir.resolve("builds/unix/unix-def.in")
+        if (unixDef.exists()) {
+            if (vendorType == "windows")
+                // https://github.com/rdp/ffmpeg-windows-build-helpers/issues/234#issuecomment-862903347
+                unixDef.writeText(unixDef.readText().replace("TOP_DIR := $(shell cd $(TOP_DIR); pwd)", "#replacedForWSLSupport"))
+            else
+                unixDef.writeText(unixDef.readText().replace("#replacedForWSLSupport", "TOP_DIR := $(shell cd $(TOP_DIR); pwd)"))
+        }
 
         when (vendorType) {
             "windows" -> {
@@ -177,14 +189,19 @@ open class BuildLibrariesTask : DefaultTask() {
         logger.info("Cleaning previous builds...")
         runCommands(workDir, "make", "clean")
 
+        logger.info("Autogenning FreeType")
+        if (runCommands(workDir, "./autogen.sh").apply { if (this != 0) logger.info("Exited with code $this") } != 0) {
+            throw RuntimeException("Failed to configure FreeType")
+        }
+
         logger.info("Configuring FreeType with CFLAGS='$cFlags' and PREFIX='$prefix'")
-        if (runCommands(workDir, "./configure", "CFLAGS=$cFlags", *COMMON_FLAGS.split(" ").toTypedArray(), *prefix.split(" ").toTypedArray()) != 0) {
+        if (runCommands(workDir, "./configure", "CFLAGS=$cFlags", *COMMON_FLAGS.split(" ").toTypedArray(), *prefix.split(" ").toTypedArray()).apply { if (this != 0) logger.info("Exited with code $this") } != 0) {
             throw RuntimeException("Failed to configure FreeType")
         }
 
         logger.info("Building FreeType...")
 
-        if (runCommands(workDir, "make") != 0) {
+        if (runCommands(workDir, "make").apply { if (this != 0) logger.info("Exited with code $this") } != 0) {
             throw RuntimeException("Failed to build FreeType!")
         }
 
@@ -201,6 +218,26 @@ open class BuildLibrariesTask : DefaultTask() {
         val pb = ProcessBuilder()
         pb.directory(workDir)
         pb.command(*commands)
-        return pb.start().waitFor()
+        return pb.start().apply {
+            this.inputStream.use {
+                it.bufferedReader().use { r ->
+                    var line = r.readLine()
+                    while (line != null) {
+                        logger.info("[STDOUT] $line")
+                        line = r.readLine()
+                    }
+                }
+            }
+
+            this.errorStream.use {
+                it.bufferedReader().use { r ->
+                    var line = r.readLine()
+                    while (line != null) {
+                        logger.error("[STDERR] $line")
+                        line = r.readLine()
+                    }
+                }
+            }
+        }.waitFor()
     }
 }

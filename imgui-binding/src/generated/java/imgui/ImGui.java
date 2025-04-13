@@ -2,7 +2,6 @@ package imgui;
 
 import imgui.assertion.ImAssertCallback;
 import imgui.callback.ImGuiInputTextCallback;
-import imgui.flag.ImGuiMultiSelectFlags;
 import imgui.internal.ImGuiContext;
 import imgui.type.*;
 
@@ -21,7 +20,9 @@ public class ImGui {
     private static final String LIB_NAME_DEFAULT = "imgui-java64";
     private static final String LIB_TMP_DIR_PREFIX = "imgui-java-natives";
 
-    static {
+    private static boolean isLoaded;
+
+    public static void loadImGui() {
         final String libPath = System.getProperty(LIB_PATH_PROP);
         final String fullLibName = resolveFullLibName();
 
@@ -29,7 +30,7 @@ public class ImGui {
             System.load(Paths.get(libPath).resolve(fullLibName).toAbsolutePath().toString());
         }
 
-        onLoadJNI();
+        isLoaded = true;
     }
 
     public static void onLoadJNI() {
@@ -147,11 +148,25 @@ public class ImGui {
     // You may instance one yourself and pass it to CreateContext() to share a font atlas between imgui contexts.
     // None of those functions is reliant on the current context.
 
-    public static ImGuiContext createContext() {
+    public static ImGuiContext createContext(boolean loadLibrary) {
+        if (loadLibrary && !isLoaded) {
+            loadImGui();
+        } else if (!isLoaded) {
+            onLoadJNI();
+            isLoaded = true;
+        }
+
         return new ImGuiContext(nCreateContext());
     }
 
-    public static ImGuiContext createContext(final ImFontAtlas sharedFontAtlas) {
+    public static ImGuiContext createContext(boolean loadLibrary, final ImFontAtlas sharedFontAtlas) {
+        if (loadLibrary && !isLoaded) {
+            loadImGui();
+        } else if (!isLoaded) {
+            onLoadJNI();
+            isLoaded = true;
+        }
+
         return new ImGuiContext(nCreateContext(sharedFontAtlas.ptr));
     }
 
@@ -11229,7 +11244,6 @@ public class ImGui {
     /**
      * return hovered column. return -1 when table is not hovered. return columns_count if the unused space at the right of visible columns is hovered.
      * <p>
-     * Can also use (TableGetColumnFlags() & ImGuiTableColumnFlags_IsHovered) instead.
      */
     public static int tableGetHoveredColumn() {
         return nTableGetHoveredColumn();
@@ -13156,9 +13170,7 @@ public class ImGui {
         return ImGui::IsMouseDoubleClicked(button);
     */
 
-    /**
-     * delayed mouse release (use very sparingly!). Generally used with 'delay >= io.MouseDoubleClickTime' + combined with a 'io.MouseClickedLastCount==1' test. This is a very rarely used UI idiom, but some apps use this: e.g. MS Explorer single click on an icon to rename.
-     */
+
     public static boolean isMouseReleasedWithDelay(final int button, final float delay) {
         return nIsMouseReleasedWithDelay(button, delay);
     }

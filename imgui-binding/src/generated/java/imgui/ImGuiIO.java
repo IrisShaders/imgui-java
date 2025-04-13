@@ -1,8 +1,6 @@
 package imgui;
 
 import imgui.binding.ImGuiStruct;
-import imgui.callback.ImStrConsumer;
-import imgui.callback.ImStrSupplier;
 import imgui.internal.ImGuiContext;
 
 /**
@@ -414,16 +412,10 @@ public final class ImGuiIO extends ImGuiStruct {
         THIS->DisplayFramebufferScale = value;
     */
 
-    /**
-     * Swap Activate<>Cancel (A<>B) buttons, matching typical "Nintendo/Japanese style" gamepad layout.
-     */
     public boolean getConfigNavSwapGamepadButtons() {
         return nGetConfigNavSwapGamepadButtons();
     }
 
-    /**
-     * Swap Activate<>Cancel (A<>B) buttons, matching typical "Nintendo/Japanese style" gamepad layout.
-     */
     public void setConfigNavSwapGamepadButtons(final boolean value) {
         nSetConfigNavSwapGamepadButtons(value);
     }

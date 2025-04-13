@@ -37,7 +37,8 @@ open class GenerateLibs : DefaultTask() {
     private val forWindows = buildEnvs?.contains("windows") == true
     private val forLinux = buildEnvs?.contains("linux") == true
     private val forMac = buildEnvs?.contains("macos") == true
-    private val forMacArm64 = buildEnvs?.contains("macosarm64") == true
+    private val buildArm = System.getProperty("arm64", "false") == "true"
+    // TODO: Figure out how to cross compile arm64 on Linux and Windows. This only works on macOS right now.
 
     private val withFreeType = System.getProperty("freetype", "false") == "true"
 
@@ -113,29 +114,27 @@ open class GenerateLibs : DefaultTask() {
 
         buildConfig.multiThreadedCompile = true
         var os: Os? = null
+        val arch = if (buildArm) Architecture.ARM else Architecture.x86
         if (forWindows) {
             os = Os.Windows
-            val win64 = BuildTarget.newDefaultTarget(Os.Windows, Architecture.Bitness._64)
+            val win64 = BuildTarget.newDefaultTarget(Os.Windows, Architecture.Bitness._64, arch)
             addFreeTypeIfEnabled(win64)
             buildTargets += win64
         }
 
         if (forLinux) {
             os = Os.Linux
-            val linux64 = BuildTarget.newDefaultTarget(Os.Linux, Architecture.Bitness._64)
-            linux64.cFlags += "-g"
-            linux64.cppFlags += "-g"
+            val linux64 = BuildTarget.newDefaultTarget(Os.Linux, Architecture.Bitness._64, arch)
+            linux64.cFlags += "-Os"
+            linux64.cppFlags += "-Os"
+            linux64.linkerFlags += "-Os"
             addFreeTypeIfEnabled(linux64)
             buildTargets += linux64
         }
 
         if (forMac) {
             os = Os.MacOsX
-            buildTargets += createMacTarget(Architecture.x86)
-        }
-
-        if (forMacArm64) {
-            buildTargets += createMacTarget(Architecture.ARM)
+            buildTargets += createMacTarget(arch)
         }
 
 
@@ -155,8 +154,6 @@ open class GenerateLibs : DefaultTask() {
             checkLibExist("linux64/libimgui-java64.so")
         if (forMac)
             checkLibExist("macosx64/libimgui-java64.dylib")
-        if (forMacArm64)
-            checkLibExist("macosxarm64/libimgui-java64.dylib")
     }
 
     fun checkLibExist(libName: String) {
@@ -171,7 +168,7 @@ open class GenerateLibs : DefaultTask() {
         val minMacOsVersion = "10.15"
         val macTarget = BuildTarget.newDefaultTarget(Os.MacOsX, Architecture.Bitness._64, arch)
         macTarget.libName = "libimgui-java64.dylib" // Lib for arm64 will be named the same for consistency.
-        macTarget.cppFlags += " -std=c++14"
+        macTarget.cppFlags += "-std=c++14"
         // macTarget.cppFlags = macTarget.cppFlags.replace("10.7", minMacOsVersion)
         // macTarget.linkerFlags = macTarget.linkerFlags.replace("10.7", minMacOsVersion)
         addFreeTypeIfEnabled(macTarget)
@@ -183,15 +180,16 @@ open class GenerateLibs : DefaultTask() {
             return
         }
 
-        val freetypeVendorDir = project.rootProject.file("build/vendor/freetype")
+        val freetypeVendorDir = project.rootProject.file("build/vendor/freetype/freetype-2.13.3")
         if (!freetypeVendorDir.exists()) {
             logger.error("$freetypeVendorDir doesn't exist! Run \"buildSrc/scripts/vendor_freetype.sh\" for your platform beforehand!")
             throw IllegalStateException("Unable to build library for FreeType")
         }
 
-        target.cppFlags += " -I$freetypeVendorDir/include"
-        target.linkerFlags += " -L${project.rootProject.file("$freetypeVendorDir/lib")}"
-        target.libraries += " -lfreetype"
+        target.headerDirs += "$freetypeVendorDir/include"
+        target.headerDirs += "${jniDir}/misc/freetype"
+        target.linkerFlags += "-L${project.rootProject.file("$freetypeVendorDir/lib")}"
+        target.libraries += "-lfreetype"
     }
 
     fun replaceSourceFileContent(fileName: String, replaceWhat: String, replaceWith: String) {

@@ -997,16 +997,10 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
         THIS->TabBorderSize = value;
     */
 
-    /**
-     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width.
-     */
     public float getTabCloseButtonMinWidthSelected() {
         return nGetTabCloseButtonMinWidthSelected();
     }
 
-    /**
-     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width.
-     */
     public void setTabCloseButtonMinWidthSelected(final float value) {
         nSetTabCloseButtonMinWidthSelected(value);
     }
@@ -1019,16 +1013,12 @@ public final class ImGuiStyle extends ImGuiStructDestroyable {
         THIS->TabCloseButtonMinWidthSelected = value;
     */
 
-    /**
-     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width. FLT_MAX: never show close button when unselected.
-     */
+
     public float getTabCloseButtonMinWidthUnselected() {
         return nGetTabCloseButtonMinWidthUnselected();
     }
 
-    /**
-     * -1: always visible. 0.0f: visible when hovered. >0.0f: visible when hovered if minimum width. FLT_MAX: never show close button when unselected.
-     */
+
     public void setTabCloseButtonMinWidthUnselected(final float value) {
         nSetTabCloseButtonMinWidthUnselected(value);
     }

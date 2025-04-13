@@ -9,7 +9,6 @@ import imgui.binding.ImGuiStructDestroyable;
  * {
  * unsigned short  Width, Height;  // Input    // Desired rectangle dimension
  * unsigned short  X, Y;           // Output   // Packed position in Atlas
- * unsigned int    GlyphID;        // Input    // For custom font glyphs only (ID < 0x110000)
  * float           GlyphAdvanceX;  // Input    // For custom font glyphs only: glyph xadvance
  * ImVec2          GlyphOffset;    // Input    // For custom font glyphs only: glyph display offset
  * ImFont*         Font;           // Input    // For custom font glyphs only: target font
@@ -128,16 +127,12 @@ public final class ImFontAtlasCustomRect extends ImGuiStructDestroyable {
         return THIS->Y;
     */
 
-    /**
-     * For custom font glyphs only (ID < 0x110000)
-     */
+
     public int getGlyphID() {
         return nGetGlyphID();
     }
 
-    /**
-     * For custom font glyphs only (ID < 0x110000)
-     */
+
     public void setGlyphID(final int value) {
         nSetGlyphID(value);
     }
