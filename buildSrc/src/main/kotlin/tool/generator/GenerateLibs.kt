@@ -11,6 +11,8 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.tasks.TaskAction
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
 
 open class GenerateLibs : DefaultTask() {
     companion object {
@@ -48,6 +50,33 @@ open class GenerateLibs : DefaultTask() {
     private val jniDir = "$rootDir/jni"
     private val tmpDir = "$rootDir/tmp"
     private val libsDirName = "libsNative"
+
+    fun runCommands(workDir: File, vararg commands: String): Int {
+        val pb = ProcessBuilder()
+        pb.directory(workDir)
+        pb.command(*commands)
+        return pb.start().apply {
+            this.inputStream.use {
+                it.bufferedReader().use { r ->
+                    var line = r.readLine()
+                    while (line != null) {
+                        logger.info("[STDOUT] $line")
+                        line = r.readLine()
+                    }
+                }
+            }
+
+            this.errorStream.use {
+                it.bufferedReader().use { r ->
+                    var line = r.readLine()
+                    while (line != null) {
+                        logger.error("[STDERR] $line")
+                        line = r.readLine()
+                    }
+                }
+            }
+        }.waitFor()
+    }
 
     @TaskAction
     fun generate() {
@@ -137,7 +166,16 @@ open class GenerateLibs : DefaultTask() {
 
         if (forMac) {
             os = Os.MacOsX
-            buildTargets += createMacTarget(arch)
+            val target = createMacTarget(Architecture.x86)
+            target.cFlags += "-Oz"
+            target.cppFlags += "-Oz"
+            target.linkerFlags += "-Oz -s"
+            buildTargets += target
+            val target2 = createMacTarget(Architecture.ARM)
+            target2.cFlags += "-Oz"
+            target2.cppFlags += "-Oz"
+            target2.linkerFlags += "-Oz -s"
+            buildTargets += target2
         }
 
 
@@ -155,8 +193,24 @@ open class GenerateLibs : DefaultTask() {
             checkLibExist("windows64/imgui-java64.dll")
         if (forLinux)
             checkLibExist("linux64/libimgui-java64.so")
-        if (forMac)
+        if (forMac) {
             checkLibExist("macosx64/libimgui-java64.dylib")
+            checkLibExist("macosxarm64/libimgui-java64.dylib")
+            Files.createDirectories(Path.of("$rootDir/$libsDirName/macos"))
+
+            logger.info("Creating universal library using lipo...")
+
+            if (runCommands(File("$rootDir/$libsDirName/"), "lipo", "-create", "-output", "macos/libimgui-java64.dylib", "macosx64/libimgui-java64.dylib", "macosxarm64/libimgui-java64.dylib") != 0) {
+                throw RuntimeException("Failed to create universal library with lipo")
+            }
+
+            File("$rootDir/$libsDirName/macosx64").deleteRecursively()
+            File("$rootDir/$libsDirName/macosxarm64").deleteRecursively()
+
+            if (runCommands(File("$rootDir/$libsDirName/"), "strip", "-S", "-x", "macos/libimgui-java64.dylib") != 0) {
+                throw RuntimeException("Failed to create universal library with lipo")
+            }
+        }
     }
 
     fun checkLibExist(libName: String) {

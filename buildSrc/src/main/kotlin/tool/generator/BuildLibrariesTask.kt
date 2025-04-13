@@ -53,7 +53,7 @@ open class BuildLibrariesTask : DefaultTask() {
             val platformGenFiles = if (platform == "windows")
                 listOf(generatedDir.resolve("windows64/imgui-java64.dll"))
             else if (platform == "macos")
-                listOf(generatedDir.resolve("macosx64/libimgui-java64.dylib"), generatedDir.resolve("macosxarm64/libimgui-java64.dylib"))
+                listOf(generatedDir.resolve("macos/libimgui-java64.dylib"))
             else if (platform == "linux")
                 listOf(generatedDir.resolve("linux64/libimgui-java64.so"))
             else throw IllegalArgumentException("Invalid platform $platform!")
@@ -163,12 +163,12 @@ open class BuildLibrariesTask : DefaultTask() {
             }
 
             "macos" -> {
-                buildFreetype(libDir, "-arch x86_64 -mmacosx-version-min=$MACOS_VERSION", "", libDir.resolve("tmp/libfreetype-x86_64.a"))
-                buildFreetype(libDir, "-arch arm64 -mmacosx-version-min=$MACOS_VERSION", "", libDir.resolve("tmp/libfreetype-arm64.a"))
+                buildFreetype(libDir, "-arch x86_64 -mmacosx-version-min=$MACOS_VERSION", "", libDir.resolve("lib/macos/libfreetype-x86_64.a"))
+                buildFreetype(libDir, "-arch arm64 -mmacosx-version-min=$MACOS_VERSION", "", libDir.resolve("lib/macos/libfreetype-arm64.a"))
 
                 logger.info("Creating universal library using lipo...")
 
-                if (runCommands(libDir, "lipo", "-create", "-output", "lib/libfreetype.a", "tmp/libfreetype-x86_64.a", "tmp/libfreetype-arm64.a") != 0) {
+                if (runCommands(libDir, "lipo", "-create", "-output", "lib/macos/libfreetype.a", "lib/macos/libfreetype-x86_64.a", "lib/macos/libfreetype-arm64.a") != 0) {
                     throw RuntimeException("Failed to create universal library with lipo")
                 }
 
@@ -186,7 +186,7 @@ open class BuildLibrariesTask : DefaultTask() {
     }
 
     private fun buildFreetype(workDir: File, cFlags: String, prefix: String, outputDir: File) {
-        Files.createDirectories(outputDir.toPath())
+        Files.createDirectories(outputDir.parentFile.toPath())
         logger.info("Cleaning previous builds...")
         runCommands(workDir, "make", "clean")
 
